@@ -1,13 +1,12 @@
 import { FastifyInstance } from "fastify"
 
 import { verifyToken } from "@app/middleware"
-
 import {
     createPatientFactory,
     getAllPatientsFactory,
     getPatientFactory,
     updatePatientFactory
-} from "../../useCases"
+} from "@modules/patients/useCases"
 
 const routesPatients = async (app: FastifyInstance) => {
     app.addHook("onRequest", verifyToken)

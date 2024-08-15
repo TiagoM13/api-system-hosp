@@ -1,7 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreatePatientService } from "./create-patient-service";
+import { ZodError } from "zod";
+
 import { AppError } from "@app/errors";
 import { schemaBody } from "@modules/patients/schemas";
+import { CreatePatientService } from "./create-patient-service";
 
 export class CreatePatientController {
     private createPatientService: CreatePatientService
@@ -23,6 +25,13 @@ export class CreatePatientController {
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(400).send({ message: error.message })
+            }
+
+            if (error instanceof ZodError) {
+                return res.status(400).send({
+                    message: 'Invalid request body',
+                    errors: error.flatten().fieldErrors
+                })
             }
 
             return res.status(500).send({ error: "Internal Server Error" });

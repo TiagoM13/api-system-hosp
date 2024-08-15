@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+import { ZodError } from "zod";
 
 import { AppError } from "@app/errors";
+import { schemaBody } from "@modules/users/schemas";
 import { CreateUserService } from "./create-user-service";
-import { schemaBody } from "../../schemas";
-import { ZodError } from "zod";
 
 export class CreateUserController {
     private createUserService: CreateUserService

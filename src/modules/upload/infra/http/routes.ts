@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
+
 import { verifyToken } from "@app/middleware/authenticate";
-import uploadFactory from "@modules/upload/useCases/upload/upload-factory";
+import { uploadFactory } from "@modules/upload/useCases";
 
 export const routeUpload = async (app: FastifyInstance) => {
     app.addHook("onRequest", verifyToken)

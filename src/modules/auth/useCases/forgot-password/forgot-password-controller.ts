@@ -1,7 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ForgotPasswordService } from "./forgot-password-service";
+import { ZodError } from "zod";
+
 import { AppError } from "@app/errors";
 import { schemaBody } from "@modules/auth/schemas";
+import { ForgotPasswordService } from "./forgot-password-service";
 
 export class ForgotPasswordController {
     private forgotPasswordService: ForgotPasswordService
@@ -20,6 +22,13 @@ export class ForgotPasswordController {
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(400).send({ message: error.message })
+            }
+
+            if (error instanceof ZodError) {
+                return res.status(400).send({
+                    message: 'Invalid request body',
+                    errors: error.flatten().fieldErrors
+                })
             }
 
             return res.status(500).send({ error: "Internal Server Error" });

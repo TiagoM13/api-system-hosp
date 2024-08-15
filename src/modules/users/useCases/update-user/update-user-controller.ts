@@ -1,8 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+import { ZodError } from "zod";
 
 import { AppError } from "@app/errors";
 import { UpdateUserService } from "./update-user-service";
-import { schemaBody, schemaParams } from "../../schemas";
+import { schemaBody, schemaParams } from "@modules/users/schemas";
 
 export class UpdateUserController {
     private updateUserService: UpdateUserService
@@ -31,6 +32,13 @@ export class UpdateUserController {
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(400).send({ message: error.message });
+            }
+
+            if (error instanceof ZodError) {
+                return res.status(400).send({
+                    message: 'Invalid request body',
+                    errors: error.flatten().fieldErrors
+                })
             }
 
             return res.status(500).send({ error: "Internal Server Error" });

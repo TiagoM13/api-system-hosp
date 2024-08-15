@@ -1,8 +1,12 @@
 import { FastifyInstance } from "fastify"
 
 import { verifyToken } from "@app/middleware/authenticate"
-import { createQueryFactory, getAllQueriesFactory, getQueryFactory, updateQueryFactory } from "@modules/queries/useCases"
-
+import {
+    createQueryFactory,
+    getAllQueriesFactory,
+    getQueryFactory,
+    updateQueryFactory
+} from "@modules/queries/useCases"
 
 const routesQueries = async (app: FastifyInstance) => {
     app.addHook("onRequest", verifyToken)

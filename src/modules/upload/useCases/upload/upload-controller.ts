@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { UploadService } from "./upload-service";
+
 import { AppError } from "@app/errors";
+import { UploadService } from "./upload-service";
 
 export class UploadController {
     private uploadService: UploadService
@@ -18,7 +19,7 @@ export class UploadController {
             return res.send({ success: true, filePath: uploadPath });
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(400).send({ message: error.message})
+                return res.status(400).send({ message: error.message })
             }
 
             return res.status(500).send({ error: "Internal Server Error" });
