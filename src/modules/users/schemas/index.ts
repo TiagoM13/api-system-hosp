@@ -8,7 +8,7 @@ export const schemaBody = z.object({
     email: z.string().email().trim(),
     user_type: z.nativeEnum(UserType),
     status: z.nativeEnum(Status).optional(),
-    image_url: z.string().optional().nullable()
+    image_url: z.string().nullable().optional()
 })
 
 export const schemaChangePasswordBody = z.object({
