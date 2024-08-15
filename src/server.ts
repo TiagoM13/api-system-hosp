@@ -1,6 +1,5 @@
 import { app } from "./app"
 
-// Definindo a porta e o host (opcional)
 const PORT = 6006;
 const HOST = 'localhost';
 
