@@ -1,4 +1,5 @@
 import { MultipartFile } from "@fastify/multipart";
+import { randomUUID } from 'node:crypto'
 import { pipeline } from 'node:stream';
 import util from 'node:util';
 import path from "node:path";
@@ -18,13 +19,17 @@ export class UploadService {
             throw new AppError("Only image files are allowed")
         }
 
-        const timestamp = new Date().toISOString().replace(/[-:.]/g, '');
-        const ext = path.extname(uploadData.filename);
-        const filename = `image_${timestamp}${ext}`;
-        const uploadPath = path.join(__dirname, '../../../../uploads', 'img', filename);
+        const fileId = randomUUID()
+        const extension = path.extname(uploadData.filename)
 
-        await pump(uploadData.file, fs.createWriteStream(uploadPath))
+        const fileName = fileId.concat(extension)
 
-        return uploadPath;
+        const writeStream = fs.createWriteStream(
+            path.resolve(__dirname, '../../../../', 'uploads', fileName),
+        )
+
+        await pump(uploadData.file, writeStream)
+
+        return { fileName };
     }
 }

@@ -12,11 +12,22 @@ export class UploadController {
 
     async handle(req: FastifyRequest, res: FastifyReply) {
         try {
-            const file = await req.file()
+            const file = await req.file({
+                limits: {
+                    fileSize: 5_242_880, // 5mb
+                },
+            })
 
-            const uploadPath = await this.uploadService.execute(file)
+            if (!file) {
+                return res.status(400).send()
+            }
 
-            return res.send({ success: true, filePath: uploadPath });
+            const { fileName } = await this.uploadService.execute(file)
+
+            const fullUrl = req.protocol.concat('://').concat(req.hostname)
+            const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
+
+            return res.status(201).send({ success: true, fileUrl: fileUrl });
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(400).send({ message: error.message })

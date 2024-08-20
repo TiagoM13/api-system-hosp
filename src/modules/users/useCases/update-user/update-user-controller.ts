@@ -25,7 +25,7 @@ export class UpdateUserController {
                 image_url
             })
 
-            return res.send({
+            return res.status(201).send({
                 success: true,
                 user: updatedUser
             })
