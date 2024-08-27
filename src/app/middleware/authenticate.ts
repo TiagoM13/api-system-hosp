@@ -49,3 +49,18 @@ export const verifyAdmin = async (req: FastifyRequest, res: FastifyReply) => {
         return res.status(403).send({ error: "Access forbidden: Admins only" });
     }
 };
+
+export const verifyUserTypes = (allowedUserTypes: UserType[]) => {
+    return async (req: FastifyRequest, res: FastifyReply) => {
+        const schemaUser = z.object({
+            id: z.coerce.number().int(),
+            user_type: z.nativeEnum(UserType),
+        });
+
+        const { user_type } = schemaUser.parse(req.user);
+
+        if (!allowedUserTypes.includes(user_type)) {
+            return res.status(403).send({ error: "Access forbidden: Unauthorized user type" });
+        }
+    };
+};

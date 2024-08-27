@@ -13,7 +13,7 @@ export const schemaBody = z.object({
 
 export const schemaChangePasswordBody = z.object({
     password: z.string().min(6).max(20).trim(),
-    confirmPassword: z.string().min(6).max(20).trim(),
+    confirm_password: z.string().min(6).max(20).trim(),
 })
 
 export const schemaQuery = z.object({

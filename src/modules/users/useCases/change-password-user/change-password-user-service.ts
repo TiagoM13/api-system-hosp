@@ -9,14 +9,14 @@ export class ChangePasswordUserService {
         this.userRepository = userRepository
     }
 
-    async execute(userId: number, password: string, confirmPassword: string) {
+    async execute(userId: number, password: string, confirm_password: string) {
         const user = await this.userRepository.findById(userId)
 
         if (!user) {
             throw new AppError("User not found.")
         }
 
-        const isVerifyPassword = password === confirmPassword;
+        const isVerifyPassword = password === confirm_password;
 
         if (!isVerifyPassword) {
             throw new AppError("Confirm that the passwords are the same.")
