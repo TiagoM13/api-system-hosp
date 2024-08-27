@@ -14,12 +14,12 @@ export class CreateUserController {
 
     async handle(req: FastifyRequest, res: FastifyReply) {
         try {
-            const { name, email, user_type, image_url } = schemaBody.parse(req.body)
+            const { name, email, role, image_url } = schemaBody.parse(req.body)
 
             const user = await this.createUserService.execute({
                 name,
                 email,
-                user_type,
+                role,
                 image_url,
             });
 

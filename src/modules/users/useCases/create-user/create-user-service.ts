@@ -24,6 +24,6 @@ export class CreateUserService {
             ...data, password: hashedPassword,
         })
 
-        return newUser 
+        return newUser
     }
 }

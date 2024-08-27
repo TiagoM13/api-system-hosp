@@ -8,7 +8,3 @@ const authRoutes = async (app: FastifyInstance) => {
 }
 
 export { authRoutes }
-
-// User 1
-// tiago.umbj@gmail.com
-// hospital123

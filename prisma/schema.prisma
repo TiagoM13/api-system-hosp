@@ -7,7 +7,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-// Tabela de Pacientes 
 model Patient {
     id              String   @id @default(uuid())
     name            String
@@ -47,7 +46,7 @@ model User {
     id          Int       @id @default(autoincrement())
     name        String
     email       String    @unique
-    user_type   String
+    role        Int
     image_url   String?
     status      String    @default("ativo")
     last_access DateTime?
