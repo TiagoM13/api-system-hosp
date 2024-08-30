@@ -10,13 +10,18 @@ interface UserPayload {
 
 export const verifyToken = async (req: FastifyRequest, res: FastifyReply) => {
     try {
-        const token = req.headers.authorization;
+        const authorization = req.headers.authorization;
 
-        if (!token) {
+        if (!authorization) {
             return res.status(401).send({ message: "Token não fornecido" });
         }
 
+        const token = authorization.split(' ')[1];
         const decoded = app.jwt.verify<UserPayload>(token);
+
+        if (decoded.status === "inativo") {
+            return res.status(403).send({ message: "Usuário inativo! Você está sem acesso no momento" })
+        }
 
         return req.user = decoded;
     } catch (err) {
@@ -33,7 +38,7 @@ export const verifyToken = async (req: FastifyRequest, res: FastifyReply) => {
 export const checkPermissions = (roleIds: number[]) => {
     return async (req: FastifyRequest, res: FastifyReply) => {
         if (!req.user) {
-            return res.status(400).send({ message: "Usuário não autenticado" })
+            return res.status(401).send({ message: "Usuário não autenticado" })
         }
 
         const schemaUser = z.object({
@@ -45,7 +50,7 @@ export const checkPermissions = (roleIds: number[]) => {
             const { role } = schemaUser.parse(req.user);
 
             if (!roleIds.includes(role)) {
-                return res.status(403).send({ message: "Acesso proibido: Tipo de usuário não autorizado" });
+                return res.status(403).send({ message: "Acesso proibido! Tipo de usuário não autorizado" });
             }
         } catch (error) {
             return res.status(400).send({ message: "Dados inválidos! Faça login novamente" })

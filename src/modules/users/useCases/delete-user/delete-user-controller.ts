@@ -21,7 +21,7 @@ export class DeleteUserController {
             return res.send({ userId: user.id })
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(404).send({ message: error.message });
+                return res.status(error.statusCode).send({ message: error.message });
             }
 
             if (error instanceof ZodError) {

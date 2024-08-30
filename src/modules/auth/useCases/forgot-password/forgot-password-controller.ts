@@ -21,7 +21,7 @@ export class ForgotPasswordController {
             return res.status(201).send({ success: true, email: user.email })
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(400).send({ message: error.message })
+                return res.status(error.statusCode).send({ message: error.message })
             }
 
             if (error instanceof ZodError) {

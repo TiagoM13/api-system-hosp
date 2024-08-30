@@ -13,7 +13,7 @@ export class ChangePasswordUserService {
         const user = await this.userRepository.findById(userId)
 
         if (!user) {
-            throw new AppError("User not found.")
+            throw new AppError("User not found.", 404)
         }
 
         const isVerifyPassword = password === confirm_password;

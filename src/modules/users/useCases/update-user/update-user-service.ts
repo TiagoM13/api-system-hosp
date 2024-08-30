@@ -11,11 +11,11 @@ export class UpdateUserService {
 
     async execute(id: number, data: IUser) {
         const user = await this.userRepository.findById(id)
-        
+
         if (!user) {
-            throw new AppError("User not found.")
+            throw new AppError("User not found.", 404)
         }
-        
+
         const updateUser = await this.userRepository.update(id, data)
 
         return updateUser

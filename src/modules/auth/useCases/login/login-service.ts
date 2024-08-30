@@ -18,17 +18,21 @@ export class LoginService {
         const user = await this.userRepository.findByEmail(email)
 
         if (!user) {
-            throw new AppError("Invalid credentials");
+            throw new AppError("E-mail inválido");
         }
 
         const isPasswordValid = await app.bcrypt.compare(password, String(user.password))
 
         if (!isPasswordValid) {
-            throw new AppError("Invalid credentials");
+            throw new AppError("Senha inválida");
+        }
+
+        if (user.status === "inativo") {
+            throw new AppError("Usuário inativo! Você está sem acesso no momento", 403)
         }
 
         const token = app.jwt.sign({
-            id: user.id, role: user.role,
+            id: user.id, role: user.role, status: user.status
         });
 
         const { password: _, ...userWithoutPassword } = user;

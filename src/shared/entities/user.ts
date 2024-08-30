@@ -1,8 +1,7 @@
 export enum Role {
     ADMIN = 0,
-    NO_TYPE = 1,
-    EDITOR = 2,
-    CLINICAL = 3,
+    EDITOR = 1,
+    CLINICAL = 2,
 }
 
 export enum Status {
