@@ -16,7 +16,18 @@ export class UpdateUserService {
             throw new AppError("User not found.", 404)
         }
 
-        const updateUser = await this.userRepository.update(id, data)
+        if (data.email && data.email !== user.email) {
+            throw new AppError("Email address cannot be changed.");
+        }
+
+        if (data.email) {
+            const emailInUse = await this.userRepository.findByEmail(data.email);
+            if (emailInUse && emailInUse.id !== id) {
+                throw new AppError("This email is already in use by another user.")
+            }
+        }
+
+        const updateUser = await this.userRepository.update(id, data);
 
         return updateUser
     }
