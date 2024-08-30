@@ -15,13 +15,13 @@ export class UpdateUserController {
     async handle(req: FastifyRequest, res: FastifyReply) {
         try {
             const { userId } = schemaParams.parse(req.params)
-            const { name, email, status, user_type, image_url } = schemaBody.parse(req.body)
+            const { name, email, status, role, image_url } = schemaBody.parse(req.body)
 
             const updatedUser = await this.updateUserService.execute(userId, {
                 name,
                 email,
                 status,
-                user_type,
+                role,
                 image_url
             })
 
@@ -31,7 +31,7 @@ export class UpdateUserController {
             })
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(400).send({ message: error.message });
+                return res.status(error.statusCode).send({ message: error.message });
             }
 
             if (error instanceof ZodError) {

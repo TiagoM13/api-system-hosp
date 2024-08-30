@@ -15,9 +15,9 @@ export class ChangePasswordUserController {
     async handle(req: FastifyRequest, res: FastifyReply) {
         try {
             const { userId } = schemaParams.parse(req.params)
-            const { password, confirmPassword } = schemaChangePasswordBody.parse(req.body)
+            const { password, confirm_password } = schemaChangePasswordBody.parse(req.body)
 
-            await this.changePasswordUserService.execute(userId, password, confirmPassword)
+            await this.changePasswordUserService.execute(userId, password, confirm_password)
 
             return res.send({
                 success: true,
@@ -25,7 +25,7 @@ export class ChangePasswordUserController {
             })
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(400).send({ message: error.message });
+                return res.status(error.statusCode).send({ message: error.message });
             }
 
             if (error instanceof ZodError) {

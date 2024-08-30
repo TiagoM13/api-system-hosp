@@ -12,7 +12,7 @@ export class ForgotPasswordService {
         const user = await this.userRepository.findByEmail(email)
 
         if (!user) {
-            throw new AppError("User not found.")
+            throw new AppError("User not found.", 404)
         }
 
         return user

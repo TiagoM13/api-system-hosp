@@ -14,19 +14,19 @@ export class CreateUserController {
 
     async handle(req: FastifyRequest, res: FastifyReply) {
         try {
-            const { name, email, user_type, image_url } = schemaBody.parse(req.body)
+            const { name, email, role, image_url } = schemaBody.parse(req.body)
 
             const user = await this.createUserService.execute({
                 name,
                 email,
-                user_type,
+                role,
                 image_url,
             });
 
             return res.status(201).send({ success: true, user })
         } catch (error) {
             if (error instanceof AppError) {
-                return res.status(400).send({ message: error.message });
+                return res.status(error.statusCode).send({ message: error.message });
             }
 
             if (error instanceof ZodError) {

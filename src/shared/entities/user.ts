@@ -1,8 +1,7 @@
-export enum UserType {
-    ADMIN = "administrador",
-    EDIT = "editor",
-    CLINICAL = "clínico",
-    NO_TYPE = "não definido"
+export enum Role {
+    ADMIN = 0,
+    EDITOR = 1,
+    CLINICAL = 2,
 }
 
 export enum Status {
@@ -14,7 +13,7 @@ export type IUser = {
     id?: number;
     name: string;
     email: string;
-    user_type: string;
+    role: number;
     image_url?: string | null;
     status?: string;
     last_access?: Date | null;
