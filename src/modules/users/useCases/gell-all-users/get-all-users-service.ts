@@ -1,4 +1,5 @@
 import { AppError } from "@app/errors";
+import { INVALID_NUMBER_ITEMS_PER_PAGE, INVALID_PAGE_NUMBER } from "@shared/constants";
 import { IMetadataResponse, IQueryParamsService, IUser } from "@shared/entities";
 import { UserRepository } from "@shared/repositories";
 
@@ -16,10 +17,10 @@ export class GetAllUsersService {
 
     async execute({ name, page, items_per_page }: IQueryParamsService): Promise<IGetAllUsersServiceResponse> {
         if (isNaN(page) || page <= 0) {
-            throw new AppError("Invalid page number.");
+            throw new AppError(INVALID_PAGE_NUMBER);
         }
         if (isNaN(items_per_page) || items_per_page <= 0) {
-            throw new AppError("Invalid limit number.");
+            throw new AppError(INVALID_NUMBER_ITEMS_PER_PAGE);
         }
 
         const currentData = await this.userRepository.count(name);

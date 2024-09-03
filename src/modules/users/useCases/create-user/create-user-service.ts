@@ -1,4 +1,5 @@
 import { AppError } from "@app/errors";
+import { EMAIL_IS_ALREADY_IN_USE } from "@shared/constants";
 import { IUser } from "@shared/entities";
 import { UserRepository } from "@shared/repositories";
 import { generateProvisionalPassword, hashPassword } from "@shared/utils";
@@ -14,7 +15,7 @@ export class CreateUserService {
         const user = await this.userRespository.findByEmail(data.email)
 
         if (user) {
-            throw new AppError("email is already being used.")
+            throw new AppError(EMAIL_IS_ALREADY_IN_USE)
         }
 
         const provisionalPassword = generateProvisionalPassword();

@@ -1,4 +1,5 @@
 import { AppError } from "@app/errors";
+import { USER_NOT_FOUND } from "@shared/constants";
 import { UserRepository } from "@shared/repositories";
 import { hashPassword } from "@shared/utils";
 
@@ -13,13 +14,13 @@ export class ChangePasswordUserService {
         const user = await this.userRepository.findById(userId)
 
         if (!user) {
-            throw new AppError("User not found.", 404)
+            throw new AppError(USER_NOT_FOUND, 404)
         }
 
         const isVerifyPassword = password === confirm_password;
 
         if (!isVerifyPassword) {
-            throw new AppError("Confirm that the passwords are the same.")
+            throw new AppError("Confirme se as senhas são iguais.")
         }
 
         const hashedPassword = await hashPassword(password);

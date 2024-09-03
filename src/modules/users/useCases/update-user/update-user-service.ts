@@ -1,5 +1,11 @@
-import { IUser } from "@shared/entities";
 import { AppError } from "@app/errors";
+
+import {
+    EMAIL_CANNOT_BE_CHANGED,
+    EMAIL_IS_ALREADY_IN_USE,
+    USER_NOT_FOUND
+} from "@shared/constants";
+import { IUser } from "@shared/entities";
 import { UserRepository } from "@shared/repositories";
 
 export class UpdateUserService {
@@ -13,17 +19,17 @@ export class UpdateUserService {
         const user = await this.userRepository.findById(id)
 
         if (!user) {
-            throw new AppError("User not found.", 404)
+            throw new AppError(USER_NOT_FOUND, 404)
         }
 
         if (data.email && data.email !== user.email) {
-            throw new AppError("Email address cannot be changed.");
+            throw new AppError(EMAIL_CANNOT_BE_CHANGED);
         }
 
         if (data.email) {
             const emailInUse = await this.userRepository.findByEmail(data.email);
             if (emailInUse && emailInUse.id !== id) {
-                throw new AppError("This email is already in use by another user.")
+                throw new AppError(EMAIL_IS_ALREADY_IN_USE)
             }
         }
 

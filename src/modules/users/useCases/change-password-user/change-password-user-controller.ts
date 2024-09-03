@@ -21,7 +21,7 @@ export class ChangePasswordUserController {
 
             return res.send({
                 success: true,
-                message: "Password is altered success"
+                message: "Sua senha foi alterada com sucesso"
             })
         } catch (error) {
             if (error instanceof AppError) {

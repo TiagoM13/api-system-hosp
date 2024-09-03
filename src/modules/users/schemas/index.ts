@@ -19,5 +19,5 @@ export const schemaChangePasswordBody = z.object({
 export const schemaQuery = z.object({
     name: z.string().optional(),
     page: z.string().transform((val) => parseInt(val, 10)).default("1"),
-    limit: z.string().transform((val) => parseInt(val, 10)).default("10"),
+    items_per_page: z.string().transform((val) => parseInt(val, 10)).default("10"),
 });
