@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
 
 import { AppError } from "@app/errors";
-import { schemaBody } from "@modules/auth/schemas";
+import { schemaBodyLogin } from "@modules/auth/schemas";
 import { LoginService } from "./login-service";
 
 export class LoginController {
@@ -14,7 +14,7 @@ export class LoginController {
 
     async handle(req: FastifyRequest, res: FastifyReply) {
         try {
-            const { email, password } = schemaBody.parse(req.body);
+            const { email, password } = schemaBodyLogin.parse(req.body);
 
             const { token, user } = await this.loginService.execute({ email, password });
 

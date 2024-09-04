@@ -25,11 +25,9 @@ export class ChangePasswordUserService {
 
         const hashedPassword = await hashPassword(password);
 
-        const changePassword = await this.userRepository.changePassword(user.id!, {
+        await this.userRepository.changePassword(user.id!, {
             ...user,
             password: hashedPassword
         })
-
-        return changePassword
     }
 }

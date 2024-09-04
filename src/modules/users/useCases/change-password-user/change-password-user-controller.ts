@@ -19,7 +19,7 @@ export class ChangePasswordUserController {
 
             await this.changePasswordUserService.execute(userId, password, confirm_password)
 
-            return res.send({
+            return res.status(201).send({
                 success: true,
                 message: "Sua senha foi alterada com sucesso"
             })

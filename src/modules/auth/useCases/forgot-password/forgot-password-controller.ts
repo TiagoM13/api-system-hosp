@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
 
 import { AppError } from "@app/errors";
-import { schemaBody } from "@modules/auth/schemas";
+import { schemaBodyForgotPassword } from "@modules/auth/schemas";
 import { ForgotPasswordService } from "./forgot-password-service";
 
 export class ForgotPasswordController {
@@ -14,11 +14,11 @@ export class ForgotPasswordController {
 
     async handle(req: FastifyRequest, res: FastifyReply) {
         try {
-            const { email } = schemaBody.parse(req.body)
+            const { email } = schemaBodyForgotPassword.parse(req.body)
 
-            const user = await this.forgotPasswordService.execute(email)
+            await this.forgotPasswordService.execute(email)
 
-            return res.status(201).send({ success: true, email: user.email })
+            return res.status(201).send({ success: true, message: 'Uma nova senha foi enviada para seu endereço de e-mail.' })
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).send({ message: error.message })
