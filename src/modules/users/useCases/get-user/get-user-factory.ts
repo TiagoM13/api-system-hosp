@@ -1,13 +1,13 @@
-import { UserRepository } from "@shared/repositories";
+import { UserRepository } from "@shared/repositories/implementations";
 import { GetUserService } from "./get-user-service";
 import { GetUserController } from "./get-user-controller";
 
 export function getUserFactory() {
-    const repository = new UserRepository()
-    const service = new GetUserService(repository)
-    const controller = new GetUserController(service)
+  const repository = new UserRepository()
+  const service = new GetUserService(repository)
+  const controller = new GetUserController(service)
 
-    return controller  
+  return controller
 }
 
 export default getUserFactory;
