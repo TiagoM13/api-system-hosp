@@ -14,9 +14,9 @@ export class GetAllPatientsController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { name, page, limit } = schemaQuery.parse(req.query);
+      const queries = schemaQuery.parse(req.query);
 
-      const { patients, meta } = await this.getAllPatientsService.execute({ name, page, items_per_page: limit })
+      const { patients, meta } = await this.getAllPatientsService.execute(queries)
 
       return res.status(200).send({
         success: true,

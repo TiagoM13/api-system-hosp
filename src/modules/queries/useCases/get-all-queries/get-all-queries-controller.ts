@@ -15,9 +15,9 @@ export class GetAllQueriesController {
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
       const { patientId } = schemaParams.parse(req.params)
-      const { page, items_per_page, end_date, start_date, type_query } = schemaQuery.parse(req.query);
+      const reqQueries = schemaQuery.parse(req.query);
 
-      const { queries, meta } = await this.getAllQueriesService.execute({ patient_id: patientId, page, items_per_page, end_date, start_date, type_query })
+      const { queries, meta } = await this.getAllQueriesService.execute({ patient_id: patientId, ...reqQueries })
 
       return res.status(200).send({
         success: true,

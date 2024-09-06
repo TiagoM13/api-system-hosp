@@ -15,9 +15,9 @@ export class CreateQueryController {
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
       const { patientId } = schemaParams.parse(req.params)
-      const { type_query, diagnosis, exam } = schemaBody.parse(req.body)
+      const data = schemaBody.parse(req.body)
 
-      const query = await this.createQueryService.execute(patientId, { type_query, diagnosis, exam, patient_id: patientId })
+      const query = await this.createQueryService.execute(patientId, { ...data, patient_id: patientId })
 
       return res.status(201).send({
         success: true,

@@ -14,9 +14,9 @@ export class GetAllUsersController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { name, page, items_per_page } = schemaQuery.parse(req.query);
+      const queries = schemaQuery.parse(req.query);
 
-      const { users, meta } = await this.getAllUsersService.execute({ name, page, items_per_page })
+      const { users, meta } = await this.getAllUsersService.execute(queries)
 
       return res.send({
         success: true,

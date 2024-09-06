@@ -1,7 +1,7 @@
 export enum TypeQuery {
-  QUERY = "query",
-  OTHER = "other",
-  ACCIDENT = "accident",
-  FIREARM_INJURY = "firearm injury",
-  WHITE_WEAPON_INJURY = "white weapon injury"
+  QUERY = "consulta",
+  OTHER = "outros",
+  ACCIDENT = "acidente",
+  FIREARM_INJURY = "ferimento por arma de fogo",
+  WHITE_WEAPON_INJURY = "ferimento por arma branca"
 }

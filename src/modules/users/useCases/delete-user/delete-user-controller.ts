@@ -16,9 +16,9 @@ export class DeleteUserController {
     try {
       const { userId } = schemaParams.parse(req.params)
 
-      const user = await this.deleteUserService.execute(userId)
+      await this.deleteUserService.execute(userId)
 
-      return res.send({ userId: user.id })
+      return res.send()
     } catch (error) {
       if (error instanceof AppError) {
         return res.status(error.statusCode).send({ message: error.message });

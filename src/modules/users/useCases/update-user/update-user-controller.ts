@@ -15,15 +15,9 @@ export class UpdateUserController {
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
       const { userId } = schemaParams.parse(req.params)
-      const { name, email, status, role, image_url } = schemaBody.parse(req.body)
+      const data = schemaBody.parse(req.body)
 
-      const updatedUser = await this.updateUserService.execute(userId, {
-        name,
-        email,
-        status,
-        role,
-        image_url
-      })
+      const updatedUser = await this.updateUserService.execute(userId, data)
 
       return res.status(201).send({
         success: true,

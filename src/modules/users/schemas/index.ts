@@ -1,6 +1,6 @@
 import z from "zod";
-import { Role } from "@shared/entities/user";
 import { Status } from "@shared/enums/status";
+import { Role } from "@shared/enums/role";
 
 export const schemaParams = z.object({ userId: z.coerce.number().int() });
 
@@ -12,7 +12,7 @@ export const schemaBody = z.object({
   image_url: z.string().nullable().optional()
 })
 
-export const schemaChangePasswordBody = z.object({
+export const changePasswordSchema = z.object({
   password: z.string().min(6).max(20).trim(),
   confirm_password: z.string().min(6).max(20).trim(),
 })

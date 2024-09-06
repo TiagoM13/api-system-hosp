@@ -16,8 +16,6 @@ export class DeleteUserService {
       throw new AppError(USER_NOT_FOUND, 404)
     }
 
-    const deleteUser = await this.userRepository.delete(id)
-
-    return deleteUser
+    await this.userRepository.delete(id)
   }
 }

@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
 
 import { AppError } from "@app/errors/app-client";
-import { schemaBodyForgotPassword } from "@modules/auth/schemas";
+import { forgotPasswordSchema } from "@modules/auth/schemas";
 import { ForgotPasswordService } from "./forgot-password-service";
 
 export class ForgotPasswordController {
@@ -14,7 +14,7 @@ export class ForgotPasswordController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { email } = schemaBodyForgotPassword.parse(req.body)
+      const { email } = forgotPasswordSchema.parse(req.body)
 
       await this.forgotPasswordService.execute(email)
 

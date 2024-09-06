@@ -1,10 +1,10 @@
 import { app } from "@app/app";
+import { Role } from "@shared/enums/role";
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
-interface UserPayload {
+interface TokenData {
   id: number;
-  role: number;
+  role: Role;
   status: string;
 }
 
@@ -17,7 +17,7 @@ export const verifyToken = async (req: FastifyRequest, res: FastifyReply) => {
     }
 
     const token = authorization.split(' ')[1];
-    const decoded = app.jwt.verify<UserPayload>(token);
+    const decoded = app.jwt.verify<TokenData>(token);
 
     if (decoded.status === "inativo") {
       return res.status(403).send({ message: "Usuário inativo! Você está sem acesso no momento" })
@@ -35,25 +35,39 @@ export const verifyToken = async (req: FastifyRequest, res: FastifyReply) => {
   }
 };
 
-export const checkPermissions = (roleIds: number[]) => {
+export const verifyAuthorization = (roleIds: Role[] = []) => {
   return async (req: FastifyRequest, res: FastifyReply) => {
-    if (!req.user) {
-      return res.status(401).send({ message: "Usuário não autenticado" })
-    }
-
-    const schemaUser = z.object({
-      id: z.coerce.number().int(),
-      role: z.coerce.number().int(),
-    });
-
     try {
-      const { role } = schemaUser.parse(req.user);
+      const authorization = req.headers.authorization;
+
+      if (!authorization) {
+        return res.status(401).send({ message: "Token não fornecido" });
+      }
+
+      const token = authorization.split(' ')[1];
+      const { id, role, status } = app.jwt.verify<TokenData>(token);
+
+      if (status === "inativo") {
+        return res.status(403).send({ message: "Usuário inativo! Você está sem acesso no momento" })
+      }
 
       if (!roleIds.includes(role)) {
         return res.status(403).send({ message: "Acesso proibido! Tipo de usuário não autorizado" });
       }
-    } catch (error) {
-      return res.status(400).send({ message: "Dados inválidos! Faça login novamente" })
+
+      req.headers.id = String(id);
+      req.headers.role = role;
+      req.headers.status = String(status);
+
+      return
+    } catch (err) {
+      if (err instanceof Error) {
+        if (err.message.includes('expired')) {
+          return res.status(401).send({ message: "O token expirou" });
+        }
+      }
+
+      return res.status(401).send({ message: "Token inválido" });
     }
-  };
+  }
 };

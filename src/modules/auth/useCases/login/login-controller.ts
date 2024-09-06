@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
 
 import { AppError } from "@app/errors/app-client";
-import { schemaBodyLogin } from "@modules/auth/schemas";
+import { authenticationSchema } from "@modules/auth/schemas";
 import { LoginService } from "./login-service";
 
 export class LoginController {
@@ -14,15 +14,9 @@ export class LoginController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { email, password } = schemaBodyLogin.parse(req.body);
+      const data = authenticationSchema.parse(req.body);
 
-      const { token, user } = await this.loginService.execute({ email, password });
-
-      res.setCookie('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 3600
-      });
+      const { token, user } = await this.loginService.execute(data);
 
       return res.status(201).send({ success: true, token, user });
     } catch (error) {

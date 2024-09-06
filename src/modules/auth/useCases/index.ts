@@ -1,2 +1,2 @@
-export * from "./login/login-factory" 
-export * from "./forgot-password/forgot-password-factory" 
+export * from "./login/login-factory"
+export * from "./forgot-password/forgot-password-factory"

@@ -1,10 +1,10 @@
 import z from "zod";
 
-export const schemaBodyLogin = z.object({
+export const authenticationSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 })
 
-export const schemaBodyForgotPassword = z.object({
+export const forgotPasswordSchema = z.object({
   email: z.string().email(),
 })

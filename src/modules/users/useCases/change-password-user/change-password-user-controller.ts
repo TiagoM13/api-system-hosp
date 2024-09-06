@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
 
 import { AppError } from "@app/errors/app-client";
-import { schemaChangePasswordBody, schemaParams } from "@modules/users/schemas";
+import { changePasswordSchema, schemaParams } from "@modules/users/schemas";
 import { ChangePasswordUserService } from "./change-password-user-service";
 
 export class ChangePasswordUserController {
@@ -15,7 +15,7 @@ export class ChangePasswordUserController {
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
       const { userId } = schemaParams.parse(req.params)
-      const { password, confirm_password } = schemaChangePasswordBody.parse(req.body)
+      const { password, confirm_password } = changePasswordSchema.parse(req.body)
 
       await this.changePasswordUserService.execute(userId, password, confirm_password)
 

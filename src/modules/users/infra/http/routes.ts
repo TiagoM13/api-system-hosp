@@ -1,17 +1,16 @@
 import { FastifyInstance } from "fastify";
 
-import { checkPermissions, verifyToken } from "@app/infra/http/middleware/authenticate";
+import { Role } from "@shared/enums/role";
+import { verifyAuthorization } from "@app/infra/http/middleware/authenticate";
 import { createUserFactory, deleteUserFactory, getAllUsersFactory, getUserFactory, updateUserFactory, changePasswordUserFactory } from "../../useCases";
 
 const userRoutes = async (app: FastifyInstance) => {
-  app.addHook("onRequest", verifyToken)
-
-  app.get("/users", { preHandler: checkPermissions([0]) }, (req, res) => getAllUsersFactory().handle(req, res))
-  app.get("/users/:userId", { preHandler: checkPermissions([0, 1, 2]) }, (req, res) => getUserFactory().handle(req, res))
-  app.post("/users", { preHandler: checkPermissions([0]) }, (req, res) => createUserFactory().handle(req, res))
-  app.put("/users/:userId", { preHandler: checkPermissions([0, 1, 2]) }, (req, res) => updateUserFactory().handle(req, res))
-  app.patch("/users/:userId/change-password", { preHandler: checkPermissions([0, 1, 2]) }, (req, res) => changePasswordUserFactory().handle(req, res))
-  app.delete("/users/:userId", { preHandler: checkPermissions([0]) }, (req, res) => deleteUserFactory().handle(req, res))
+  app.get("/users", { preHandler: verifyAuthorization([Role.ADMIN]) }, (req, res) => getAllUsersFactory().handle(req, res))
+  app.get("/users/:userId", { preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]) }, (req, res) => getUserFactory().handle(req, res))
+  app.post("/users", { preHandler: verifyAuthorization([Role.ADMIN]) }, (req, res) => createUserFactory().handle(req, res))
+  app.put("/users/:userId", { preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]) }, (req, res) => updateUserFactory().handle(req, res))
+  app.patch("/users/:userId/change-password", { preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]) }, (req, res) => changePasswordUserFactory().handle(req, res))
+  app.delete("/users/:userId", { preHandler: verifyAuthorization([Role.ADMIN]) }, (req, res) => deleteUserFactory().handle(req, res))
 }
 
 export { userRoutes }
