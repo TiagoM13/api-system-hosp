@@ -8,31 +8,31 @@ import cors from "@fastify/cors"
 import jwt from "@fastify/jwt"
 
 import { routesPatients, routesQueries, routeUpload, userRoutes, authRoutes } from "@modules/exports"
-import { errorHandler } from "./middleware";
+import { errorHandler } from "./infra/http/middleware/error-handler";
 
-const app = fastify({
-    logger: true
+export const app = fastify({
+  logger: true
 })
 
 app.setErrorHandler(errorHandler);
 
 app.register(cors, {
-    origin: "*"
+  origin: "*"
 });
 app.register(multipart);
 app.register(fastifyStatic, {
-    root: resolve(__dirname, "../uploads"),
-    prefix: "/uploads"
+  root: resolve(__dirname, "../uploads"),
+  prefix: "/uploads"
 })
 app.register(jwt, {
-    secret: process.env.JWT_SECRET || 'defaultsecret'
+  secret: process.env.JWT_SECRET || 'defaultsecret'
 });
 app.register(fastifyBcrypt, {
-    saltWorkFactor: 12
+  saltWorkFactor: 12
 });
 app.register(fastifyCookie, {
-    secret: process.env.COOKIE_SECRET || 'some-secret',
-    parseOptions: {}
+  secret: process.env.COOKIE_SECRET || 'some-secret',
+  parseOptions: {}
 });
 
 app.register(authRoutes);
@@ -40,5 +40,3 @@ app.register(userRoutes);
 app.register(routesPatients);
 app.register(routesQueries);
 app.register(routeUpload);
-
-export { app }

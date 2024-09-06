@@ -3,7 +3,24 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx --watch ./src/server.ts"
+    "start": "node dist/src/app/infra/http/server",
+    "dev": "tsx --watch ./src/app/infra/http/server",
+    "lint": "eslint src",
+    "prettier": "prettier --check ./",
+    "prettier:fix": "prettier --check --write ./",
+    "migrate": "prisma migrate deploy",
+    "migrate:new": "prisma migrate dev",
+    "migrate:generate": "prisma generate",
+    "migrate:reset": "prisma migrate reset"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -31,5 +48,8 @@
     "form-auto-content": "^3.2.1",
     "nodemailer": "^6.9.15",
     "zod": "^3.23.8"
+  },
+  "prisma": {
+    "schema": "./src/app/infra/prisma/schema.prisma"
   }
 }
