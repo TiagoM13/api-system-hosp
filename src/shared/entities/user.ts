@@ -4,11 +4,6 @@ export enum Role {
     CLINICAL = 2,
 }
 
-export enum Status {
-    ACTIVE = "ativo",
-    INACTIVE = "inativo"
-}
-
 export type IUser = {
     id?: number;
     name: string;

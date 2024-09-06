@@ -1,15 +1,7 @@
-export enum QueryType {
-    QUERY = "query",
-    OTHER = "other",
-    ACCIDENT = "accident",
-    FIREARM_INJURY = "firearm injury",
-    WHITE_WEAPON_INJURY = "white weapon injury"
-}
-
 export type IQuery = {
     id?: number
     public_id?: string
-    type_query: string
+    type_query: string // TypeQuery enum
     exam?: string | null
     diagnosis?: string | null
     created_at?: Date

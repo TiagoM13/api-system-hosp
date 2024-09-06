@@ -1,7 +1,8 @@
 import { IUser } from "@shared/entities";
 import { prisma } from "@app/database/prisma";
+import { IUserRepository } from "../interfaces/user";
 
-export class UserRepository {
+export class UserRepository implements IUserRepository {
     async findAll(name: string | undefined, skip: number, take: number): Promise<IUser[]> {
         return await prisma.user.findMany({
             skip,
