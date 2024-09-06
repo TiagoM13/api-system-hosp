@@ -1,13 +1,13 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { AppError } from "@app/errors/app-client";
-import { UploadService } from "./upload-service";
+import { AppError } from '@app/errors/app-client';
+import { UploadService } from './upload-service';
 
 export class UploadController {
-  private uploadService: UploadService
+  private uploadService: UploadService;
 
   constructor(uploadService: UploadService) {
-    this.uploadService = uploadService
+    this.uploadService = uploadService;
   }
 
   async handle(req: FastifyRequest, res: FastifyReply) {
@@ -16,24 +16,24 @@ export class UploadController {
         limits: {
           fileSize: 5_242_880, // 5mb
         },
-      })
+      });
 
       if (!file) {
-        return res.status(400).send()
+        return res.status(400).send();
       }
 
-      const { fileName } = await this.uploadService.execute(file)
+      const { fileName } = await this.uploadService.execute(file);
 
-      const fullUrl = req.protocol.concat('://').concat(req.hostname)
-      const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
+      const fullUrl = req.protocol.concat('://').concat(req.hostname);
+      const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString();
 
       return res.status(201).send({ success: true, fileUrl: fileUrl });
     } catch (error) {
       if (error instanceof AppError) {
-        return res.status(400).send({ message: error.message })
+        return res.status(400).send({ message: error.message });
       }
 
-      return res.status(500).send({ error: "Internal Server Error" });
+      return res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 }

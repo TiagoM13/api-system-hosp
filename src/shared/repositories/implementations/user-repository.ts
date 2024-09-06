@@ -1,14 +1,18 @@
-import { IUser } from "@shared/entities";
-import { prisma } from "@app/infra/prisma/client";
-import { IUserRepository } from "../interfaces/user";
+import { IUser } from '@shared/entities';
+import { prisma } from '@app/infra/prisma/client';
+import { IUserRepository } from '../interfaces/user';
 
 export class UserRepository implements IUserRepository {
-  async findAll(name: string | undefined, skip: number, take: number): Promise<IUser[]> {
+  async findAll(
+    name: string | undefined,
+    skip: number,
+    take: number,
+  ): Promise<IUser[]> {
     return await prisma.user.findMany({
       skip,
       take,
       where: {
-        name: name ? { contains: name } : undefined
+        name: name ? { contains: name } : undefined,
       },
       select: {
         id: true,
@@ -19,8 +23,8 @@ export class UserRepository implements IUserRepository {
         status: true,
         last_access: true,
         created_at: true,
-        updated_at: true
-      }
+        updated_at: true,
+      },
     });
   }
 
@@ -36,22 +40,22 @@ export class UserRepository implements IUserRepository {
         status: true,
         last_access: true,
         created_at: true,
-        updated_at: true
-      }
-    })
+        updated_at: true,
+      },
+    });
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
     return await prisma.user.findUnique({
-      where: { email }
-    })
+      where: { email },
+    });
   }
 
   async count(name: string | undefined): Promise<number> {
     return await prisma.user.count({
       where: {
-        name: name ? { contains: name } : undefined
-      }
+        name: name ? { contains: name } : undefined,
+      },
     });
   }
 
@@ -59,7 +63,7 @@ export class UserRepository implements IUserRepository {
     return await prisma.user.create({
       data: {
         ...data,
-        password: String(data.password)
+        password: String(data.password),
       },
       select: {
         id: true,
@@ -70,9 +74,9 @@ export class UserRepository implements IUserRepository {
         status: true,
         last_access: true,
         created_at: true,
-        updated_at: true
+        updated_at: true,
       },
-    })
+    });
   }
 
   async update(id: number, data: IUser): Promise<IUser> {
@@ -87,20 +91,20 @@ export class UserRepository implements IUserRepository {
         status: true,
         last_access: true,
         created_at: true,
-        updated_at: true
+        updated_at: true,
       },
-      data
-    })
+      data,
+    });
   }
 
   async changePassword(id: number, data: IUser): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
-      data
-    })
+      data,
+    });
   }
 
   async delete(id: number): Promise<IUser> {
-    return await prisma.user.delete({ where: { id } })
+    return await prisma.user.delete({ where: { id } });
   }
 }

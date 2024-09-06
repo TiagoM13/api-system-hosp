@@ -1,13 +1,13 @@
-import { UserRepository } from "@shared/repositories/implementations";
-import { ForgotPasswordService } from "./forgot-password-service";
-import { ForgotPasswordController } from "./forgot-password-controller";
+import { UserRepository } from '@shared/repositories/implementations';
+import { ForgotPasswordService } from './forgot-password-service';
+import { ForgotPasswordController } from './forgot-password-controller';
 
 export function forgotPasswordFactory() {
-  const repository = new UserRepository()
-  const service = new ForgotPasswordService(repository)
-  const controller = new ForgotPasswordController(service)
+  const repository = new UserRepository();
+  const service = new ForgotPasswordService(repository);
+  const controller = new ForgotPasswordController(service);
 
-  return controller
+  return controller;
 }
 
 export default forgotPasswordFactory;

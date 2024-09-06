@@ -1,9 +1,9 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError } from "zod";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { ZodError } from 'zod';
 
-import { AppError } from "@app/errors/app-client";
-import { schemaBody, schemaParamsQueries } from "@modules/queries/schemas";
-import { UpdateQueryService } from "./update-query-service";
+import { AppError } from '@app/errors/app-client';
+import { schemaBody, schemaParamsQueries } from '@modules/queries/schemas';
+import { UpdateQueryService } from './update-query-service';
 
 export class UpdateQueryController {
   private updateQueryService: UpdateQueryService;
@@ -14,28 +14,31 @@ export class UpdateQueryController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { queryId, patientId } = schemaParamsQueries.parse(req.params)
-      const data = schemaBody.parse(req.body)
+      const { queryId, patientId } = schemaParamsQueries.parse(req.params);
+      const data = schemaBody.parse(req.body);
 
-      const query = await this.updateQueryService.execute(queryId, patientId, { ...data, patient_id: patientId })
+      const query = await this.updateQueryService.execute(queryId, patientId, {
+        ...data,
+        patient_id: patientId,
+      });
 
       return res.status(201).send({
         success: true,
-        query
-      })
+        query,
+      });
     } catch (error) {
       if (error instanceof AppError) {
-        return res.status(error.statusCode).send({ message: error.message })
+        return res.status(error.statusCode).send({ message: error.message });
       }
 
       if (error instanceof ZodError) {
         return res.status(400).send({
           message: 'Invalid request body',
-          errors: error.flatten().fieldErrors
-        })
+          errors: error.flatten().fieldErrors,
+        });
       }
 
-      return res.status(500).send({ error: "Internal Server Error" })
+      return res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 }

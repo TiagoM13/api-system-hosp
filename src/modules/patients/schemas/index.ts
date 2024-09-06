@@ -1,4 +1,4 @@
-import z from "zod";
+import z from 'zod';
 
 export const schemaParams = z.object({ patientId: z.string().uuid() });
 
@@ -15,10 +15,16 @@ export const schemaBody = z.object({
   material_status: z.string().optional(),
   occupation: z.string().optional(),
   // queries: z.string().optional()
-})
+});
 
 export const schemaQuery = z.object({
   name: z.string().optional(),
-  page: z.string().transform((val) => parseInt(val, 10)).default("1"),
-  items_per_page: z.string().transform((val) => parseInt(val, 10)).default("10"),
+  page: z
+    .string()
+    .transform(val => parseInt(val, 10))
+    .default('1'),
+  items_per_page: z
+    .string()
+    .transform(val => parseInt(val, 10))
+    .default('10'),
 });

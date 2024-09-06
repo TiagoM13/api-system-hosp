@@ -7,4 +7,4 @@ export type IUser = {
   status?: string;
   last_access?: Date | null;
   password?: string;
-}
+};

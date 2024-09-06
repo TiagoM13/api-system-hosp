@@ -1,9 +1,9 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError } from "zod";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { ZodError } from 'zod';
 
-import { AppError } from "@app/errors/app-client";
-import { authenticationSchema } from "@modules/auth/schemas";
-import { LoginService } from "./login-service";
+import { AppError } from '@app/errors/app-client';
+import { authenticationSchema } from '@modules/auth/schemas';
+import { LoginService } from './login-service';
 
 export class LoginController {
   private loginService: LoginService;
@@ -24,15 +24,15 @@ export class LoginController {
         return res.status(error.statusCode).send({ message: error.message });
       }
 
-      console.error(error)
+      console.error(error);
       if (error instanceof ZodError) {
         return res.status(400).send({
           message: 'Invalid request body',
-          errors: error.flatten().fieldErrors
-        })
+          errors: error.flatten().fieldErrors,
+        });
       }
 
-      return res.status(500).send({ error: "Internal Server Error" });
+      return res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 }

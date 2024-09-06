@@ -1,6 +1,6 @@
-import { UserRepository } from "@shared/repositories/implementations";
-import { DeleteUserService } from "./delete-user-service";
-import { DeleteUserController } from "./delete-user-controller";
+import { UserRepository } from '@shared/repositories/implementations';
+import { DeleteUserService } from './delete-user-service';
+import { DeleteUserController } from './delete-user-controller';
 
 export function deleteUserFactory() {
   const repository = new UserRepository();

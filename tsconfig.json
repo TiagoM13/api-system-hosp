@@ -14,9 +14,9 @@
     "moduleResolution": "node16",
     "baseUrl": "./",
     "paths": {
-        "@app/*": ["./src/app/*"],
-        "@shared/*": ["./src/shared/*"],
-        "@modules/*": ["./src/modules/*"]
+      "@app/*": ["./src/app/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "include": ["src"],

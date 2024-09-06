@@ -1,34 +1,34 @@
-import { MultipartFile } from "@fastify/multipart";
-import { randomUUID } from 'node:crypto'
+import { MultipartFile } from '@fastify/multipart';
+import { randomUUID } from 'node:crypto';
 import { pipeline } from 'node:stream';
 import util from 'node:util';
-import path from "node:path";
+import path from 'node:path';
 import fs from 'node:fs';
 
-import { AppError } from "@app/errors/app-client";
+import { AppError } from '@app/errors/app-client';
 
-const pump = util.promisify(pipeline)
+const pump = util.promisify(pipeline);
 
 export class UploadService {
   async execute(uploadData: MultipartFile | undefined) {
     if (!uploadData) {
-      throw new AppError("No file uploaded")
+      throw new AppError('No file uploaded');
     }
 
-    if (!uploadData.mimetype.startsWith("image/")) {
-      throw new AppError("Only image files are allowed")
+    if (!uploadData.mimetype.startsWith('image/')) {
+      throw new AppError('Only image files are allowed');
     }
 
-    const fileId = randomUUID()
-    const extension = path.extname(uploadData.filename)
+    const fileId = randomUUID();
+    const extension = path.extname(uploadData.filename);
 
-    const fileName = fileId.concat(extension)
+    const fileName = fileId.concat(extension);
 
     const writeStream = fs.createWriteStream(
       path.resolve(__dirname, '../../../../', 'uploads', fileName),
-    )
+    );
 
-    await pump(uploadData.file, writeStream)
+    await pump(uploadData.file, writeStream);
 
     return { fileName };
   }

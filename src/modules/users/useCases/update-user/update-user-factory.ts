@@ -1,13 +1,13 @@
-import { UserRepository } from "@shared/repositories/implementations";
-import { UpdateUserService } from "./update-user-service";
-import { UpdateUserController } from "./update-user-controller";
+import { UserRepository } from '@shared/repositories/implementations';
+import { UpdateUserService } from './update-user-service';
+import { UpdateUserController } from './update-user-controller';
 
 export function updateUserFactory() {
-  const repository = new UserRepository()
-  const service = new UpdateUserService(repository)
-  const controller = new UpdateUserController(service)
+  const repository = new UserRepository();
+  const service = new UpdateUserService(repository);
+  const controller = new UpdateUserController(service);
 
-  return controller
+  return controller;
 }
 
 export default updateUserFactory;

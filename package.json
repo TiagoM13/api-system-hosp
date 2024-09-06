@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/src/app/infra/http/server",
+    "start": "node dist/app/infra/http/server",
     "dev": "tsx --watch ./src/app/infra/http/server",
     "lint": "eslint src",
     "prettier": "prettier --check ./",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^20.14.10",
     "@types/nodemailer": "^6.4.15",
+    "prettier": "3.3.3",
     "prisma": "^5.16.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.16.2",

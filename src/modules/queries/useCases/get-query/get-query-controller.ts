@@ -1,9 +1,9 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { ZodError } from "zod";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { ZodError } from 'zod';
 
-import { AppError } from "@app/errors/app-client";
-import { schemaParamsQueries } from "@modules/queries/schemas";
-import { GetQueryService } from "./get-query-service";
+import { AppError } from '@app/errors/app-client';
+import { schemaParamsQueries } from '@modules/queries/schemas';
+import { GetQueryService } from './get-query-service';
 
 export class GetQueryController {
   private getQueryService: GetQueryService;
@@ -14,27 +14,27 @@ export class GetQueryController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { queryId, patientId } = schemaParamsQueries.parse(req.params)
+      const { queryId, patientId } = schemaParamsQueries.parse(req.params);
 
-      const query = await this.getQueryService.execute(queryId, patientId)
+      const query = await this.getQueryService.execute(queryId, patientId);
 
       return res.status(200).send({
         success: true,
-        query
-      })
+        query,
+      });
     } catch (error) {
       if (error instanceof AppError) {
-        return res.status(error.statusCode).send({ message: error.message })
+        return res.status(error.statusCode).send({ message: error.message });
       }
 
       if (error instanceof ZodError) {
         return res.status(400).send({
           message: 'Invalid request body',
-          errors: error.flatten().fieldErrors
-        })
+          errors: error.flatten().fieldErrors,
+        });
       }
 
-      return res.status(500).send({ error: "Internal Server Error" })
+      return res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 }

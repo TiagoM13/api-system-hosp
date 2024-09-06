@@ -1,32 +1,46 @@
-import { AppError } from "@app/errors/app-client";
-import { IMetadataResponse, IQuery, IQueryParamsService } from "@shared/entities";
-import { PatientRepository, QueryRepository } from "@shared/repositories/implementations";
+import { AppError } from '@app/errors/app-client';
+import {
+  IMetadataResponse,
+  IQuery,
+  IQueryParamsService,
+} from '@shared/entities';
+import {
+  PatientRepository,
+  QueryRepository,
+} from '@shared/repositories/implementations';
 
 type IGetAllQueriesServiceResponse = {
-  queries: IQuery[],
-  meta: IMetadataResponse
-}
+  queries: IQuery[];
+  meta: IMetadataResponse;
+};
 
 type IGetAllQueriesParams = IQueryParamsService & {
-  patient_id: string
-  end_date?: Date
-  start_date?: Date
-  type_query?: string
-}
+  patient_id: string;
+  end_date?: Date;
+  start_date?: Date;
+  type_query?: string;
+};
 
 export class GetAllQueriesService {
-  private queryRepository: QueryRepository
-  private patientRepository: PatientRepository
+  private queryRepository: QueryRepository;
+  private patientRepository: PatientRepository;
 
   constructor(
     queryRepository: QueryRepository,
-    patientRepository: PatientRepository
+    patientRepository: PatientRepository,
   ) {
     this.queryRepository = queryRepository;
     this.patientRepository = patientRepository;
   }
 
-  async execute({ patient_id, page, items_per_page, type_query, start_date, end_date }: IGetAllQueriesParams): Promise<IGetAllQueriesServiceResponse> {
+  async execute({
+    patient_id,
+    page,
+    items_per_page,
+    type_query,
+    start_date,
+    end_date,
+  }: IGetAllQueriesParams): Promise<IGetAllQueriesServiceResponse> {
     const patient = await this.patientRepository.findById(patient_id);
 
     if (!patient) {
@@ -34,13 +48,18 @@ export class GetAllQueriesService {
     }
 
     if (page <= 0) {
-      throw new AppError("Invalid page number.");
+      throw new AppError('Invalid page number.');
     }
     if (items_per_page <= 0 || items_per_page > 50) {
-      throw new AppError("Invalid limit number.");
+      throw new AppError('Invalid limit number.');
     }
 
-    const currentData = await this.queryRepository.count(patient_id, type_query, start_date, end_date)
+    const currentData = await this.queryRepository.count(
+      patient_id,
+      type_query,
+      start_date,
+      end_date,
+    );
     const totalPages = Math.ceil(currentData / items_per_page);
 
     if (totalPages === 0) {
@@ -53,14 +72,21 @@ export class GetAllQueriesService {
           total_pages: 0,
           total_records: 0,
           items_per_page,
-          total_current_records: 0
-        }
+          total_current_records: 0,
+        },
       };
     }
 
-    const skip = (page - 1) * items_per_page
+    const skip = (page - 1) * items_per_page;
 
-    const queries = await this.queryRepository.findAll(patient_id, skip, items_per_page, type_query, start_date, end_date)
+    const queries = await this.queryRepository.findAll(
+      patient_id,
+      skip,
+      items_per_page,
+      type_query,
+      start_date,
+      end_date,
+    );
 
     const totalItemsInCurrentPage = queries.length;
     const hasPreviousPage = page > 1;
@@ -75,8 +101,8 @@ export class GetAllQueriesService {
         total_current_records: totalItemsInCurrentPage,
         items_per_page,
         has_previous_page: hasPreviousPage,
-        has_next_page: hasNextPage
-      }
-    }
+        has_next_page: hasNextPage,
+      },
+    };
   }
 }

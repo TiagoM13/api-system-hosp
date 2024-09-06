@@ -1,13 +1,16 @@
-import { AppError } from "@app/errors/app-client";
-import { PatientRepository, QueryRepository } from "@shared/repositories/implementations";
+import { AppError } from '@app/errors/app-client';
+import {
+  PatientRepository,
+  QueryRepository,
+} from '@shared/repositories/implementations';
 
 export class GetQueryService {
-  private queryRepository: QueryRepository
-  private patientRepository: PatientRepository
+  private queryRepository: QueryRepository;
+  private patientRepository: PatientRepository;
 
   constructor(
     queryRepository: QueryRepository,
-    patientRepository: PatientRepository
+    patientRepository: PatientRepository,
   ) {
     this.queryRepository = queryRepository;
     this.patientRepository = patientRepository;
@@ -20,12 +23,12 @@ export class GetQueryService {
       throw new AppError('Patient not found.');
     }
 
-    const query = await this.queryRepository.findById(queryId)
+    const query = await this.queryRepository.findById(queryId);
 
     if (patientId !== query?.patient_id) {
-      throw new AppError('Query not found.')
+      throw new AppError('Query not found.');
     }
 
-    return query
+    return query;
   }
 }
