@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { app } from '@app/app';
 import { AppError } from '@app/errors/app-client';
 import {

@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { forgotPasswordSchema } from '@modules/auth/schemas';
+
 import { ForgotPasswordService } from './forgot-password-service';
 
 export class ForgotPasswordController {
@@ -18,12 +20,10 @@ export class ForgotPasswordController {
 
       await this.forgotPasswordService.execute(email);
 
-      return res
-        .status(201)
-        .send({
-          success: true,
-          message: 'Uma nova senha foi enviada para seu endereço de e-mail.',
-        });
+      return res.status(201).send({
+        success: true,
+        message: 'Uma nova senha foi enviada para seu endereço de e-mail.',
+      });
     } catch (error) {
       if (error instanceof AppError) {
         return res.status(error.statusCode).send({ message: error.message });

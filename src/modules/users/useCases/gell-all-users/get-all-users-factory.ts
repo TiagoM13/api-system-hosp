@@ -1,4 +1,5 @@
 import { UserRepository } from '@shared/repositories/implementations';
+
 import { GetAllUsersController } from './get-all-users-controller';
 import { GetAllUsersService } from './get-all-users-service';
 

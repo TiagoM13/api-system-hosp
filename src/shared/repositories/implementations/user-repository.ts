@@ -1,5 +1,6 @@
-import { IUser } from '@shared/entities';
 import { prisma } from '@app/infra/prisma/client';
+import { IUser } from '@shared/entities';
+
 import { IUserRepository } from '../interfaces/user';
 
 export class UserRepository implements IUserRepository {

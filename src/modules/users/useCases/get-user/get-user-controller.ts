@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { schemaParams } from '@modules/users/schemas';
+
 import { GetUserService } from './get-user-service';
 
 export class GetUserController {

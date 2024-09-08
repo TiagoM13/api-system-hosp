@@ -1,5 +1,6 @@
-import { TypeQuery } from '@shared/enums/query';
 import z from 'zod';
+
+import { TypeQuery } from '@shared/enums/query';
 
 export const schemaParams = z.object({
   patientId: z.string().uuid(),

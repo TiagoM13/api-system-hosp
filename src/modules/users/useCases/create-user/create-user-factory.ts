@@ -1,4 +1,5 @@
 import { UserRepository } from '@shared/repositories/implementations';
+
 import { CreateUserController } from './create-user-controller';
 import { CreateUserService } from './create-user-service';
 

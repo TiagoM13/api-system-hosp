@@ -2,8 +2,9 @@ import {
   PatientRepository,
   QueryRepository,
 } from '@shared/repositories/implementations';
-import { UpdateQueryService } from './update-query-service';
+
 import { UpdateQueryController } from './update-query-controller';
+import { UpdateQueryService } from './update-query-service';
 
 export function updateQueryFactory() {
   const patientRepository = new PatientRepository();

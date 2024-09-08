@@ -1,6 +1,7 @@
 import z from 'zod';
-import { Status } from '@shared/enums/status';
+
 import { Role } from '@shared/enums/role';
+import { Status } from '@shared/enums/status';
 
 export const schemaParams = z.object({ userId: z.coerce.number().int() });
 

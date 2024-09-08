@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { schemaBody, schemaParamsQueries } from '@modules/queries/schemas';
+
 import { UpdateQueryService } from './update-query-service';
 
 export class UpdateQueryController {

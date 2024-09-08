@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { schemaBody } from '@modules/patients/schemas';
+
 import { CreatePatientService } from './create-patient-service';
 
 export class CreatePatientController {

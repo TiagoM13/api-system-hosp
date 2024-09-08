@@ -1,5 +1,4 @@
 import { AppError } from '@app/errors/app-client';
-
 import {
   INVALID_NUMBER_ITEMS_PER_PAGE,
   INVALID_PAGE_NUMBER,

@@ -1,6 +1,7 @@
 import { UserRepository } from '@shared/repositories/implementations';
-import { UpdateUserService } from './update-user-service';
+
 import { UpdateUserController } from './update-user-controller';
+import { UpdateUserService } from './update-user-service';
 
 export function updateUserFactory() {
   const repository = new UserRepository();

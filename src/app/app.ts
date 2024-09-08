@@ -1,11 +1,10 @@
-import { fastify } from 'fastify';
-import { fastifyStatic } from '@fastify/static';
-import { resolve } from 'node:path';
-import multipart from '@fastify/multipart';
-import fastifyBcrypt from 'fastify-bcrypt';
-import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
+import multipart from '@fastify/multipart';
+import { fastifyStatic } from '@fastify/static';
+import { fastify } from 'fastify';
+import fastifyBcrypt from 'fastify-bcrypt';
+import { resolve } from 'node:path';
 
 import {
   routesPatients,
@@ -14,6 +13,7 @@ import {
   userRoutes,
   authRoutes,
 } from '@modules/exports';
+
 import { errorHandler } from './infra/http/middleware/error-handler';
 
 export const app = fastify({
@@ -35,10 +35,6 @@ app.register(jwt, {
 });
 app.register(fastifyBcrypt, {
   saltWorkFactor: 12,
-});
-app.register(fastifyCookie, {
-  secret: process.env.COOKIE_SECRET || 'some-secret',
-  parseOptions: {},
 });
 
 app.register(authRoutes);

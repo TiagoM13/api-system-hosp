@@ -1,6 +1,7 @@
+import { FastifyReply, FastifyRequest } from 'fastify';
+
 import { app } from '@app/app';
 import { Role } from '@shared/enums/role';
-import { FastifyReply, FastifyRequest } from 'fastify';
 
 interface TokenData {
   id: number;
@@ -50,11 +51,9 @@ export const verifyAuthorization = (roleIds: Role[] = []) => {
       const { id, role, status } = app.jwt.verify<TokenData>(token);
 
       if (status === 'inativo') {
-        return res
-          .status(403)
-          .send({
-            message: 'Usuário inativo! Você está sem acesso no momento',
-          });
+        return res.status(403).send({
+          message: 'Usuário inativo! Você está sem acesso no momento',
+        });
       }
 
       if (!roleIds.includes(role)) {

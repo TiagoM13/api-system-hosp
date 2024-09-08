@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { schemaParamsQueries } from '@modules/queries/schemas';
+
 import { GetQueryService } from './get-query-service';
 
 export class GetQueryController {

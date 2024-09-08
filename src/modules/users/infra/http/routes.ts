@@ -1,7 +1,8 @@
 import { FastifyInstance } from 'fastify';
 
-import { Role } from '@shared/enums/role';
 import { verifyAuthorization } from '@app/infra/http/middleware/authenticate';
+import { Role } from '@shared/enums/role';
+
 import {
   createUserFactory,
   deleteUserFactory,

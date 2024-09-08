@@ -1,5 +1,4 @@
 import { AppError } from '@app/errors/app-client';
-
 import {
   EMAIL_CANNOT_BE_CHANGED,
   EMAIL_IS_ALREADY_IN_USE,

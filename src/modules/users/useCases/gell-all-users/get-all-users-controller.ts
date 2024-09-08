@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { schemaQuery } from '@modules/users/schemas';
+
 import { GetAllUsersService } from './get-all-users-service';
 
 export class GetAllUsersController {

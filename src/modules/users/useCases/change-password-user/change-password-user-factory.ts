@@ -1,6 +1,7 @@
 import { UserRepository } from '@shared/repositories/implementations';
-import { ChangePasswordUserService } from './change-password-user-service';
+
 import { ChangePasswordUserController } from './change-password-user-controller';
+import { ChangePasswordUserService } from './change-password-user-service';
 
 export function changePasswordUserFactory() {
   const repository = new UserRepository();

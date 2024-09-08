@@ -1,6 +1,7 @@
 import { UserRepository } from '@shared/repositories/implementations';
-import { LoginService } from './login-service';
+
 import { LoginController } from './login-controller';
+import { LoginService } from './login-service';
 
 export function loginFactory() {
   const repository = new UserRepository();

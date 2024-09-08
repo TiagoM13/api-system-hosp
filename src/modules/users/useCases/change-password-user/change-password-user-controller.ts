@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { changePasswordSchema, schemaParams } from '@modules/users/schemas';
+
 import { ChangePasswordUserService } from './change-password-user-service';
 
 export class ChangePasswordUserController {

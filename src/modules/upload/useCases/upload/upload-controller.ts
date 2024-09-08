@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { AppError } from '@app/errors/app-client';
+
 import { UploadService } from './upload-service';
 
 export class UploadController {

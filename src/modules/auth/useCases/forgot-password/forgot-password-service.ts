@@ -1,13 +1,13 @@
 import nodemailer from 'nodemailer';
-import { AppError } from '@app/errors/app-client';
 
+import { AppError } from '@app/errors/app-client';
+import { getMailClient } from '@shared/configs/mailer';
 import { USER_INACTIVE, USER_NOT_FOUND } from '@shared/constants/messages';
+import { UserRepository } from '@shared/repositories/implementations';
 import {
   generateProvisionalPassword,
   hashPassword,
 } from '@shared/utils/generate-password';
-import { UserRepository } from '@shared/repositories/implementations';
-import { getMailClient } from '@shared/configs/mailer';
 
 export class ForgotPasswordService {
   private userRepository: UserRepository;

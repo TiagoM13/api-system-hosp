@@ -1,6 +1,7 @@
 import { PatientRepository } from '@shared/repositories/implementations';
-import { GetPatientService } from './get-patient-service';
+
 import { GetPatientController } from './get-patient-controller';
+import { GetPatientService } from './get-patient-service';
 
 export function getPatientFactory() {
   const repository = new PatientRepository();

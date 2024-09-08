@@ -1,9 +1,9 @@
 import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
+import { getMailClient } from '@shared/configs/mailer';
 import { EMAIL_IS_ALREADY_IN_USE } from '@shared/constants/messages';
 import { IUser } from '@shared/entities';
-import { getMailClient } from '@shared/configs/mailer';
 import { UserRepository } from '@shared/repositories/implementations';
 import {
   generateProvisionalPassword,

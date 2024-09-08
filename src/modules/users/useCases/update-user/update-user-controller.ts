@@ -2,8 +2,9 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
-import { UpdateUserService } from './update-user-service';
 import { schemaBody, schemaParams } from '@modules/users/schemas';
+
+import { UpdateUserService } from './update-user-service';
 
 export class UpdateUserController {
   private updateUserService: UpdateUserService;
