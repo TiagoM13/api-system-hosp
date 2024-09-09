@@ -19,9 +19,13 @@ export const updateLastAccess = (userRepository: UserRepository) => {
 
       return;
     } catch (err) {
-      return res
-        .status(401)
-        .send({ message: 'Token inválido ou expirado', details: err });
+      if (err instanceof Error) {
+        if (err.message.includes('expired')) {
+          return res.status(401).send({ message: 'O token expirou' });
+        }
+      }
+
+      return res.status(401).send({ message: 'Token inválido' });
     }
   };
 };

@@ -47,7 +47,7 @@ export class LoginService {
         status: user.status,
       },
       {
-        expiresIn: '1h',
+        expiresIn: '4h',
       },
     );
 
