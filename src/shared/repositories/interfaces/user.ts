@@ -13,4 +13,5 @@ export interface IUserRepository {
   update(id: number, data: IUser): Promise<IUser>;
   changePassword(id: number, data: IUser): Promise<IUser>;
   delete(id: number): Promise<IUser>;
+  updateLastAccess(id: number): Promise<IUser>;
 }

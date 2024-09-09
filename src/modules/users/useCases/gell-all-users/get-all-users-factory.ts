@@ -1,11 +1,10 @@
-import { UserRepository } from '@shared/repositories/implementations';
+import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
 
 import { GetAllUsersController } from './get-all-users-controller';
 import { GetAllUsersService } from './get-all-users-service';
 
 export function getAllUsersFactory() {
-  const repository = new UserRepository();
-  const service = new GetAllUsersService(repository);
+  const service = new GetAllUsersService(makeUserRepository());
   const controller = new GetAllUsersController(service);
 
   return controller;

@@ -105,6 +105,13 @@ export class UserRepository implements IUserRepository {
     });
   }
 
+  async updateLastAccess(id: number): Promise<IUser> {
+    return await prisma.user.update({
+      where: { id },
+      data: { last_access: new Date() },
+    });
+  }
+
   async delete(id: number): Promise<IUser> {
     return await prisma.user.delete({ where: { id } });
   }

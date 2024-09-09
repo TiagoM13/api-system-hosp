@@ -1,7 +1,9 @@
 import { FastifyInstance } from 'fastify';
 
 import { verifyAuthorization } from '@app/infra/http/middleware/authenticate';
+import { updateLastAccess } from '@app/infra/http/middleware/update-last-access';
 import { Role } from '@shared/enums/role';
+import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
 
 import {
   createUserFactory,
@@ -13,6 +15,8 @@ import {
 } from '../../useCases';
 
 const userRoutes = async (app: FastifyInstance) => {
+  app.addHook('preHandler', updateLastAccess(makeUserRepository()));
+
   app.get(
     '/users',
     { preHandler: verifyAuthorization([Role.ADMIN]) },
