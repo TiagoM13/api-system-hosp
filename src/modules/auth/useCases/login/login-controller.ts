@@ -25,7 +25,6 @@ export class LoginController {
         return res.status(error.statusCode).send({ message: error.message });
       }
 
-      console.error(error);
       if (error instanceof ZodError) {
         return res.status(400).send({
           message: 'Invalid request body',

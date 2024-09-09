@@ -40,11 +40,16 @@ export class LoginService {
       throw new AppError(USER_INACTIVE, 403);
     }
 
-    const token = app.jwt.sign({
-      id: user.id,
-      role: user.role,
-      status: user.status,
-    });
+    const token = app.jwt.sign(
+      {
+        id: user.id,
+        role: user.role,
+        status: user.status,
+      },
+      {
+        expiresIn: '1h',
+      },
+    );
 
     const { password: _, ...userWithoutPassword } = user;
 
