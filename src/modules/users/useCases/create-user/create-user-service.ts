@@ -1,44 +1,47 @@
 import nodemailer from 'nodemailer';
 
-import { AppError } from "@app/errors";
-import { EMAIL_IS_ALREADY_IN_USE } from "@shared/constants";
-import { IUser } from "@shared/entities";
-import { getMailClient } from "@shared/lib";
-import { UserRepository } from "@shared/repositories";
-import { generateProvisionalPassword, hashPassword } from "@shared/utils";
-
+import { AppError } from '@app/errors/app-client';
+import { getMailClient } from '@shared/configs/mailer';
+import { EMAIL_IS_ALREADY_IN_USE } from '@shared/constants/messages';
+import { IUser } from '@shared/entities';
+import { UserRepository } from '@shared/repositories/implementations';
+import {
+  generateProvisionalPassword,
+  hashPassword,
+} from '@shared/utils/generate-password';
 
 export class CreateUserService {
-    private userRespository: UserRepository
+  private userRespository: UserRepository;
 
-    constructor(userRepository: UserRepository) {
-        this.userRespository = userRepository
+  constructor(userRepository: UserRepository) {
+    this.userRespository = userRepository;
+  }
+
+  async execute(data: IUser) {
+    const user = await this.userRespository.findByEmail(data.email);
+
+    if (user) {
+      throw new AppError(EMAIL_IS_ALREADY_IN_USE);
     }
 
-    async execute(data: IUser) {
-        const user = await this.userRespository.findByEmail(data.email)
+    const provisionalPassword = generateProvisionalPassword();
+    const hashedPassword = await hashPassword(provisionalPassword);
 
-        if (user) {
-            throw new AppError(EMAIL_IS_ALREADY_IN_USE)
-        }
+    const newUser = await this.userRespository.create({
+      ...data,
+      password: hashedPassword,
+    });
 
-        const provisionalPassword = generateProvisionalPassword();
-        const hashedPassword = await hashPassword(provisionalPassword);
+    const mail = await getMailClient();
 
-        const newUser = await this.userRespository.create({
-            ...data, password: hashedPassword,
-        })
-
-        const mail = await getMailClient()
-
-        const message = await mail.sendMail({
-            from: {
-                name: "Equipe Teste",
-                address: "equipe@example.com",
-            },
-            to: newUser.email,
-            subject: "Bem-vindo ao Sistema de Gerenciamento Hospitalar!",
-            html: `
+    const message = await mail.sendMail({
+      from: {
+        name: 'Equipe Teste',
+        address: 'equipe@example.com',
+      },
+      to: newUser.email,
+      subject: 'Bem-vindo ao Sistema de Gerenciamento Hospitalar!',
+      html: `
             <div style="font-family: sans-serif; font-size: 16px; line-height: 1.6;">
                 <p>Olá, ${newUser.name}!</p>
                 <p>Seja muito bem-vindo ao Sistema de Gerenciamento Hospitalar!</p>
@@ -55,12 +58,12 @@ export class CreateUserService {
                 <p>Abraços,</p>
                 <p>Equipe Teste</p>
             </div>
-          `.trim()
-        });
+          `.trim(),
+    });
 
-        // Remover
-        console.error(nodemailer.getTestMessageUrl(message))
+    // Remover
+    console.error(nodemailer.getTestMessageUrl(message));
 
-        return newUser
-    }
+    return newUser;
+  }
 }

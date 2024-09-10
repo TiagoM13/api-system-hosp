@@ -1,5 +1,5 @@
 export interface IQueryParamsService {
-    name?: string;
-    page: number;
-    items_per_page: number;
+  name?: string;
+  page: number;
+  items_per_page: number;
 }

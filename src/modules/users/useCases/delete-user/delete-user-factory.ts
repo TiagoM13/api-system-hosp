@@ -1,13 +1,13 @@
-import { UserRepository } from "@shared/repositories";
-import { DeleteUserService } from "./delete-user-service";
-import { DeleteUserController } from "./delete-user-controller";
+import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
+
+import { DeleteUserController } from './delete-user-controller';
+import { DeleteUserService } from './delete-user-service';
 
 export function deleteUserFactory() {
-    const repository = new UserRepository();
-    const service = new DeleteUserService(repository);
-    const controller = new DeleteUserController(service);
+  const service = new DeleteUserService(makeUserRepository());
+  const controller = new DeleteUserController(service);
 
-    return controller;
+  return controller;
 }
 
 export default deleteUserFactory;
