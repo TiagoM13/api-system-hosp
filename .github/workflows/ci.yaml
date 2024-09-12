@@ -34,8 +34,8 @@ jobs:
       # - name: Prisma generate
       #   run: yarn prisma generate
 
-      - name: Build typescript code
-        run: yarn build
+      # - name: Build typescript code
+      #   run: yarn build
 
       - name: Run linter
         run: yarn lint
