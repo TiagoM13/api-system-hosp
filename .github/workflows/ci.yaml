@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+      - 'check_ci/**'
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
+      - '**/**approved'
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [20]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Set up node env
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Compile typescript code
+        run: yarn compile
+
+      - name: Run linter
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test:ci
