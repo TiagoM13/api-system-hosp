@@ -1,0 +1,44 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - 'check_ci/**'
+  pull_request:
+    branches:
+      - main
+      - '**/**approved'
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [20]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Set up node env
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      # - name: Prisma generate
+      #   run: yarn prisma generate
+
+      # - name: Build typescript code
+      #   run: yarn build
+
+      - name: Run linter
+        run: yarn lint
+
+      # - name: Run tests
+      #   run: yarn test

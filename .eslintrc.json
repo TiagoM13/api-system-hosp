@@ -30,16 +30,8 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          [
-            "/^@app/",
-            "/^@shared/",
-            "/^@modules/"
-          ],
-          [
-            "parent",
-            "sibling",
-            "index"
-          ]
+          ["/^@app/", "/^@shared/", "/^@modules/"],
+          ["parent", "sibling", "index"]
         ],
         "alphabetize": {
           "order": "asc",
