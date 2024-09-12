@@ -8,7 +8,6 @@
   "scripts": {
     "start": "node dist/src/app/infra/http/server.js",
     "dev": "tsx --watch ./src/app/infra/http/server.ts",
-    "compile": "yarn tsc -p tsconfig-build.json",
     "build": "swc src -d dist",
     "lint": "eslint src",
     "prettier": "prettier --check ./",
