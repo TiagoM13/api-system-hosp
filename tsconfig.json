@@ -4,16 +4,22 @@
 
   "compilerOptions": {
     "lib": ["es2023"],
-    "module": "node16",
+    "module": "CommonJS",
     "target": "es2022",
     "outDir": "./dist",
+    "moduleResolution": "Node",
 
     "strict": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "node16",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
+      "@": ["./*"],
       "@app/*": ["./src/app/*"],
       "@shared/*": ["./src/shared/*"],
       "@modules/*": ["./src/modules/*"]

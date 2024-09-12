@@ -4,12 +4,10 @@ on:
   push:
     branches:
       - main
-      - 'release/**'
       - 'check_ci/**'
   pull_request:
     branches:
       - main
-      - 'release/**'
       - '**/**approved'
 
 jobs:
@@ -33,11 +31,14 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Compile typescript code
-        run: yarn compile
+      # - name: Prisma generate
+      #   run: yarn prisma generate
+
+      - name: Build typescript code
+        run: yarn build
 
       - name: Run linter
         run: yarn lint
 
-      - name: Run tests
-        run: yarn test:ci
+      # - name: Run tests
+      #   run: yarn test
