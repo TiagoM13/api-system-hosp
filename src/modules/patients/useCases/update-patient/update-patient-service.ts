@@ -2,7 +2,7 @@ import { AppError } from '@app/errors/app-client';
 import {
   CNS_EXISTS,
   CPF_EXISTS,
-  INVALID_BIRTH_DATE,
+  PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
 import { PatientRepository } from '@shared/repositories/implementations';
 
@@ -19,14 +19,10 @@ export class UpdatePatientService {
     const patient = await this.patientRepository.findById(id);
 
     if (!patient) {
-      throw new AppError('Pacient not found.');
+      throw new AppError(PATIENT_NOT_FOUND);
     }
 
-    const { birth_date, cpf, cns } = data;
-
-    if (birth_date >= new Date()) {
-      throw new AppError(INVALID_BIRTH_DATE);
-    }
+    const { cpf, cns } = data;
 
     if (cpf) {
       const existingCpf = await this.patientRepository.findFirstByCPF(cpf, id);

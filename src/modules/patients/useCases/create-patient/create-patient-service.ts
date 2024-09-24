@@ -1,9 +1,5 @@
 import { AppError } from '@app/errors/app-client';
-import {
-  CNS_EXISTS,
-  CPF_EXISTS,
-  INVALID_BIRTH_DATE,
-} from '@shared/constants/messages';
+import { CNS_EXISTS, CPF_EXISTS } from '@shared/constants/messages';
 import { PatientRepository } from '@shared/repositories/implementations';
 
 import { PatientDataType } from '../../schemas/body';
@@ -16,11 +12,7 @@ export class CreatePatientService {
   }
 
   async execute(data: PatientDataType) {
-    const { birth_date, cpf, cns } = data;
-
-    if (birth_date >= new Date()) {
-      throw new AppError(INVALID_BIRTH_DATE);
-    }
+    const { cpf, cns } = data;
 
     if (cpf) {
       const existingCPF = await this.patientRepository.findByCPF(cpf);

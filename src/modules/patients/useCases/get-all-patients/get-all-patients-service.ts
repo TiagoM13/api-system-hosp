@@ -1,3 +1,8 @@
+import {
+  INVALID_NUMBER_ITEMS_PER_PAGE,
+  INVALID_PAGE_NUMBER,
+} from '@/src/shared/constants/messages';
+
 import { AppError } from '@app/errors/app-client';
 import {
   IPatient,
@@ -24,10 +29,10 @@ export class GetAllPatientsService {
     items_per_page,
   }: IPaginateRequest): Promise<IGetAllPatientsServiceResponse> {
     if (isNaN(page) || page <= 0) {
-      throw new AppError('Invalid page number.');
+      throw new AppError(INVALID_PAGE_NUMBER);
     }
     if (isNaN(items_per_page) || items_per_page <= 0) {
-      throw new AppError('Invalid limit number.');
+      throw new AppError(INVALID_NUMBER_ITEMS_PER_PAGE);
     }
 
     const currentData = await this.patientRepository.count(name);

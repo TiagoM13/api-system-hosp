@@ -10,6 +10,12 @@ export const USER_INACTIVE =
 export const EMAIL_INVALID = 'E-mail inválido.';
 export const PASSWORD_INVALID = 'Senha inválida.';
 
+// Patient
+export const CNS_EXISTS = 'O CNS já existe.';
+export const CPF_EXISTS = 'O CPF já existe.';
+export const INVALID_BIRTH_DATE = 'Data de nascimento inválida.';
+export const PATIENT_NOT_FOUND = 'Paciente não encontrado.';
+
 // Paginate Params
 export const INVALID_PAGE_NUMBER = 'Número de página inválido.';
 export const INVALID_NUMBER_ITEMS_PER_PAGE =
