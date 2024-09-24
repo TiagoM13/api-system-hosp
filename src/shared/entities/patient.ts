@@ -1,3 +1,5 @@
+import { Decimal } from '@prisma/client/runtime/library';
+
 export type IPatient = {
   id?: string;
   name: string;
@@ -15,6 +17,8 @@ export type IPatient = {
   contact_emergency?: string | null;
   name_contact_emergency?: string | null;
   health_agent?: string | null;
+  height?: number | Decimal | null;
+  weight?: number | Decimal | null;
   status?: string;
 
   created_at?: Date;

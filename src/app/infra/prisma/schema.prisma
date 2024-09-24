@@ -40,6 +40,8 @@ model Patient {
   name_contact_emergency String?
   health_agent           String?
   status                 String   @default("ativo")
+  height                 Decimal?
+  weight                 Decimal?
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
   queries                Query[]

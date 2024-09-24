@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { Sex, MaterialStatus } from '@shared/enums';
 import {
-  FieldTextRequired,
+  NameFieldRequired,
   calculateAge,
   OptionalStringField,
   RequiredField,
@@ -12,10 +12,11 @@ import {
   MinLengthCPF,
   MinLengthCNS,
   MaxLengthFieldPhone,
+  PositiveNumber,
 } from '@shared/utils';
 
 export const patientDataSchema = z.object({
-  name: FieldTextRequired,
+  name: NameFieldRequired,
   birth_date: z
     .preprocess(
       arg => {
@@ -60,6 +61,18 @@ export const patientDataSchema = z.object({
   ),
   name_contact_emergency: OptionalStringField,
   health_agent: OptionalStringField,
+  height: z
+    .number()
+    .positive({ message: PositiveNumber })
+    .min(50, { message: 'Altura mínima permitida é 50 cm' })
+    .max(300, { message: 'Altura máxima permitida é 300 cm' })
+    .optional(),
+  weight: z
+    .number()
+    .positive({ message: PositiveNumber })
+    .min(0.5, { message: 'Peso mínimo permitido é 0.5 kg' })
+    .max(500, { message: 'Peso máximo permitido é 500 kg' })
+    .optional(),
 });
 
 export type PatientDataType = z.infer<typeof patientDataSchema>;

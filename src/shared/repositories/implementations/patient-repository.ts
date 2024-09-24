@@ -1,6 +1,7 @@
 import { prisma } from '@app/infra/prisma/client';
 import { IPatient } from '@shared/entities';
 
+import { convertDecimalToNumber } from '../../utils';
 import { IPatientRepository } from '../interfaces/patient';
 
 export class PatientRepository implements IPatientRepository {
@@ -22,13 +23,21 @@ export class PatientRepository implements IPatientRepository {
   }
 
   async findById(id: string): Promise<IPatient | null> {
-    return await prisma.patient.findUnique({
+    const patient = await prisma.patient.findUnique({
       where: { id },
       include: {
         _count: true,
         queries: true,
       },
     });
+
+    if (!patient) return null;
+
+    return {
+      ...patient,
+      height: convertDecimalToNumber(patient.height),
+      weight: convertDecimalToNumber(patient.weight),
+    };
   }
 
   async findByCPF(cpf: string): Promise<IPatient | null> {
@@ -70,13 +79,25 @@ export class PatientRepository implements IPatientRepository {
   }
 
   async create(data: IPatient): Promise<IPatient> {
-    return await prisma.patient.create({ data });
+    const patient = await prisma.patient.create({ data });
+
+    return {
+      ...patient,
+      height: convertDecimalToNumber(patient.height),
+      weight: convertDecimalToNumber(patient.weight),
+    };
   }
 
   async update(id: string, data: IPatient): Promise<IPatient> {
-    return await prisma.patient.update({
+    const patient = await prisma.patient.update({
       where: { id },
       data,
     });
+
+    return {
+      ...patient,
+      height: convertDecimalToNumber(patient.height),
+      weight: convertDecimalToNumber(patient.weight),
+    };
   }
 }

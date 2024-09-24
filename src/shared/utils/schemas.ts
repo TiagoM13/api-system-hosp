@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const FieldTextRequired = z
+export const NameFieldRequired = z
   .string({
     required_error: 'O campo é obrigatório',
   })
@@ -20,3 +20,4 @@ export const MinDateField =
   'A data de nascimento não pode ser maior que a data atual';
 export const InvalidDateField =
   'Data inválida, por favor insira uma data válida';
+export const PositiveNumber = 'O número deve ser um número positivo';
