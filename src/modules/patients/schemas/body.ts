@@ -1,10 +1,18 @@
-import { Sex, MaterialStatus } from '@/src/shared/enums';
+import { z } from 'zod';
+
+import { Sex, MaterialStatus } from '@shared/enums';
 import {
   FieldTextRequired,
   calculateAge,
   OptionalStringField,
-} from '@/src/shared/utils';
-import { z } from 'zod';
+  RequiredField,
+  InvalidDateField,
+  MinDateField,
+  MaxDateField,
+  MinLengthCPF,
+  MinLengthCNS,
+  MaxLengthFieldPhone,
+} from '@shared/utils';
 
 export const patientDataSchema = z.object({
   name: FieldTextRequired,
@@ -18,36 +26,36 @@ export const patientDataSchema = z.object({
         return arg;
       },
       z.date({
-        invalid_type_error: 'Data inválida, por favor insira uma data válida',
-        required_error: 'O campo é obrigatório',
+        invalid_type_error: InvalidDateField,
+        required_error: RequiredField,
       }),
     )
     .refine(data => data <= new Date(), {
-      message: 'A data de nascimento não pode ser futura',
+      message: MinDateField,
     })
     .refine(data => calculateAge(data) <= 105, {
-      message: 'A idade não pode ser maior que 105 anos',
+      message: MaxDateField,
     }),
   sex: z.nativeEnum(Sex),
   cpf: OptionalStringField.refine(value => !value || value.length === 11, {
-    message: 'O CPF deve ter no máximo 11 dígitos.',
+    message: MinLengthCPF,
   }),
   cns: OptionalStringField.refine(value => !value || value.length === 15, {
-    message: 'O CNS deve ter no máximo 15 dígitos.',
+    message: MinLengthCNS,
   }),
   address: OptionalStringField,
   mother_name: OptionalStringField,
   father_name: OptionalStringField,
-  material_status: z.nativeEnum(MaterialStatus),
+  material_status: z.nativeEnum(MaterialStatus).optional(),
   occupation: OptionalStringField,
   email: OptionalStringField,
   phone: OptionalStringField.refine(value => !value || value.length === 11, {
-    message: 'O número de telefone deve ter no máximo 11 dígitos.',
+    message: MaxLengthFieldPhone,
   }),
   contact_emergency: OptionalStringField.refine(
     value => !value || value.length === 11,
     {
-      message: 'O número de telefone deve ter no máximo 11 dígitos.',
+      message: MaxLengthFieldPhone,
     },
   ),
   name_contact_emergency: OptionalStringField,

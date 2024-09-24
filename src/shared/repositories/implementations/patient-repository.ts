@@ -43,26 +43,20 @@ export class PatientRepository implements IPatientRepository {
     });
   }
 
-  async findFirstByCPF(
-    cpf: string,
-    patientId: string,
-  ): Promise<IPatient | null> {
+  async findFirstByCPF(cpf: string, id: string): Promise<IPatient | null> {
     return await prisma.patient.findFirst({
       where: {
         cpf,
-        id: { not: patientId },
+        id: { not: id },
       },
     });
   }
 
-  async findFirstByCNS(
-    cns: string,
-    patientId: string,
-  ): Promise<IPatient | null> {
+  async findFirstByCNS(cns: string, id: string): Promise<IPatient | null> {
     return await prisma.patient.findFirst({
       where: {
         cns,
-        id: { not: patientId },
+        id: { not: id },
       },
     });
   }
