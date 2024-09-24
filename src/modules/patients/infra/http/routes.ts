@@ -13,10 +13,8 @@ const routesPatients = async (app: FastifyInstance) => {
 
   app.post('/patients', (req, res) => createPatientFactory().handle(req, res));
   app.get('/patients', (req, res) => getAllPatientsFactory().handle(req, res));
-  app.get('/patients/:patientId', (req, res) =>
-    getPatientFactory().handle(req, res),
-  );
-  app.put('/patients/:patientId', (req, res) =>
+  app.get('/patients/:id', (req, res) => getPatientFactory().handle(req, res));
+  app.put('/patients/:id', (req, res) =>
     updatePatientFactory().handle(req, res),
   );
 };

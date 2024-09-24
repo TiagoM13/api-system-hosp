@@ -1,11 +1,10 @@
-import { PatientRepository } from '@shared/repositories/implementations';
+import { MakePatientRepository } from '@shared/factories/repositories/make-patient-repository';
 
 import { UpdatePatientController } from './update-patient-controller';
 import { UpdatePatientService } from './update-patient-service';
 
 export function updatePatientFactory() {
-  const repository = new PatientRepository();
-  const service = new UpdatePatientService(repository);
+  const service = new UpdatePatientService(MakePatientRepository());
   const controller = new UpdatePatientController(service);
 
   return controller;

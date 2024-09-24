@@ -2,8 +2,9 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
-import { schemaBody, schemaParams } from '@modules/patients/schemas';
 
+import { patientDataSchema } from '../../schemas/body';
+import { paramSchema } from '../../schemas/params';
 import { UpdatePatientService } from './update-patient-service';
 
 export class UpdatePatientController {
@@ -15,13 +16,10 @@ export class UpdatePatientController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { patientId } = schemaParams.parse(req.params);
-      const data = schemaBody.parse(req.body);
+      const { id } = paramSchema.parse(req.params);
+      const data = patientDataSchema.parse(req.body);
 
-      const updatedPatient = await this.updatePatientService.execute(
-        patientId,
-        data,
-      );
+      const updatedPatient = await this.updatePatientService.execute(id, data);
 
       return res.status(201).send({
         succes: true,

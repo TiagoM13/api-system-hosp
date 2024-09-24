@@ -1,6 +1,12 @@
 import { AppError } from '@app/errors/app-client';
-import { IPatient } from '@shared/entities';
+import {
+  CNS_EXISTS,
+  CPF_EXISTS,
+  INVALID_BIRTH_DATE,
+} from '@shared/constants/messages';
 import { PatientRepository } from '@shared/repositories/implementations';
+
+import { PatientDataType } from '../../schemas/body';
 
 export class CreatePatientService {
   private patientRepository: PatientRepository;
@@ -9,24 +15,24 @@ export class CreatePatientService {
     this.patientRepository = patientRepository;
   }
 
-  async execute(data: IPatient) {
-    const { birth_date, cpf, cnes } = data;
+  async execute(data: PatientDataType) {
+    const { birth_date, cpf, cns } = data;
 
     if (birth_date >= new Date()) {
-      throw new AppError('Invalid birth of date.');
+      throw new AppError(INVALID_BIRTH_DATE);
     }
 
     if (cpf) {
-      const existingCpf = await this.patientRepository.findByCPF(cpf);
-      if (existingCpf) {
-        throw new AppError('CPF already exists.');
+      const existingCPF = await this.patientRepository.findByCPF(cpf);
+      if (existingCPF) {
+        throw new AppError(CPF_EXISTS);
       }
     }
 
-    if (cnes) {
-      const existingCNES = await this.patientRepository.findByCNES(cnes);
-      if (existingCNES) {
-        throw new AppError('CNES already exists.');
+    if (cns) {
+      const existingCNS = await this.patientRepository.findByCNS(cns);
+      if (existingCNS) {
+        throw new AppError(CNS_EXISTS);
       }
     }
 

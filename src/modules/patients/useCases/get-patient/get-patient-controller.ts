@@ -2,8 +2,8 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
-import { schemaParams } from '@modules/patients/schemas';
 
+import { paramSchema } from '../../schemas/params';
 import { GetPatientService } from './get-patient-service';
 
 export class GetPatientController {
@@ -15,9 +15,9 @@ export class GetPatientController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const { patientId } = schemaParams.parse(req.params);
+      const { id } = paramSchema.parse(req.params);
 
-      const patient = await this.getPatientService.execute(patientId);
+      const patient = await this.getPatientService.execute(id);
 
       return res.status(200).send({
         success: true,
