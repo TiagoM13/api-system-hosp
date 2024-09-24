@@ -1,14 +1,14 @@
 import { AppError } from '@app/errors/app-client';
 import {
-  IMetadataResponse,
   IPatient,
-  IQueryParamsService,
+  IPaginateRequest,
+  IPaginateResponse,
 } from '@shared/entities';
 import { PatientRepository } from '@shared/repositories/implementations';
 
 type IGetAllPatientsServiceResponse = {
   patients: IPatient[];
-  meta: IMetadataResponse;
+  meta: IPaginateResponse;
 };
 
 export class GetAllPatientsService {
@@ -22,7 +22,7 @@ export class GetAllPatientsService {
     name,
     page,
     items_per_page,
-  }: IQueryParamsService): Promise<IGetAllPatientsServiceResponse> {
+  }: IPaginateRequest): Promise<IGetAllPatientsServiceResponse> {
     if (isNaN(page) || page <= 0) {
       throw new AppError('Invalid page number.');
     }

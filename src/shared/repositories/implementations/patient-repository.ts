@@ -1,7 +1,9 @@
 import { prisma } from '@app/infra/prisma/client';
 import { IPatient } from '@shared/entities';
 
-export class PatientRepository {
+import { IPatientRepository } from '../interfaces/patient';
+
+export class PatientRepository implements IPatientRepository {
   async findAll(
     name: string | undefined,
     skip: number,
@@ -35,9 +37,9 @@ export class PatientRepository {
     });
   }
 
-  async findByCNES(cnes: string): Promise<IPatient | null> {
+  async findByCNS(cns: string): Promise<IPatient | null> {
     return await prisma.patient.findUnique({
-      where: { cnes },
+      where: { cns },
     });
   }
 
@@ -53,13 +55,13 @@ export class PatientRepository {
     });
   }
 
-  async findFirstByCNES(
-    cnes: string,
+  async findFirstByCNS(
+    cns: string,
     patientId: string,
   ): Promise<IPatient | null> {
     return await prisma.patient.findFirst({
       where: {
-        cnes,
+        cns,
         id: { not: patientId },
       },
     });
@@ -82,9 +84,5 @@ export class PatientRepository {
       where: { id },
       data,
     });
-  }
-
-  async delete(id: string): Promise<IPatient> {
-    return await prisma.patient.delete({ where: { id } });
   }
 }

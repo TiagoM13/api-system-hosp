@@ -7,22 +7,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Patient {
-  id              String   @id @default(uuid())
-  name            String
-  birth_date      DateTime
-  cpf             String?  @unique
-  cnes            String?  @unique
-  sex             String
-  address         String?
-  mother_name     String?
-  father_name     String?
-  material_status String?
-  occupation      String?
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
+model User {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  role        String
+  image_url   String?
+  status      String    @default("ativo")
+  last_access DateTime?
+  password    String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt()
 
-  queries Query[]
+  @@map("users")
+}
+
+model Patient {
+  id                     String   @id @default(uuid())
+  name                   String
+  birth_date             DateTime
+  cpf                    String?  @unique
+  cns                    String?  @unique
+  sex                    String
+  address                String?
+  mother_name            String?
+  father_name            String?
+  material_status        String?
+  occupation             String?
+  email                  String?
+  phone                  String?
+  contact_emergency      String?
+  name_contact_emergency String?
+  health_agent           String?
+  status                 String   @default("ativo")
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt
+  queries                Query[]
 
   @@map("patients")
 }
@@ -40,19 +60,4 @@ model Query {
   patient_id String
 
   @@map("queries")
-}
-
-model User {
-  id          Int       @id @default(autoincrement())
-  name        String
-  email       String    @unique
-  role        String
-  image_url   String?
-  status      String    @default("ativo")
-  last_access DateTime?
-  password    String
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt()
-
-  @@map("users")
 }
