@@ -23,11 +23,11 @@ model User {
 }
 
 model Patient {
-  id                     String   @id @default(uuid())
+  id                     String             @id @default(uuid())
   name                   String
   birth_date             DateTime
-  cpf                    String?  @unique
-  cns                    String?  @unique
+  cpf                    String?            @unique
+  cns                    String?            @unique
   sex                    String
   address                String?
   mother_name            String?
@@ -39,14 +39,32 @@ model Patient {
   contact_emergency      String?
   name_contact_emergency String?
   health_agent           String?
-  status                 String   @default("ativo")
+  status                 String             @default("ativo")
   height                 Decimal?
   weight                 Decimal?
-  created_at             DateTime @default(now())
-  updated_at             DateTime @updatedAt
+  created_at             DateTime           @default(now())
+  updated_at             DateTime           @updatedAt
   queries                Query[]
+  conditions             PatientCondition[]
 
   @@map("patients")
+}
+
+model Condition {
+  id       Int                @id @default(autoincrement())
+  name     String             @unique
+  patients PatientCondition[]
+
+  @@map("conditions")
+}
+
+model PatientCondition {
+  patient      Patient   @relation(fields: [patient_id], references: [id])
+  patient_id   String
+  condition    Condition @relation(fields: [condition_id], references: [id])
+  condition_id Int
+
+  @@id([patient_id, condition_id])
 }
 
 model Query {
