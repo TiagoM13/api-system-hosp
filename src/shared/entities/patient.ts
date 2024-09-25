@@ -23,5 +23,10 @@ export type IPatient = {
 
   created_at?: Date;
   updated_at?: Date;
-  // conditions: []
+  conditions?: ICondition[];
 };
+
+export interface ICondition {
+  id: number;
+  name: string;
+}

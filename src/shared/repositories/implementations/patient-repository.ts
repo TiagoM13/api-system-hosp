@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from '@app/infra/prisma/client';
 import { IPatient } from '@shared/entities';
 
@@ -28,16 +30,17 @@ export class PatientRepository implements IPatientRepository {
       include: {
         _count: true,
         queries: true,
+        conditions: {
+          include: {
+            condition: true,
+          },
+        },
       },
     });
 
     if (!patient) return null;
 
-    return {
-      ...patient,
-      height: convertDecimalToNumber(patient.height),
-      weight: convertDecimalToNumber(patient.weight),
-    };
+    return formatPatientResponse(patient);
   }
 
   async findByCPF(cpf: string): Promise<IPatient | null> {
@@ -79,25 +82,74 @@ export class PatientRepository implements IPatientRepository {
   }
 
   async create(data: IPatient): Promise<IPatient> {
-    const patient = await prisma.patient.create({ data });
+    const { conditions = [], ...patientData } = data;
 
-    return {
-      ...patient,
-      height: convertDecimalToNumber(patient.height),
-      weight: convertDecimalToNumber(patient.weight),
-    };
+    const patient = await prisma.patient.create({
+      data: {
+        ...patientData,
+        conditions: {
+          create: conditions.map(condition => ({
+            condition: {
+              connectOrCreate: {
+                where: { name: condition.name },
+                create: { name: condition.name }
+              }
+            },
+          })),
+        },
+      },
+      include: {
+        conditions: {
+          include: {
+            condition: true,
+          },
+        },
+      },
+    });
+
+    return formatPatientResponse(patient);
   }
 
   async update(id: string, data: IPatient): Promise<IPatient> {
+    const { conditions = [], ...patientData } = data;
+
     const patient = await prisma.patient.update({
       where: { id },
-      data,
+      data: {
+        ...patientData,
+        conditions: {
+          deleteMany: {},
+          create: conditions.map(condition => ({
+            condition: {
+              connectOrCreate: {
+                where: { name: condition.name },
+                create: { name: condition.name },
+              },
+            },
+          })),
+        },
+      },
+      include: {
+        conditions: {
+          include: {
+            condition: true,
+          },
+        },
+      },
     });
 
-    return {
-      ...patient,
-      height: convertDecimalToNumber(patient.height),
-      weight: convertDecimalToNumber(patient.weight),
-    };
+    return formatPatientResponse(patient);
   }
 }
+
+export const formatPatientResponse = (patient: any): IPatient => {
+  return {
+    ...patient,
+    height: convertDecimalToNumber(patient.height),
+    weight: convertDecimalToNumber(patient.weight),
+    conditions: patient.conditions.map((c: any) => ({
+      id: c.condition.id,
+      name: c.condition.name,
+    })),
+  };
+};

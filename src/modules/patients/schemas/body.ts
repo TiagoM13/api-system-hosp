@@ -15,7 +15,13 @@ import {
   PositiveNumber,
 } from '@shared/utils';
 
+const Condition = z.object({
+  id: z.number().optional(),
+  name: z.string().min(1, { message: 'Condition name is required' }),
+});
+
 export const patientDataSchema = z.object({
+  id: z.string().uuid().optional(),
   name: NameFieldRequired,
   birth_date: z
     .preprocess(
@@ -73,6 +79,7 @@ export const patientDataSchema = z.object({
     .min(0.5, { message: 'Peso mínimo permitido é 0.5 kg' })
     .max(500, { message: 'Peso máximo permitido é 500 kg' })
     .optional(),
+  conditions: z.array(Condition).optional(),
 });
 
 export type PatientDataType = z.infer<typeof patientDataSchema>;
