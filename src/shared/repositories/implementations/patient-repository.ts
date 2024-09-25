@@ -10,7 +10,7 @@ export class PatientRepository implements IPatientRepository {
     skip: number,
     take: number,
   ): Promise<IPatient[]> {
-    return await prisma.patient.findMany({
+    const patients = await prisma.patient.findMany({
       skip,
       take,
       where: {
@@ -20,6 +20,12 @@ export class PatientRepository implements IPatientRepository {
         created_at: 'desc',
       },
     });
+
+    return patients.map(patient => ({
+      ...patient,
+      height: convertDecimalToNumber(patient.height),
+      weight: convertDecimalToNumber(patient.weight),
+    }));
   }
 
   async findById(id: string): Promise<IPatient | null> {
