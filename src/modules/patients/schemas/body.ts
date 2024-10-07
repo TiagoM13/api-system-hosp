@@ -47,7 +47,7 @@ export const patientDataSchema = z.object({
   address: OptionalStringField,
   mother_name: OptionalStringField,
   father_name: OptionalStringField,
-  material_status: z.nativeEnum(MaterialStatus).optional(),
+  material_status: z.nativeEnum(MaterialStatus).nullable().optional(),
   occupation: OptionalStringField,
   email: OptionalStringField,
   phone: OptionalStringField.refine(value => !value || value.length === 11, {

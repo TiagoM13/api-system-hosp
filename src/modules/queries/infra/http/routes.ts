@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
-import { verifyToken } from '@app/infra/http/middleware/authenticate';
+import { verifyToken } from '@app/infra/http/middleware';
 import {
   createQueryFactory,
   getAllQueriesFactory,

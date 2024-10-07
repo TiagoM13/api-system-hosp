@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
-import { verifyToken } from '@app/infra/http/middleware/authenticate';
+import { verifyToken } from '@app/infra/http/middleware';
 import { uploadFactory } from '@modules/upload/useCases';
 
 export const routeUpload = async (app: FastifyInstance) => {

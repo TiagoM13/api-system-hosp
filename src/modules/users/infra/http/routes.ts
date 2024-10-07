@@ -1,8 +1,10 @@
 import { FastifyInstance } from 'fastify';
 
-import { verifyAuthorization } from '@app/infra/http/middleware/authenticate';
-import { updateLastAccess } from '@app/infra/http/middleware/update-last-access';
-import { Role } from '@shared/enums/role';
+import {
+  updateLastAccess,
+  verifyAuthorization,
+} from '@app/infra/http/middleware';
+import { Role } from '@shared/enums';
 import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
 
 import {

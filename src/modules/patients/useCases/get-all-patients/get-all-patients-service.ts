@@ -1,9 +1,8 @@
+import { AppError } from '@app/errors/app-client';
 import {
   INVALID_NUMBER_ITEMS_PER_PAGE,
   INVALID_PAGE_NUMBER,
-} from '@/src/shared/constants/messages';
-
-import { AppError } from '@app/errors/app-client';
+} from '@shared/constants/messages';
 import {
   IPatient,
   IPaginateRequest,
