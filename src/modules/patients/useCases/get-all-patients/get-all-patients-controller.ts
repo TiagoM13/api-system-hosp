@@ -2,8 +2,8 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
-import { schemaQuery } from '@modules/patients/schemas';
 
+import { paginateSchema } from '../../schemas/paginate';
 import { GetAllPatientsService } from './get-all-patients-service';
 
 export class GetAllPatientsController {
@@ -15,10 +15,10 @@ export class GetAllPatientsController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const queries = schemaQuery.parse(req.query);
+      const query = paginateSchema.parse(req.query);
 
       const { patients, meta } =
-        await this.getAllPatientsService.execute(queries);
+        await this.getAllPatientsService.execute(query);
 
       return res.status(200).send({
         success: true,

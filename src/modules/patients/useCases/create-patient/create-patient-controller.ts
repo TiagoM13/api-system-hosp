@@ -2,8 +2,8 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
-import { schemaBody } from '@modules/patients/schemas';
 
+import { patientDataSchema } from '../../schemas/body';
 import { CreatePatientService } from './create-patient-service';
 
 export class CreatePatientController {
@@ -15,7 +15,7 @@ export class CreatePatientController {
 
   async handle(req: FastifyRequest, res: FastifyReply) {
     try {
-      const data = schemaBody.parse(req.body);
+      const data = patientDataSchema.parse(req.body);
 
       const patient = await this.createPatientService.execute(data);
 

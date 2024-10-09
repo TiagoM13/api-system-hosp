@@ -1,19 +1,27 @@
+import { Decimal } from '@prisma/client/runtime/library';
+
 export type IPatient = {
   id?: string;
   name: string;
   birth_date: Date;
-  sex: string; // add enum
+  sex: string;
   cpf?: string | null;
-  cnes?: string | null;
+  cns?: string | null;
   address?: string | null;
   mother_name?: string | null;
   father_name?: string | null;
-  material_status?: string | null; // add enum
+  material_status?: string | null;
   occupation?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  contact_emergency?: string | null;
+  name_contact_emergency?: string | null;
+  health_agent?: string | null;
+  height?: number | Decimal | null;
+  weight?: number | Decimal | null;
+  status?: string;
 
   created_at?: Date;
   updated_at?: Date;
-  // queries: IQuery[]
-  // health_agent?: String
-  // chronic_disease?: String
+  // conditions: []
 };

@@ -1,4 +1,5 @@
 import { AppError } from '@app/errors/app-client';
+import { PATIENT_NOT_FOUND } from '@shared/constants/messages';
 import { PatientRepository } from '@shared/repositories/implementations';
 
 export class GetPatientService {
@@ -12,7 +13,7 @@ export class GetPatientService {
     const patient = await this.patientRepository.findById(id);
 
     if (!patient) {
-      throw new AppError('Patient not found.');
+      throw new AppError(PATIENT_NOT_FOUND);
     }
 
     return patient;

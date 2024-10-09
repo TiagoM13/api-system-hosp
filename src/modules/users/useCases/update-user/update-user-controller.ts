@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 
 import { AppError } from '@app/errors/app-client';
 import { schemaBody, schemaParams } from '@modules/users/schemas';
+import { IUser } from '@shared/entities';
 
 import { UpdateUserService } from './update-user-service';
 
@@ -17,8 +18,13 @@ export class UpdateUserController {
     try {
       const { userId } = schemaParams.parse(req.params);
       const data = schemaBody.parse(req.body);
+      const loggedInUser = req.user as IUser;
 
-      const updatedUser = await this.updateUserService.execute(userId, data);
+      const updatedUser = await this.updateUserService.execute(
+        userId,
+        data,
+        loggedInUser,
+      );
 
       return res.status(201).send({
         success: true,
@@ -28,6 +34,8 @@ export class UpdateUserController {
       if (error instanceof AppError) {
         return res.status(error.statusCode).send({ message: error.message });
       }
+
+      console.error(error);
 
       if (error instanceof ZodError) {
         return res.status(400).send({

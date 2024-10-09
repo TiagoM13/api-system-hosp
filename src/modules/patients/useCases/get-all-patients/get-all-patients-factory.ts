@@ -1,11 +1,10 @@
-import { PatientRepository } from '@shared/repositories/implementations';
+import { MakePatientRepository } from '@shared/factories/repositories/make-patient-repository';
 
 import { GetAllPatientsController } from './get-all-patients-controller';
 import { GetAllPatientsService } from './get-all-patients-service';
 
 export function getAllPatientsFactory() {
-  const repository = new PatientRepository();
-  const service = new GetAllPatientsService(repository);
+  const service = new GetAllPatientsService(MakePatientRepository());
   const controller = new GetAllPatientsController(service);
 
   return controller;
