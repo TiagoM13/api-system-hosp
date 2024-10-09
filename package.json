@@ -16,6 +16,7 @@
     "lint": "eslint src",
     "prettier": "prettier --check ./",
     "prettier:fix": "prettier --check --write ./",
+    "seed": "tsx ./src/app/infra/prisma/seed.ts",
     "migrate": "prisma migrate deploy",
     "migrate:new": "prisma migrate dev",
     "migrate:generate": "prisma generate",
