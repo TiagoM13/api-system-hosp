@@ -15,7 +15,7 @@ export class UpdateUserService {
     this.userRepository = userRepository;
   }
 
-  async execute(id: number, data: IUser) {
+  async execute(id: number, data: IUser, loggedInUser: IUser) {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
@@ -34,7 +34,9 @@ export class UpdateUserService {
     }
 
     if (data.role && data.role !== user.role) {
-      throw new AppError(ROLE_CANNOT_BE_CHANGED);
+      if (loggedInUser.id === id) {
+        throw new AppError(ROLE_CANNOT_BE_CHANGED);
+      }
     }
 
     const updateUser = await this.userRepository.update(id, data);
