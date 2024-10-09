@@ -3,5 +3,5 @@ export enum MaterialStatus {
   MARRIED = 'casado(a)',
   WIDOWER = 'viúvo(a)',
   DIVORCE = 'divorciado(a)',
-  SEPARATED = 'sseparado(a)',
+  SEPARATED = 'separado(a)',
 }
