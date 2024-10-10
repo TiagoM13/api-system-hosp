@@ -1,7 +1,8 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { changePasswordSchema, schemaParams } from '@modules/users/schemas';
+import { changePasswordUserSchema } from '@modules/users/schemas';
+import { paramIdSchema } from '@shared/utils';
 
 import { ChangePasswordUserService } from './change-password-user-service';
 
@@ -13,13 +14,13 @@ export class ChangePasswordUserController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const { userId } = schemaParams.parse(this.request.params);
-    const { password, confirm_password } = changePasswordSchema.parse(
+    const { id } = paramIdSchema.parse(this.request.params);
+    const { password, confirm_password } = changePasswordUserSchema.parse(
       this.request.body,
     );
 
     await this.changePasswordUserService.execute(
-      userId,
+      id,
       password,
       confirm_password,
     );

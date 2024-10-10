@@ -1,8 +1,9 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { schemaBody, schemaParams } from '@modules/users/schemas';
+import { userDataSchema } from '@modules/users/schemas';
 import { IUser } from '@shared/entities';
+import { paramIdSchema } from '@shared/utils';
 
 import { UpdateUserService } from './update-user-service';
 
@@ -12,12 +13,12 @@ export class UpdateUserController extends BaseController {
   }
 
   async handle(): Promise<FastifyReply> {
-    const { userId } = schemaParams.parse(this.request.params);
-    const data = schemaBody.parse(this.request.body);
+    const { id } = paramIdSchema.parse(this.request.params);
+    const data = userDataSchema.parse(this.request.body);
     const loggedInUser = this.request.user as IUser;
 
     const updatedUser = await this.updateUserService.execute(
-      userId,
+      id,
       data,
       loggedInUser,
     );

@@ -13,7 +13,7 @@ export class UpdateUserService {
     this.userRepository = userRepository;
   }
 
-  async execute(id: number, data: IUser, loggedInUser: IUser) {
+  async execute(id: number, data: IUser, loggedInUser: IUser): Promise<IUser> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {

@@ -1,7 +1,7 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { schemaBody } from '@modules/users/schemas';
+import { userDataSchema } from '@modules/users/schemas';
 
 import { CreateUserService } from './create-user-service';
 
@@ -10,8 +10,8 @@ export class CreateUserController extends BaseController {
     super();
   }
 
-  async handle(): Promise<FastifyReply> {
-    const data = schemaBody.parse(this.request.body);
+  protected async handle(): Promise<FastifyReply> {
+    const data = userDataSchema.parse(this.request.body);
 
     const user = await this.createUserService.execute(data);
 

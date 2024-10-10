@@ -1,8 +1,8 @@
 import { FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
+import { paginateSchema } from '@shared/utils';
 
-import { paginateSchema } from '../../schemas/paginate';
 import { GetAllPatientsService } from './get-all-patients-service';
 
 export class GetAllPatientsController extends BaseController {

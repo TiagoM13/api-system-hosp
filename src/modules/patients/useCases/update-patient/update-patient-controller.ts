@@ -1,9 +1,9 @@
 import { FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
+import { paramSchema } from '@shared/utils';
 
 import { patientDataSchema } from '../../schemas/body';
-import { paramSchema } from '../../schemas/params';
 import { UpdatePatientService } from './update-patient-service';
 
 export class UpdatePatientController extends BaseController {

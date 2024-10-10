@@ -8,8 +8,8 @@ export class ChangePasswordUserService {
     this.userRepository = userRepository;
   }
 
-  async execute(userId: number, password: string, confirm_password: string) {
-    const user = await this.userRepository.findById(userId);
+  async execute(id: number, password: string, confirm_password: string) {
+    const user = await this.userRepository.findById(id);
 
     if (!user) {
       throw new AppError(USER_NOT_FOUND, 404);

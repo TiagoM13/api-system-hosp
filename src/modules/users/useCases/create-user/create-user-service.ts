@@ -10,12 +10,14 @@ import {
   hashPassword,
 } from '@shared/utils/generate-password';
 
+import { UserDataType } from '../../schemas';
+
 export class CreateUserService {
   constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute(data: IUser) {
+  async execute(data: UserDataType): Promise<IUser> {
     const user = await this.userRepository.findByEmail(data.email);
 
     if (user) {

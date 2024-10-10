@@ -25,7 +25,7 @@ const userRoutes = async (app: FastifyInstance) => {
     bindController(makeGetAllUsersController()),
   );
   app.get(
-    '/users/:userId',
+    '/users/:id',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
@@ -37,21 +37,21 @@ const userRoutes = async (app: FastifyInstance) => {
     bindController(makeCreateUserController()),
   );
   app.put(
-    '/users/:userId',
+    '/users/:id',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
     bindController(makeUpdateUserController()),
   );
   app.patch(
-    '/users/:userId/change-password',
+    '/users/:id/change-password',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
     bindController(makeChangePasswordUserController()),
   );
   app.delete(
-    '/users/:userId',
+    '/users/:id',
     { preHandler: verifyAuthorization([Role.ADMIN]) },
     bindController(makeDeleteUserController()),
   );
