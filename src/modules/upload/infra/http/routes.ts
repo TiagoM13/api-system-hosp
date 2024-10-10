@@ -1,10 +1,19 @@
 import { FastifyInstance } from 'fastify';
 
-import { verifyToken } from '@app/infra/http/middleware';
-import { uploadFactory } from '@modules/upload/useCases';
+import { bindController } from '@app/infra/http/controller/bindController';
+import { verifyAuthorization } from '@app/infra/http/middleware';
+import { Role } from '@shared/enums';
+
+import makeUploadController from '../../useCases/upload/upload-factory';
 
 export const routeUpload = async (app: FastifyInstance) => {
-  app.addHook('onRequest', verifyToken);
-
-  app.post('/upload', (req, res) => uploadFactory().handle(req, res));
+  app.post(
+    '/upload',
+    {
+      preHandler: [
+        verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
+      ],
+    },
+    bindController(makeUploadController()),
+  );
 };
