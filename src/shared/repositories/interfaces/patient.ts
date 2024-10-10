@@ -1,4 +1,8 @@
-import { IPatient } from '../../entities';
+import {
+  type FindEntitiesAndCountParams,
+  type FindEntitiesAndCountResult,
+  IPatient,
+} from '../../entities';
 
 export interface IPatientRepository {
   findAll(
@@ -14,4 +18,7 @@ export interface IPatientRepository {
   count(search: string | undefined): Promise<number>;
   create(data: IPatient): Promise<IPatient>;
   update(id: string, data: IPatient): Promise<IPatient>;
+  findAndCountAll(
+    params: FindEntitiesAndCountParams,
+  ): Promise<FindEntitiesAndCountResult<IPatient>>;
 }

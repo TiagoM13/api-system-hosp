@@ -1,17 +1,16 @@
 import { AppError } from '@app/errors/app-client';
 import { CNS_EXISTS, CPF_EXISTS } from '@shared/constants/messages';
+import { IPatient } from '@shared/entities';
 import { PatientRepository } from '@shared/repositories/implementations';
 
 import { PatientDataType } from '../../schemas/body';
 
 export class CreatePatientService {
-  private patientRepository: PatientRepository;
-
-  constructor(patientRepository: PatientRepository) {
+  constructor(private patientRepository: PatientRepository) {
     this.patientRepository = patientRepository;
   }
 
-  async execute(data: PatientDataType) {
+  async execute(data: PatientDataType): Promise<IPatient> {
     const { cpf, cns } = data;
 
     if (cpf) {

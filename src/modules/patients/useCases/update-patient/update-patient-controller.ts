@@ -1,43 +1,25 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ZodError } from 'zod';
+import { FastifyReply } from 'fastify';
 
-import { AppError } from '@app/errors/app-client';
+import { BaseController } from '@app/infra/http/controller/baseController';
 
 import { patientDataSchema } from '../../schemas/body';
 import { paramSchema } from '../../schemas/params';
 import { UpdatePatientService } from './update-patient-service';
 
-export class UpdatePatientController {
-  private updatePatientService: UpdatePatientService;
-
-  constructor(updatePatientService: UpdatePatientService) {
-    this.updatePatientService = updatePatientService;
+export class UpdatePatientController extends BaseController {
+  constructor(private readonly updatePatientService: UpdatePatientService) {
+    super();
   }
 
-  async handle(req: FastifyRequest, res: FastifyReply) {
-    try {
-      const { id } = paramSchema.parse(req.params);
-      const data = patientDataSchema.parse(req.body);
+  protected async handle(): Promise<FastifyReply> {
+    const { id } = paramSchema.parse(this.request.params);
+    const data = patientDataSchema.parse(this.request.body);
 
-      const updatedPatient = await this.updatePatientService.execute(id, data);
+    const updatedPatient = await this.updatePatientService.execute(id, data);
 
-      return res.status(201).send({
-        succes: true,
-        patient: updatedPatient,
-      });
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(400).send({ message: error.message });
-      }
-
-      if (error instanceof ZodError) {
-        return res.status(400).send({
-          message: 'Invalid request body',
-          errors: error.flatten().fieldErrors,
-        });
-      }
-
-      return res.status(500).send({ error: 'Internal Server Error' });
-    }
+    return this.ok({
+      succes: true,
+      patient: updatedPatient,
+    });
   }
 }

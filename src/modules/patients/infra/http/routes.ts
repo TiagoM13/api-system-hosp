@@ -1,13 +1,14 @@
 import { FastifyInstance } from 'fastify';
 
+import { bindController } from '@app/infra/http/controller/bindController';
 import { verifyAuthorization } from '@app/infra/http/middleware';
-import {
-  createPatientFactory,
-  getAllPatientsFactory,
-  getPatientFactory,
-  updatePatientFactory,
-} from '@modules/patients/useCases';
 import { Role } from '@shared/enums';
+import {
+  makeGetAllPatientsController,
+  makeGetPatientController,
+  makeUpdatePatientController,
+  makeCreatePatientController,
+} from '@shared/factories/controllers';
 
 const routesPatients = async (app: FastifyInstance) => {
   app.post(
@@ -15,28 +16,28 @@ const routesPatients = async (app: FastifyInstance) => {
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    (req, res) => createPatientFactory().handle(req, res),
+    bindController(makeCreatePatientController()),
   );
   app.get(
     '/patients',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    (req, res) => getAllPatientsFactory().handle(req, res),
+    bindController(makeGetAllPatientsController()),
   );
   app.get(
     '/patients/:id',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    (req, res) => getPatientFactory().handle(req, res),
+    bindController(makeGetPatientController()),
   );
   app.put(
     '/patients/:id',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    (req, res) => updatePatientFactory().handle(req, res),
+    bindController(makeUpdatePatientController()),
   );
 };
 

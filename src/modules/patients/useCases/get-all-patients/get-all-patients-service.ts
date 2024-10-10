@@ -1,78 +1,30 @@
-import { AppError } from '@app/errors/app-client';
-import {
-  INVALID_NUMBER_ITEMS_PER_PAGE,
-  INVALID_PAGE_NUMBER,
-} from '@shared/constants/messages';
-import {
-  IPatient,
-  IPaginateRequest,
-  IPaginateResponse,
-} from '@shared/entities';
+import { IPatient, IPaginateRequest } from '@shared/entities';
 import { PatientRepository } from '@shared/repositories/implementations';
-
-type IGetAllPatientsServiceResponse = {
-  patients: IPatient[];
-  meta: IPaginateResponse;
-};
+import { FindAndCountAll } from '@shared/utils/format-paginate';
+import { validatePaginationParams } from '@shared/utils/validate-paginate';
 
 export class GetAllPatientsService {
-  private patientRepository: PatientRepository;
-
-  constructor(patientRepository: PatientRepository) {
+  constructor(private readonly patientRepository: PatientRepository) {
     this.patientRepository = patientRepository;
   }
 
   async execute({
     name,
-    page,
-    items_per_page,
-  }: IPaginateRequest): Promise<IGetAllPatientsServiceResponse> {
-    if (isNaN(page) || page <= 0) {
-      throw new AppError(INVALID_PAGE_NUMBER);
-    }
-    if (isNaN(items_per_page) || items_per_page <= 0) {
-      throw new AppError(INVALID_NUMBER_ITEMS_PER_PAGE);
-    }
+    page = 1,
+    items_per_page = 10,
+  }: IPaginateRequest): Promise<FindAndCountAll<IPatient>> {
+    validatePaginationParams(page, items_per_page);
 
-    const currentData = await this.patientRepository.count(name);
-    const totalPages = Math.ceil(currentData / items_per_page);
-
-    const patients = await this.patientRepository.findAll(
+    const offset = (page - 1) * items_per_page;
+    const { rows, count } = await this.patientRepository.findAndCountAll({
       name,
-      (page - 1) * items_per_page,
-      items_per_page,
-    );
-
-    if (totalPages === 0) {
-      return {
-        patients: [],
-        meta: {
-          page,
-          has_previous_page: false,
-          has_next_page: false,
-          total_pages: 0,
-          total_records: 0,
-          items_per_page,
-          total_current_records: 0,
-        },
-      };
-    }
-
-    const totalItemsInCurrentPage = patients.length;
-    const hasPreviousPage = page > 1;
-    const hasNextPage = page < totalPages;
+      skip: offset,
+      take: items_per_page,
+    });
 
     return {
-      patients,
-      meta: {
-        page,
-        total_pages: totalPages,
-        total_records: currentData,
-        total_current_records: totalItemsInCurrentPage,
-        items_per_page,
-        has_previous_page: hasPreviousPage,
-        has_next_page: hasNextPage,
-      },
+      rows,
+      count,
     };
   }
 }
