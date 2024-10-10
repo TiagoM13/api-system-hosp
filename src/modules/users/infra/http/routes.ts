@@ -1,20 +1,20 @@
 import { FastifyInstance } from 'fastify';
 
+import { bindController } from '@app/infra/http/controller/bindController';
 import {
   updateLastAccess,
   verifyAuthorization,
 } from '@app/infra/http/middleware';
 import { Role } from '@shared/enums';
-import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
-
 import {
-  createUserFactory,
-  deleteUserFactory,
-  getAllUsersFactory,
-  getUserFactory,
-  updateUserFactory,
-  changePasswordUserFactory,
-} from '../../useCases';
+  makeChangePasswordUserController,
+  makeCreateUserController,
+  makeDeleteUserController,
+  makeGetAllUsersController,
+  makeGetUserController,
+  makeUpdateUserController,
+} from '@shared/factories/controllers';
+import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
 
 const userRoutes = async (app: FastifyInstance) => {
   app.addHook('preHandler', updateLastAccess(makeUserRepository()));
@@ -22,38 +22,38 @@ const userRoutes = async (app: FastifyInstance) => {
   app.get(
     '/users',
     { preHandler: verifyAuthorization([Role.ADMIN]) },
-    (req, res) => getAllUsersFactory().handle(req, res),
+    bindController(makeGetAllUsersController()),
   );
   app.get(
     '/users/:userId',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    (req, res) => getUserFactory().handle(req, res),
+    bindController(makeGetUserController()),
   );
   app.post(
     '/users',
     { preHandler: verifyAuthorization([Role.ADMIN]) },
-    (req, res) => createUserFactory().handle(req, res),
+    bindController(makeCreateUserController()),
   );
   app.put(
     '/users/:userId',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    (req, res) => updateUserFactory().handle(req, res),
+    bindController(makeUpdateUserController()),
   );
   app.patch(
     '/users/:userId/change-password',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    (req, res) => changePasswordUserFactory().handle(req, res),
+    bindController(makeChangePasswordUserController()),
   );
   app.delete(
     '/users/:userId',
     { preHandler: verifyAuthorization([Role.ADMIN]) },
-    (req, res) => deleteUserFactory().handle(req, res),
+    bindController(makeDeleteUserController()),
   );
 };
 

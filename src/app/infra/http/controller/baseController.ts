@@ -28,7 +28,7 @@ export abstract class BaseController {
   protected ok<T>(dto?: T): Response {
     if (dto) return this.response.status(200).send(dto);
 
-    return this.response.status(200);
+    return this.response.status(200).send();
   }
 
   protected paginate<T>(model: FindAndCountAll<T>, rowsKey: string): Response {
@@ -41,7 +41,7 @@ export abstract class BaseController {
   protected created<T>(dto?: T): Response {
     if (dto) return this.response.status(201).send(dto);
 
-    return this.response.status(201);
+    return this.response.status(201).send();
   }
 
   protected unauthorized(message: string): Response {

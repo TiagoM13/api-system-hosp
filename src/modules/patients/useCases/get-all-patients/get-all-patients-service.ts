@@ -10,8 +10,8 @@ export class GetAllPatientsService {
 
   async execute({
     name,
-    page = 1,
-    items_per_page = 10,
+    page,
+    items_per_page,
   }: IPaginateRequest): Promise<FindAndCountAll<IPatient>> {
     validatePaginationParams(page, items_per_page);
 

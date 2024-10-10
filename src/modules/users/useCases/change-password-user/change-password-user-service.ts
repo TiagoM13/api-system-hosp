@@ -4,9 +4,7 @@ import { UserRepository } from '@shared/repositories/implementations';
 import { hashPassword } from '@shared/utils/generate-password';
 
 export class ChangePasswordUserService {
-  private readonly userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
+  constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 

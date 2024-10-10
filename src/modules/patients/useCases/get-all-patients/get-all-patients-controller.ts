@@ -13,11 +13,7 @@ export class GetAllPatientsController extends BaseController {
   protected async handle(): Promise<FastifyReply> {
     const query = paginateSchema.parse(this.request.query);
 
-    const results = await this.getAllPatientsService.execute({
-      name: query.name,
-      page: query.page,
-      items_per_page: query.items_per_page,
-    });
+    const results = await this.getAllPatientsService.execute(query);
 
     return this.paginate(results, 'patients');
   }

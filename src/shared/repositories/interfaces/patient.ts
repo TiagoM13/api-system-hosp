@@ -15,7 +15,6 @@ export interface IPatientRepository {
   findByCNS(cns: string): Promise<IPatient | null>;
   findFirstByCPF(id: string, cpf: string): Promise<IPatient | null>;
   findFirstByCNS(id: string, cpf: string): Promise<IPatient | null>;
-  count(search: string | undefined): Promise<number>;
   create(data: IPatient): Promise<IPatient>;
   update(id: string, data: IPatient): Promise<IPatient>;
   findAndCountAll(

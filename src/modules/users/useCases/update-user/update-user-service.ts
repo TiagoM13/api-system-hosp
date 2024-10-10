@@ -9,9 +9,7 @@ import { IUser } from '@shared/entities';
 import { UserRepository } from '@shared/repositories/implementations';
 
 export class UpdateUserService {
-  private userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
+  constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 

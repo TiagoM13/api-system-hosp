@@ -109,14 +109,6 @@ export class PatientRepository implements IPatientRepository {
     });
   }
 
-  async count(name: string | undefined): Promise<number> {
-    return await prisma.patient.count({
-      where: {
-        name: name ? { contains: name } : undefined,
-      },
-    });
-  }
-
   async create(data: IPatient): Promise<IPatient> {
     const patient = await prisma.patient.create({ data });
 

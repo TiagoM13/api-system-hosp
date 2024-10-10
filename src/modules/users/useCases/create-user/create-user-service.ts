@@ -11,14 +11,12 @@ import {
 } from '@shared/utils/generate-password';
 
 export class CreateUserService {
-  private userRespository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
-    this.userRespository = userRepository;
+  constructor(private readonly userRepository: UserRepository) {
+    this.userRepository = userRepository;
   }
 
   async execute(data: IUser) {
-    const user = await this.userRespository.findByEmail(data.email);
+    const user = await this.userRepository.findByEmail(data.email);
 
     if (user) {
       throw new AppError(EMAIL_IS_ALREADY_IN_USE);
@@ -27,7 +25,7 @@ export class CreateUserService {
     const provisionalPassword = generateProvisionalPassword();
     const hashedPassword = await hashPassword(provisionalPassword);
 
-    const newUser = await this.userRespository.create({
+    const newUser = await this.userRepository.create({
       ...data,
       password: hashedPassword,
     });
