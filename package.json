@@ -36,6 +36,8 @@
   "license": "ISC",
   "description": "API de tests para um Sistema Hospitalar",
   "devDependencies": {
+    "@swc/cli": "^0.4.1-nightly.20240914",
+    "@swc/core": "^1.7.35",
     "@types/node": "^20.14.10",
     "@types/nodemailer": "^6.4.15",
     "@typescript-eslint/eslint-plugin": "^8.4.0",

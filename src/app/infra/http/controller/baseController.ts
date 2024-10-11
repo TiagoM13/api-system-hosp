@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  FindAndCountAll,
-  formatPaginate,
-} from '@/src/shared/utils/format-paginate';
-import {
   type FastifyReply as Response,
   type FastifyRequest as Request,
 } from 'fastify';
+
+import { FindAndCountAll, formatPaginate } from '@shared/utils/format-paginate';
 
 export abstract class BaseController {
   protected request!: Request;

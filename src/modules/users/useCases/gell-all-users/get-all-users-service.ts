@@ -1,8 +1,7 @@
-import { validatePaginationParams } from '@/src/shared/utils/validate-paginate';
-
 import { IPaginateRequest, IUser } from '@shared/entities';
 import { UserRepository } from '@shared/repositories/implementations';
 import { type FindAndCountAll } from '@shared/utils/format-paginate';
+import { validatePaginationParams } from '@shared/utils/validate-paginate';
 
 export class GetAllUsersService {
   constructor(private readonly userRepository: UserRepository) {
