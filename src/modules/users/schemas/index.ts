@@ -11,7 +11,7 @@ export const userDataSchema = z.object({
   image_url: z.string().nullable().optional(),
 });
 
-export const changePasswordSchema = z.object({
+export const changePasswordUserSchema = z.object({
   password: z.string().min(6).max(20).trim(),
   confirm_password: z.string().min(6).max(20).trim(),
 });
