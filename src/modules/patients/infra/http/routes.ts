@@ -1,7 +1,10 @@
 import { FastifyInstance } from 'fastify';
 
 import { bindController } from '@app/infra/http/controller/bindController';
-import { verifyAuthorization } from '@app/infra/http/middleware';
+import {
+  updateLastAccess,
+  verifyAuthorization,
+} from '@app/infra/http/middleware';
 import { Role } from '@shared/enums';
 import {
   makeGetAllPatientsController,
@@ -9,8 +12,11 @@ import {
   makeUpdatePatientController,
   makeCreatePatientController,
 } from '@shared/factories/controllers';
+import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
 
 const routesPatients = async (app: FastifyInstance) => {
+  app.addHook('preHandler', updateLastAccess(makeUserRepository()));
+
   app.post(
     '/patients',
     {

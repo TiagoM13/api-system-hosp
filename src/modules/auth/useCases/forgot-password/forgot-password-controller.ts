@@ -1,42 +1,23 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ZodError } from 'zod';
+import { type FastifyReply } from 'fastify';
 
-import { AppError } from '@app/errors/app-client';
+import { BaseController } from '@app/infra/http/controller/baseController';
 import { forgotPasswordSchema } from '@modules/auth/schemas';
 
 import { ForgotPasswordService } from './forgot-password-service';
 
-export class ForgotPasswordController {
-  private forgotPasswordService: ForgotPasswordService;
-
-  constructor(forgotPasswordService: ForgotPasswordService) {
-    this.forgotPasswordService = forgotPasswordService;
+export class ForgotPasswordController extends BaseController {
+  constructor(private readonly forgotPasswordService: ForgotPasswordService) {
+    super();
   }
 
-  async handle(req: FastifyRequest, res: FastifyReply) {
-    try {
-      const { email } = forgotPasswordSchema.parse(req.body);
+  protected async handle(): Promise<FastifyReply> {
+    const { email } = forgotPasswordSchema.parse(this.request.body);
 
-      await this.forgotPasswordService.execute(email);
+    await this.forgotPasswordService.execute(email);
 
-      return res.status(201).send({
-        success: true,
-        message: 'Uma nova senha foi enviada para seu endereço de e-mail.',
-      });
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(error.statusCode).send({ message: error.message });
-      }
-
-      if (error instanceof ZodError) {
-        return res.status(400).send({
-          message: 'Invalid request body',
-          errors: error.flatten().fieldErrors,
-        });
-      }
-
-      return res.status(500).send({ error: 'Internal Server Error' });
-    }
+    return this.created({
+      success: true,
+      message: 'Uma nova senha foi enviada para seu endereço de e-mail.',
+    });
   }
 }

@@ -8,19 +8,14 @@ import {
 } from '@shared/constants/messages';
 import { UserRepository } from '@shared/repositories/implementations';
 
-interface ILoginService {
-  email: string;
-  password: string;
-}
+import { AuthenticationType } from '../../schemas';
 
 export class LoginService {
-  private userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
+  constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute({ email, password }: ILoginService) {
+  async execute({ email, password }: AuthenticationType) {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {

@@ -1,3 +1,7 @@
+// auth
+export * from './auth/make-forgot-password-controller';
+export * from './auth/make-login-controller';
+
 // patients
 export * from './patient/make-create-patient-controller';
 export * from './patient/make-get-all-patients-controller';
