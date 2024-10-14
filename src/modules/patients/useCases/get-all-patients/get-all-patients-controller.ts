@@ -1,43 +1,20 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ZodError } from 'zod';
+import { FastifyReply } from 'fastify';
 
-import { AppError } from '@app/errors/app-client';
+import { BaseController } from '@app/infra/http/controller/baseController';
+import { paginateSchema } from '@shared/utils';
 
-import { paginateSchema } from '../../schemas/paginate';
 import { GetAllPatientsService } from './get-all-patients-service';
 
-export class GetAllPatientsController {
-  private getAllPatientsService: GetAllPatientsService;
-
-  constructor(getAllPatientsService: GetAllPatientsService) {
-    this.getAllPatientsService = getAllPatientsService;
+export class GetAllPatientsController extends BaseController {
+  constructor(private readonly getAllPatientsService: GetAllPatientsService) {
+    super();
   }
 
-  async handle(req: FastifyRequest, res: FastifyReply) {
-    try {
-      const query = paginateSchema.parse(req.query);
+  protected async handle(): Promise<FastifyReply> {
+    const query = paginateSchema.parse(this.request.query);
 
-      const { patients, meta } =
-        await this.getAllPatientsService.execute(query);
+    const results = await this.getAllPatientsService.execute(query);
 
-      return res.status(200).send({
-        success: true,
-        patients,
-        meta,
-      });
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(400).send({ message: error.message });
-      }
-
-      if (error instanceof ZodError) {
-        return res.status(400).send({
-          message: 'Invalid request body',
-          errors: error.flatten().fieldErrors,
-        });
-      }
-
-      return res.status(500).send({ error: 'Internal Server Error' });
-    }
+    return this.paginate(results, 'patients');
   }
 }

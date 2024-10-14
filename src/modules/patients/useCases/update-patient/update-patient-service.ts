@@ -4,18 +4,17 @@ import {
   CPF_EXISTS,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
+import { IPatient } from '@shared/entities';
 import { PatientRepository } from '@shared/repositories/implementations';
 
 import { PatientDataType } from '../../schemas/body';
 
 export class UpdatePatientService {
-  private patientRepository: PatientRepository;
-
-  constructor(patientRepository: PatientRepository) {
+  constructor(private readonly patientRepository: PatientRepository) {
     this.patientRepository = patientRepository;
   }
 
-  async execute(id: string, data: PatientDataType) {
+  async execute(id: string, data: PatientDataType): Promise<IPatient> {
     const patient = await this.patientRepository.findById(id);
 
     if (!patient) {

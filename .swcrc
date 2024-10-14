@@ -10,7 +10,6 @@
     "target": "es2022",
     "baseUrl": "./",
     "paths": {
-      "@": ["./*"],
       "@app/*": ["./src/app/*"],
       "@shared/*": ["./src/shared/*"],
       "@modules/*": ["./src/modules/*"]

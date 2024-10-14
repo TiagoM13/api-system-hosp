@@ -1,38 +1,20 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ZodError } from 'zod';
+import { type FastifyReply } from 'fastify';
 
-import { AppError } from '@app/errors/app-client';
-import { schemaParams } from '@modules/users/schemas';
+import { BaseController } from '@app/infra/http/controller/baseController';
+import { paramIdSchema } from '@shared/utils';
 
 import { GetUserService } from './get-user-service';
 
-export class GetUserController {
-  private getUserService: GetUserService;
-
-  constructor(getUserService: GetUserService) {
-    this.getUserService = getUserService;
+export class GetUserController extends BaseController {
+  constructor(private readonly getUserService: GetUserService) {
+    super();
   }
 
-  async handle(req: FastifyRequest, res: FastifyReply) {
-    try {
-      const { userId } = schemaParams.parse(req.params);
+  protected async handle(): Promise<FastifyReply> {
+    const { id } = paramIdSchema.parse(this.request.params);
 
-      const user = await this.getUserService.execute(userId);
+    const user = await this.getUserService.execute(id);
 
-      return res.send({ success: true, user });
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(error.statusCode).send({ message: error.message });
-      }
-
-      if (error instanceof ZodError) {
-        return res.status(400).send({
-          message: 'Invalid request body',
-          errors: error.flatten().fieldErrors,
-        });
-      }
-
-      return res.status(500).send({ error: 'Internal Server Error' });
-    }
+    return this.ok({ success: true, user });
   }
 }

@@ -1,48 +1,33 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ZodError } from 'zod';
+import { type FastifyReply } from 'fastify';
 
-import { AppError } from '@app/errors/app-client';
-import { changePasswordSchema, schemaParams } from '@modules/users/schemas';
+import { BaseController } from '@app/infra/http/controller/baseController';
+import { changePasswordUserSchema } from '@modules/users/schemas';
+import { paramIdSchema } from '@shared/utils';
 
 import { ChangePasswordUserService } from './change-password-user-service';
 
-export class ChangePasswordUserController {
-  private changePasswordUserService: ChangePasswordUserService;
-
-  constructor(changePasswordUserService: ChangePasswordUserService) {
-    this.changePasswordUserService = changePasswordUserService;
+export class ChangePasswordUserController extends BaseController {
+  constructor(
+    private readonly changePasswordUserService: ChangePasswordUserService,
+  ) {
+    super();
   }
 
-  async handle(req: FastifyRequest, res: FastifyReply) {
-    try {
-      const { userId } = schemaParams.parse(req.params);
-      const { password, confirm_password } = changePasswordSchema.parse(
-        req.body,
-      );
+  protected async handle(): Promise<FastifyReply> {
+    const { id } = paramIdSchema.parse(this.request.params);
+    const { password, confirm_password } = changePasswordUserSchema.parse(
+      this.request.body,
+    );
 
-      await this.changePasswordUserService.execute(
-        userId,
-        password,
-        confirm_password,
-      );
+    await this.changePasswordUserService.execute(
+      id,
+      password,
+      confirm_password,
+    );
 
-      return res.status(201).send({
-        success: true,
-        message: 'Sua senha foi alterada com sucesso',
-      });
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(error.statusCode).send({ message: error.message });
-      }
-
-      if (error instanceof ZodError) {
-        return res.status(400).send({
-          message: 'Invalid request body',
-          errors: error.flatten().fieldErrors,
-        });
-      }
-
-      return res.status(500).send({ error: 'Internal Server Error' });
-    }
+    return this.created({
+      success: true,
+      message: 'Sua senha foi alterada com sucesso',
+    });
   }
 }

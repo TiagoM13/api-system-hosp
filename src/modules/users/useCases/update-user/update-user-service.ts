@@ -9,13 +9,11 @@ import { IUser } from '@shared/entities';
 import { UserRepository } from '@shared/repositories/implementations';
 
 export class UpdateUserService {
-  private userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
+  constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute(id: number, data: IUser, loggedInUser: IUser) {
+  async execute(id: number, data: IUser, loggedInUser: IUser): Promise<IUser> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {

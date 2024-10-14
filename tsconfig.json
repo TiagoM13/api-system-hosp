@@ -4,10 +4,10 @@
 
   "compilerOptions": {
     "lib": ["es2023"],
-    "module": "CommonJS",
+    "module": "Node16",
     "target": "es2022",
     "outDir": "./dist",
-    "moduleResolution": "Node",
+    "moduleResolution": "Node16",
 
     "strict": true,
     "removeComments": true,
@@ -19,7 +19,6 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
       "@app/*": ["./src/app/*"],
       "@shared/*": ["./src/shared/*"],
       "@modules/*": ["./src/modules/*"]

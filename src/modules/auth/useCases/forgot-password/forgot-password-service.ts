@@ -10,9 +10,7 @@ import {
 } from '@shared/utils/generate-password';
 
 export class ForgotPasswordService {
-  private userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
+  constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 

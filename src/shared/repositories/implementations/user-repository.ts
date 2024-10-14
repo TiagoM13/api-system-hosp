@@ -1,5 +1,9 @@
 import { prisma } from '@app/infra/prisma/client';
-import { IUser } from '@shared/entities';
+import {
+  type FindEntitiesAndCountParams,
+  type FindEntitiesAndCountResult,
+  IUser,
+} from '@shared/entities';
 
 import { IUserRepository } from '../interfaces/user';
 
@@ -29,6 +33,38 @@ export class UserRepository implements IUserRepository {
     });
   }
 
+  async findAndCountAll(
+    params: FindEntitiesAndCountParams,
+  ): Promise<FindEntitiesAndCountResult<IUser>> {
+    const { name, take, skip } = params;
+    const count = await prisma.user.count({
+      where: { name: name ? { contains: name } : undefined },
+    });
+    const users = await prisma.user.findMany({
+      skip,
+      take,
+      where: {
+        name: name ? { contains: name } : undefined,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image_url: true,
+        role: true,
+        status: true,
+        last_access: true,
+        created_at: true,
+        updated_at: true,
+      },
+    });
+
+    return {
+      count,
+      rows: users,
+    };
+  }
+
   async findById(id: number): Promise<IUser | null> {
     return await prisma.user.findUnique({
       where: { id },
@@ -49,14 +85,6 @@ export class UserRepository implements IUserRepository {
   async findByEmail(email: string): Promise<IUser | null> {
     return await prisma.user.findUnique({
       where: { email },
-    });
-  }
-
-  async count(name: string | undefined): Promise<number> {
-    return await prisma.user.count({
-      where: {
-        name: name ? { contains: name } : undefined,
-      },
     });
   }
 

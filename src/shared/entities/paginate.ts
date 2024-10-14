@@ -1,11 +1,9 @@
-// trocar a interface IQueryParamsService
 export interface IPaginateRequest {
   name?: string;
   page: number;
   items_per_page: number;
 }
 
-// trocar a interface IMetadataResponse
 export interface IPaginateResponse {
   page: number;
   total_pages: number;

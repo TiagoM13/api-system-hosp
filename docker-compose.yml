@@ -1,0 +1,16 @@
+name: api-hosp
+
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=hosp_server
+    volumes:
+      - hosp_pg_data:/bitnami/postgresql
+
+volumes:
+  hosp_pg_data:

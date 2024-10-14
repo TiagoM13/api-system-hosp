@@ -3,9 +3,7 @@ import { USER_NOT_FOUND } from '@shared/constants/messages';
 import { UserRepository } from '@shared/repositories/implementations';
 
 export class DeleteUserService {
-  private userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
+  constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 

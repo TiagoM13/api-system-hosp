@@ -1,40 +1,32 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { type FastifyReply } from 'fastify';
 
-import { AppError } from '@app/errors/app-client';
+import { BaseController } from '@app/infra/http/controller/baseController';
 
 import { UploadService } from './upload-service';
 
-export class UploadController {
-  private uploadService: UploadService;
-
-  constructor(uploadService: UploadService) {
-    this.uploadService = uploadService;
+export class UploadController extends BaseController {
+  constructor(private uploadService: UploadService) {
+    super();
   }
 
-  async handle(req: FastifyRequest, res: FastifyReply) {
-    try {
-      const file = await req.file({
-        limits: {
-          fileSize: 5_242_880, // 5mb
-        },
-      });
+  protected async handle(): Promise<FastifyReply> {
+    const file = await this.request.file({
+      limits: {
+        fileSize: 5_242_880, // 5mb
+      },
+    });
 
-      if (!file) {
-        return res.status(400).send();
-      }
-
-      const { fileName } = await this.uploadService.execute(file);
-
-      const fullUrl = req.protocol.concat('://').concat(req.hostname);
-      const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString();
-
-      return res.status(201).send({ success: true, fileUrl: fileUrl });
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(400).send({ message: error.message });
-      }
-
-      return res.status(500).send({ error: 'Internal Server Error' });
+    if (!file) {
+      return this.response.status(400).send();
     }
+
+    const { fileName } = await this.uploadService.execute(file);
+
+    const fullUrl = this.request.protocol
+      .concat('://')
+      .concat(this.request.hostname);
+    const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString();
+
+    return this.created({ success: true, fileUrl });
   }
 }

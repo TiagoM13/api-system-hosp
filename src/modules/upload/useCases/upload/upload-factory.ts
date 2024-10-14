@@ -1,11 +1,6 @@
 import { UploadController } from './upload-controller';
-import { UploadService } from './upload-service';
+import { makeUploadService } from './upload-service';
 
-export function uploadFactory() {
-  const service = new UploadService();
-  const controller = new UploadController(service);
-
-  return controller;
+export default function makeUploadController(): UploadController {
+  return new UploadController(makeUploadService());
 }
-
-export default uploadFactory;

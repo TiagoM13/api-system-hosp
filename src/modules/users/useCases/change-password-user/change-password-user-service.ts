@@ -4,14 +4,12 @@ import { UserRepository } from '@shared/repositories/implementations';
 import { hashPassword } from '@shared/utils/generate-password';
 
 export class ChangePasswordUserService {
-  private readonly userRepository: UserRepository;
-
-  constructor(userRepository: UserRepository) {
+  constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute(userId: number, password: string, confirm_password: string) {
-    const user = await this.userRepository.findById(userId);
+  async execute(id: number, password: string, confirm_password: string) {
+    const user = await this.userRepository.findById(id);
 
     if (!user) {
       throw new AppError(USER_NOT_FOUND, 404);

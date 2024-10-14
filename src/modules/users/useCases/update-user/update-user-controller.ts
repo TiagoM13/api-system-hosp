@@ -1,50 +1,31 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ZodError } from 'zod';
+import { type FastifyReply } from 'fastify';
 
-import { AppError } from '@app/errors/app-client';
-import { schemaBody, schemaParams } from '@modules/users/schemas';
+import { BaseController } from '@app/infra/http/controller/baseController';
+import { userDataSchema } from '@modules/users/schemas';
 import { IUser } from '@shared/entities';
+import { paramIdSchema } from '@shared/utils';
 
 import { UpdateUserService } from './update-user-service';
 
-export class UpdateUserController {
-  private updateUserService: UpdateUserService;
-
-  constructor(updateUserService: UpdateUserService) {
-    this.updateUserService = updateUserService;
+export class UpdateUserController extends BaseController {
+  constructor(private readonly updateUserService: UpdateUserService) {
+    super();
   }
 
-  async handle(req: FastifyRequest, res: FastifyReply) {
-    try {
-      const { userId } = schemaParams.parse(req.params);
-      const data = schemaBody.parse(req.body);
-      const loggedInUser = req.user as IUser;
+  async handle(): Promise<FastifyReply> {
+    const { id } = paramIdSchema.parse(this.request.params);
+    const data = userDataSchema.parse(this.request.body);
+    const loggedInUser = this.request.user as IUser;
 
-      const updatedUser = await this.updateUserService.execute(
-        userId,
-        data,
-        loggedInUser,
-      );
+    const updatedUser = await this.updateUserService.execute(
+      id,
+      data,
+      loggedInUser,
+    );
 
-      return res.status(201).send({
-        success: true,
-        user: updatedUser,
-      });
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(error.statusCode).send({ message: error.message });
-      }
-
-      console.error(error);
-
-      if (error instanceof ZodError) {
-        return res.status(400).send({
-          message: 'Invalid request body',
-          errors: error.flatten().fieldErrors,
-        });
-      }
-
-      return res.status(500).send({ error: 'Internal Server Error' });
-    }
+    return this.ok({
+      success: true,
+      user: updatedUser,
+    });
   }
 }

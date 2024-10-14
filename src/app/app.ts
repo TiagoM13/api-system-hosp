@@ -14,6 +14,7 @@ import {
   authRoutes,
 } from '@modules/exports';
 
+import { env } from '../env';
 import { errorHandler } from './infra/http/middleware/error-handler';
 
 export const app = fastify({
@@ -31,7 +32,7 @@ app.register(fastifyStatic, {
   prefix: '/uploads',
 });
 app.register(jwt, {
-  secret: process.env.JWT_SECRET || 'defaultsecret',
+  secret: env.JWT_SECRET || 'defaultsecret',
 });
 app.register(fastifyBcrypt, {
   saltWorkFactor: 12,

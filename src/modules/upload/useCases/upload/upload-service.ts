@@ -33,3 +33,7 @@ export class UploadService {
     return { fileName };
   }
 }
+
+export function makeUploadService(): UploadService {
+  return new UploadService();
+}
