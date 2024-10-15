@@ -1,5 +1,5 @@
 export * from './patient';
-export * from './query';
+export * from './appointment';
 export * from './user';
 export * from './metadata';
 export * from './params';

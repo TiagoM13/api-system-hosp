@@ -1,18 +1,15 @@
 import { AppError } from '@app/errors/app-client';
 import {
   PatientRepository,
-  QueryRepository,
+  AppointmentRepository,
 } from '@shared/repositories/implementations';
 
-export class GetQueryService {
-  private queryRepository: QueryRepository;
-  private patientRepository: PatientRepository;
-
+export class GetAppointmentService {
   constructor(
-    queryRepository: QueryRepository,
-    patientRepository: PatientRepository,
+    private readonly appointmentRepository: AppointmentRepository,
+    private readonly patientRepository: PatientRepository,
   ) {
-    this.queryRepository = queryRepository;
+    this.appointmentRepository = appointmentRepository;
     this.patientRepository = patientRepository;
   }
 
@@ -23,12 +20,12 @@ export class GetQueryService {
       throw new AppError('Patient not found.');
     }
 
-    const query = await this.queryRepository.findById(queryId);
+    const appointment = await this.appointmentRepository.findById(queryId);
 
-    if (patientId !== query?.patient_id) {
+    if (patientId !== appointment?.patient_id) {
       throw new AppError('Query not found.');
     }
 
-    return query;
+    return appointment;
   }
 }

@@ -1,0 +1,43 @@
+import { FastifyInstance } from 'fastify';
+
+import { bindController } from '@app/infra/http/controller/bindController';
+import {
+  updateLastAccess,
+  verifyAuthorization,
+} from '@app/infra/http/middleware';
+import { Role } from '@shared/enums';
+import {
+  makeCreateAppointmentController,
+  makeGetAllAppointmentsController,
+  makeGetAppointmentController,
+  makeUpdateAppointmentController,
+} from '@shared/factories/controllers';
+import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
+
+const appointmentsRoutes = async (app: FastifyInstance) => {
+  app.addHook('preHandler', updateLastAccess(makeUserRepository()));
+
+  app.addHook(
+    'preHandler',
+    verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
+  );
+
+  app.get(
+    '/patients/:patientId/appointments',
+    bindController(makeGetAllAppointmentsController()),
+  );
+  app.get(
+    '/patients/:patientId/appointments/:appointmentId',
+    bindController(makeGetAppointmentController()),
+  );
+  app.post(
+    '/patients/:patientId/appointments',
+    bindController(makeCreateAppointmentController()),
+  );
+  app.put(
+    '/patients/:patientId/appointments/:appointmentId',
+    bindController(makeUpdateAppointmentController()),
+  );
+};
+
+export { appointmentsRoutes };

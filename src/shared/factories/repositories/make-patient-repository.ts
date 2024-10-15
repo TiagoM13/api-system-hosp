@@ -1,5 +1,5 @@
 import { PatientRepository } from '@shared/repositories/implementations';
 
-export const MakePatientRepository = () => {
+export const makePatientRepository = () => {
   return new PatientRepository();
 };
