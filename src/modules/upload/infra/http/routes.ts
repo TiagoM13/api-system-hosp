@@ -6,7 +6,7 @@ import { Role } from '@shared/enums';
 
 import makeUploadController from '../../useCases/upload/upload-factory';
 
-export const routeUpload = async (app: FastifyInstance) => {
+export const uploadRoutes = async (app: FastifyInstance) => {
   app.post(
     '/upload',
     {

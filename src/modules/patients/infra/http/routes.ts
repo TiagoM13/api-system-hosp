@@ -14,7 +14,7 @@ import {
 } from '@shared/factories/controllers';
 import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
 
-const routesPatients = async (app: FastifyInstance) => {
+export const patientRoutes = async (app: FastifyInstance) => {
   app.addHook('preHandler', updateLastAccess(makeUserRepository()));
 
   app.post(
@@ -46,5 +46,3 @@ const routesPatients = async (app: FastifyInstance) => {
     bindController(makeUpdatePatientController()),
   );
 };
-
-export { routesPatients };
