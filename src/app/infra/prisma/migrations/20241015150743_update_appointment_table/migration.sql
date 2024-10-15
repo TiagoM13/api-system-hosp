@@ -1,0 +1,2 @@
+ALTER TABLE appointments
+ADD COLUMN scheduled_date TIMESTAMP NOT NULL DEFAULT NOW();

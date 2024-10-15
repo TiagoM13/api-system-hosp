@@ -1,5 +1,6 @@
-import { Role } from '@/src/shared/enums';
 import { PrismaClient } from '@prisma/client';
+
+import { Role } from '@shared/enums';
 
 const prisma = new PrismaClient();
 
