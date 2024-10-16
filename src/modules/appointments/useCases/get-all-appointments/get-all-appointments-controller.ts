@@ -14,11 +14,11 @@ export class GetAllAppointmentsController extends BaseController {
 
   protected async handle(): Promise<FastifyReply> {
     const { patientId } = appointmentParamId.parse(this.request.params);
-    const reqQueries = schemaQuery.parse(this.request.query);
+    const query = schemaQuery.parse(this.request.query);
 
     const results = await this.getAllAppointmentsService.execute({
       patient_id: patientId,
-      ...reqQueries,
+      ...query,
     });
 
     return this.paginate(results, 'appointments');

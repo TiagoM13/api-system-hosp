@@ -32,7 +32,7 @@ export class UpdateAppointmentController extends BaseController {
 
     return this.ok({
       success: true,
-      query: appointment,
+      appointment,
     });
   }
 }

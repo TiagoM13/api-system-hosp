@@ -13,7 +13,15 @@ export interface FindAppointmentsAndCountParams {
   patientId: string;
   skip: number;
   take: number;
-  appointmentType?: string;
+  appointment_type?: string;
+  startDate?: Date;
+  endDate?: Date;
+}
+
+export interface FindAllAppointmentsAndCountParams {
+  skip: number;
+  take: number;
+  appointment_type?: string;
   startDate?: Date;
   endDate?: Date;
 }

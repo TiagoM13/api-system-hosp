@@ -10,6 +10,7 @@ import {
   makeCreateAppointmentController,
   makeGetAllAppointmentsController,
   makeGetAppointmentController,
+  makeListAllAppointmentsController,
   makeUpdateAppointmentController,
 } from '@shared/factories/controllers';
 import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
@@ -20,6 +21,11 @@ export const appointmentRoutes = async (app: FastifyInstance) => {
   app.addHook(
     'preHandler',
     verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
+  );
+
+  app.get(
+    '/appointments/list-all',
+    bindController(makeListAllAppointmentsController()),
   );
 
   app.get(

@@ -2,6 +2,7 @@ import {
   type FindEntitiesAndCountResult,
   type FindAppointmentsAndCountParams,
   IAppointment,
+  FindAllAppointmentsAndCountParams,
 } from '@shared/entities';
 
 export interface IAppointmentRepository {
@@ -21,5 +22,8 @@ export interface IAppointmentRepository {
   ): Promise<IAppointment | null>;
   findAndCountAll(
     params: FindAppointmentsAndCountParams,
+  ): Promise<FindEntitiesAndCountResult<IAppointment>>;
+  findAllAppointments(
+    params: FindAllAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>>;
 }

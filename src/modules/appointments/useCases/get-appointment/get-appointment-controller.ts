@@ -11,12 +11,12 @@ export class GetAppointmentController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const { appointmentId: queryId, patientId } = appointmentParamsSchema.parse(
+    const { appointmentId, patientId } = appointmentParamsSchema.parse(
       this.request.params,
     );
 
     const appointment = await this.getAppointmentService.execute(
-      queryId,
+      appointmentId,
       patientId,
     );
 

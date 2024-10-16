@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from '@app/infra/prisma/client';
 import {
   FindEntitiesAndCountResult,
   IAppointment,
   FindAppointmentsAndCountParams,
+  FindAllAppointmentsAndCountParams,
 } from '@shared/entities';
 
 import { IAppointmentRepository } from '../interfaces/appointment';
@@ -30,40 +32,62 @@ export class AppointmentRepository implements IAppointmentRepository {
     });
   }
 
+  async findAllAppointments(
+    params: FindAllAppointmentsAndCountParams,
+  ): Promise<FindEntitiesAndCountResult<IAppointment>> {
+    const { skip, take, appointment_type, startDate, endDate } = params;
+
+    const where: any = {
+      appointment_type: appointment_type ? appointment_type : undefined,
+      scheduled_date: {
+        ...(startDate ? { gte: startDate } : {}),
+        ...(endDate ? { lte: endDate } : {}),
+      },
+    };
+
+    const totalAppointments = await prisma.appointment.count({ where });
+    const appointments = await prisma.appointment.findMany({
+      skip,
+      take,
+      where,
+      orderBy: {
+        scheduled_date: 'desc',
+      },
+      include: {
+        patient: true,
+      },
+    });
+
+    return {
+      count: totalAppointments,
+      rows: appointments,
+    };
+  }
+
   async findAndCountAll(
     params: FindAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>> {
-    const {
-      patientId,
-      skip,
-      take,
-      appointmentType: appointment_type,
-      startDate,
-      endDate,
-    } = params;
+    const { patientId, skip, take, appointment_type, startDate, endDate } =
+      params;
+
+    const where: any = {
+      patient_id: patientId,
+      ...(appointment_type && { appointment_type }),
+      ...(startDate && { scheduled_date: { gte: startDate } }),
+      ...(endDate && { scheduled_date: { lte: endDate } }),
+    };
 
     const count = await prisma.appointment.count({
-      where: {
-        patient_id: patientId,
-        appointment_type: appointment_type ? appointment_type : undefined,
-        created_at: {
-          ...(startDate ? { gte: startDate } : {}),
-          ...(endDate ? { lte: endDate } : {}),
-        },
+      where,
+      orderBy: {
+        scheduled_date: 'desc',
       },
     });
 
     const appointments = await prisma.appointment.findMany({
       skip,
       take,
-      where: {
-        patient_id: patientId,
-        appointment_type: appointment_type ? appointment_type : undefined,
-        created_at: {
-          ...(startDate ? { gte: startDate } : {}),
-          ...(endDate ? { lte: endDate } : {}),
-        },
-      },
+      where,
       orderBy: {
         created_at: 'desc',
       },
