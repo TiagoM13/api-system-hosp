@@ -16,6 +16,9 @@ export const CPF_EXISTS = 'O CPF já existe.';
 export const INVALID_BIRTH_DATE = 'Data de nascimento inválida.';
 export const PATIENT_NOT_FOUND = 'Paciente não encontrado.';
 
+// Appointment
+export const APPOINTMENT_NOT_FOUND = 'Consulta não encontrada.';
+
 // Paginate Params
 export const INVALID_PAGE_NUMBER = 'Número de página inválido.';
 export const INVALID_NUMBER_ITEMS_PER_PAGE =

@@ -1,4 +1,8 @@
 import { AppError } from '@app/errors/app-client';
+import {
+  APPOINTMENT_NOT_FOUND,
+  PATIENT_NOT_FOUND,
+} from '@shared/constants/messages';
 import { IAppointment } from '@shared/entities';
 import {
   PatientRepository,
@@ -18,13 +22,14 @@ export class UpdateAppointmentService {
     const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {
-      throw new AppError('Patient not found.');
+      throw new AppError(PATIENT_NOT_FOUND, 404);
     }
 
-    const query = await this.appointmentRepository.findById(appointmentId);
+    const appointment =
+      await this.appointmentRepository.findById(appointmentId);
 
-    if (patientId !== query?.patient_id) {
-      throw new AppError('Query not found.');
+    if (patientId !== appointment?.patient_id) {
+      throw new AppError(APPOINTMENT_NOT_FOUND, 404);
     }
 
     // Validate Scheduled date

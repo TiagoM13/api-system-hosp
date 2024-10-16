@@ -1,4 +1,5 @@
 import { AppError } from '@app/errors/app-client';
+import { PATIENT_NOT_FOUND } from '@shared/constants/messages';
 import { IAppointment } from '@shared/entities';
 import {
   PatientRepository,
@@ -18,7 +19,7 @@ export class CreateAppointmentService {
     const patient = await this.patientRepository.findById(id);
 
     if (!patient) {
-      throw new AppError('Patient not found.');
+      throw new AppError(PATIENT_NOT_FOUND, 404);
     }
 
     const now = new Date();
