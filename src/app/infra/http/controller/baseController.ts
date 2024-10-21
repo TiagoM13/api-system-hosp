@@ -46,11 +46,11 @@ export abstract class BaseController {
     return this.jsonResponse(401, message || 'Unauthorized');
   }
 
-  notFound(message: string): Response {
+  protected notFound(message: string): Response {
     return this.response.status(404).send({ message: message || 'Not Found' });
   }
 
-  internalServerError(message: string) {
+  protected internalServerError(message: string) {
     return this.response
       .status(500)
       .send({ message: message || 'Internal Server Error' });

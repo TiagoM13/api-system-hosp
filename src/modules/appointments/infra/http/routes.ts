@@ -12,6 +12,7 @@ import {
   makeGetAppointmentController,
   makeListAllAppointmentsController,
   makeUpdateAppointmentController,
+  makeUpdateAppointmentStatusController,
 } from '@shared/factories/controllers';
 import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
 
@@ -22,12 +23,10 @@ export const appointmentRoutes = async (app: FastifyInstance) => {
     'preHandler',
     verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
   );
-
   app.get(
     '/appointments/list-all',
     bindController(makeListAllAppointmentsController()),
   );
-
   app.get(
     '/patients/:patientId/appointments',
     bindController(makeGetAllAppointmentsController()),
@@ -43,5 +42,9 @@ export const appointmentRoutes = async (app: FastifyInstance) => {
   app.put(
     '/patients/:patientId/appointments/:appointmentId',
     bindController(makeUpdateAppointmentController()),
+  );
+  app.put(
+    '/patients/:patientId/appointments/:appointmentId/status',
+    bindController(makeUpdateAppointmentStatusController()),
   );
 };

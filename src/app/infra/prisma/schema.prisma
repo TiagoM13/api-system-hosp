@@ -55,6 +55,7 @@ model Appointment {
   examination       String?
   diagnosis_summary String?
   scheduled_date    DateTime
+  status            String   @default("pendente")
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt()
 

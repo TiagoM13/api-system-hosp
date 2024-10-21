@@ -42,10 +42,6 @@ export class GetAllAppointmentsService {
 
     const offset = (page - 1) * items_per_page;
 
-    // Adiciona logs para depuração
-    console.log('Start Date:', start_date);
-    console.log('End Date:', end_date);
-
     const appointments = await this.appointmentRepository.findAndCountAll({
       patientId: patient_id,
       skip: offset,

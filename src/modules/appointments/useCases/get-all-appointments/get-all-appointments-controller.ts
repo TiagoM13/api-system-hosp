@@ -1,7 +1,10 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { appointmentParamId, schemaQuery } from '@modules/appointments/schemas';
+import {
+  appointmentParamId,
+  appointmentQuerySchema,
+} from '@modules/appointments/schemas';
 
 import { GetAllAppointmentsService } from './get-all-appointments-service';
 
@@ -14,7 +17,7 @@ export class GetAllAppointmentsController extends BaseController {
 
   protected async handle(): Promise<FastifyReply> {
     const { patientId } = appointmentParamId.parse(this.request.params);
-    const query = schemaQuery.parse(this.request.query);
+    const query = appointmentQuerySchema.parse(this.request.query);
 
     const results = await this.getAllAppointmentsService.execute({
       patient_id: patientId,

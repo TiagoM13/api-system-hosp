@@ -22,3 +22,4 @@ export * from './appointment/make-get-all-appointments-controller';
 export * from './appointment/make-list-all-appointments-controller';
 export * from './appointment/make-get-appointment-controller';
 export * from './appointment/make-update-appointment-controller';
+export * from './appointment/make-update-appointment-status-controller';

@@ -6,6 +6,7 @@ import {
   FindAppointmentsAndCountParams,
   FindAllAppointmentsAndCountParams,
 } from '@shared/entities';
+import { AppointmentStatus } from '@shared/enums';
 
 import { IAppointmentRepository } from '../interfaces/appointment';
 
@@ -140,6 +141,18 @@ export class AppointmentRepository implements IAppointmentRepository {
       where: { id: appointment_id },
       data: {
         ...data,
+      },
+    });
+  }
+
+  async updateAppointmentStatus(
+    appointment_id: number,
+    status: AppointmentStatus,
+  ): Promise<IAppointment> {
+    return await prisma.appointment.update({
+      where: { id: appointment_id },
+      data: {
+        status,
       },
     });
   }
