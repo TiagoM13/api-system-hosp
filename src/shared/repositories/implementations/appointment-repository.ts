@@ -56,6 +56,7 @@ export class AppointmentRepository implements IAppointmentRepository {
       },
       include: {
         patient: true,
+        doctor: true,
       },
     });
 
@@ -92,6 +93,9 @@ export class AppointmentRepository implements IAppointmentRepository {
       orderBy: {
         created_at: 'desc',
       },
+      include: {
+        doctor: true,
+      },
     });
 
     return {
@@ -103,23 +107,8 @@ export class AppointmentRepository implements IAppointmentRepository {
   async findById(appointment_id: number): Promise<IAppointment | null> {
     return prisma.appointment.findUnique({
       where: { id: appointment_id },
-    });
-  }
-
-  async count(
-    patientId: string,
-    appointment_type?: string,
-    startDate?: Date,
-    endDate?: Date,
-  ): Promise<number> {
-    return await prisma.appointment.count({
-      where: {
-        patient_id: patientId,
-        appointment_type: appointment_type ? appointment_type : undefined,
-        created_at: {
-          ...(startDate ? { gte: startDate } : {}),
-          ...(endDate ? { lte: endDate } : {}),
-        },
+      include: {
+        doctor: true,
       },
     });
   }

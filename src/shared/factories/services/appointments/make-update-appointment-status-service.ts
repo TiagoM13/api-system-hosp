@@ -1,6 +1,8 @@
 import { UpdateAppointmentStatusService } from '@modules/appointments/useCases/update-appointment-status/update-appointment-status-service';
-import { makeAppointmentRepository } from '@shared/factories/repositories/make-appointment-repository';
-import { makePatientRepository } from '@shared/factories/repositories/make-patient-repository';
+import {
+  makeAppointmentRepository,
+  makePatientRepository,
+} from '@shared/factories/repositories';
 
 export const makeUpdateAppointmentStatusService =
   (): UpdateAppointmentStatusService => {

@@ -6,6 +6,7 @@ export type IAppointment = {
   scheduled_date: Date;
   created_at?: Date;
   updated_at?: Date;
-  patient_id: string;
+  patient_id?: string;
   status?: string;
+  doctor_id: number;
 };

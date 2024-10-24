@@ -18,11 +18,11 @@ import { makeUserRepository } from '@shared/factories/repositories/make-user-rep
 
 export const appointmentRoutes = async (app: FastifyInstance) => {
   app.addHook('preHandler', updateLastAccess(makeUserRepository()));
-
   app.addHook(
     'preHandler',
     verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
   );
+
   app.get(
     '/appointments/list-all',
     bindController(makeListAllAppointmentsController()),
