@@ -39,16 +39,21 @@ export class DoctorRepository implements IDoctorRepository {
     });
   }
 
-  async findByEmailOrCrm(
-    email?: string,
-    crm?: string,
-  ): Promise<IDoctor | null> {
+  async findByEmailOrCrm(email: string, crm: string): Promise<IDoctor | null> {
     return await prisma.doctor.findFirst({
       where: {
         OR: [
           { email: email ? email : undefined },
           { crm: crm ? crm : undefined },
         ],
+      },
+    });
+  }
+
+  async findByCNS(cns: string): Promise<IDoctor | null> {
+    return await prisma.doctor.findFirst({
+      where: {
+        cns,
       },
     });
   }

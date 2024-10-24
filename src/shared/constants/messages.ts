@@ -18,6 +18,8 @@ export const PATIENT_NOT_FOUND = 'Paciente não encontrado.';
 
 // Appointment
 export const APPOINTMENT_NOT_FOUND = 'Consulta não encontrada.';
+export const APPOINTMENT_STATUS_CANNOT_BE_CHANGED =
+  'Não é possível alterar o status de uma consulta que já foi cancelada ou concluída.';
 
 // Paginate Params
 export const INVALID_PAGE_NUMBER = 'Número de página inválido.';
@@ -26,3 +28,8 @@ export const INVALID_NUMBER_ITEMS_PER_PAGE =
 
 // Doctor
 export const DOCTOR_NOT_FOUND = 'Médico não encontrado.';
+export const DOCTOR_INACTIVE = 'Médico inativo, por favor tente novamente.';
+export const WORKING_DAY_MIN =
+  'O valor mínimo para os dias de trabalho é 0 (domingo).';
+export const WORKING_DAY_MAX =
+  'O valor máximo para os dias de trabalho é 6 (sábado).';

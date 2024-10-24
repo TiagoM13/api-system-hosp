@@ -1,6 +1,7 @@
 import { AppError } from '@app/errors/app-client';
 import {
   APPOINTMENT_NOT_FOUND,
+  APPOINTMENT_STATUS_CANNOT_BE_CHANGED,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
 import { IAppointment } from '@shared/entities';
@@ -35,7 +36,7 @@ export class UpdateAppointmentStatusService {
     const appointment =
       await this.appointmentRepository.findById(appointmentId);
 
-    if (!appointment) {
+    if (patientId !== appointment?.patient_id) {
       throw new AppError(APPOINTMENT_NOT_FOUND, 404);
     }
 
@@ -43,9 +44,7 @@ export class UpdateAppointmentStatusService {
       appointment.status === AppointmentStatus.CANCELLED ||
       appointment.status === AppointmentStatus.COMPLETED
     ) {
-      throw new AppError(
-        'Não é possível alterar o status de uma consulta que já foi cancelada ou concluída.',
-      );
+      throw new AppError(APPOINTMENT_STATUS_CANNOT_BE_CHANGED);
     }
 
     if (appointment.status === dto.status) {

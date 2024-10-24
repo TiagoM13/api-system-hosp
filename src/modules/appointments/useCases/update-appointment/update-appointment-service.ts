@@ -2,6 +2,8 @@ import { AppError } from '@app/errors/app-client';
 import { AppointmentDataType } from '@modules/appointments/schemas';
 import {
   APPOINTMENT_NOT_FOUND,
+  DOCTOR_INACTIVE,
+  DOCTOR_NOT_FOUND,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
 import { Status } from '@shared/enums';
@@ -42,14 +44,11 @@ export class UpdateAppointmentService {
     const doctor = await this.doctorRepository.findById(data.doctor_id);
 
     if (!doctor) {
-      throw new AppError(
-        'Médico não encontrado, por favor verifique novamente.',
-        404,
-      );
+      throw new AppError(DOCTOR_NOT_FOUND, 404);
     }
 
     if (doctor.status === Status.INACTIVE) {
-      throw new AppError('Médico inativo, por favor selecione  outro médico.');
+      throw new AppError(DOCTOR_INACTIVE);
     }
 
     const updatedAppointment = await this.appointmentRepository.update(

@@ -10,6 +10,8 @@ export const NameFieldRequired = z
 
 export const OptionalStringField = z.string().nullable().optional();
 
+export const MaxLengthText = 'O campo deve ter no máximo 255 caracteres';
+export const MinLengthText = 'O campo deve ter no mínimo 3 caracteres';
 export const RequiredField = 'O campo é obrigatório';
 export const MaxLengthFieldPhone =
   'O número de telefone deve ter no máximo 11 dígitos.';
@@ -21,3 +23,6 @@ export const MinDateField =
 export const InvalidDateField =
   'Data inválida, por favor insira uma data válida';
 export const PositiveNumber = 'O número deve ser um número positivo';
+
+export const MinLengthPassword = 'A senha deve ter no mínimo 6 caracteres';
+export const MaxLengthPassword = 'A senha deve ter no máximo 20 caracteres';
