@@ -2,7 +2,7 @@ import {
   type FindEntitiesAndCountParams,
   type FindEntitiesAndCountResult,
   IPatient,
-} from '../../entities';
+} from '@shared/entities';
 
 export interface IPatientRepository {
   findAll(

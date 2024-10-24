@@ -13,11 +13,11 @@ import {
   makeGetDoctorController,
   makeUpdateDoctorController,
 } from '@shared/factories/controllers';
-import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
+import { makeUserRepository } from '@shared/factories/repositories';
 
 export const doctorRoutes = async (app: FastifyInstance) => {
-  app.addHook('preHandler', updateLastAccess(makeUserRepository()));
   app.addHook('preHandler', verifyAuthorization([Role.ADMIN]));
+  app.addHook('preHandler', updateLastAccess(makeUserRepository()));
 
   app.get('/doctors', bindController(makeGetAllDoctorsController()));
   app.get('/doctors/:id', bindController(makeGetDoctorController()));

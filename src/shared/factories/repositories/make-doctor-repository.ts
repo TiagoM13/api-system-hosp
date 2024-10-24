@@ -1,4 +1,4 @@
-import { DoctorRepository } from '@shared/repositories/implementations/doctor-repository';
+import { DoctorRepository } from '@shared/repositories/implementations';
 import { IDoctorRepository } from '@shared/repositories/interfaces/doctor';
 
 export const makeDoctorRepoistory = (): IDoctorRepository => {

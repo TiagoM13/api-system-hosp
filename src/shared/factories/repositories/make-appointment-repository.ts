@@ -1,4 +1,4 @@
-import { AppointmentRepository } from '@shared/repositories/implementations/appointment-repository';
+import { AppointmentRepository } from '@shared/repositories/implementations';
 import { IAppointmentRepository } from '@shared/repositories/interfaces/appointment';
 
 export const makeAppointmentRepository = (): IAppointmentRepository => {

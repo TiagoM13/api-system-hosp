@@ -14,7 +14,7 @@ import {
   makeGetUserController,
   makeUpdateUserController,
 } from '@shared/factories/controllers';
-import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
+import { makeUserRepository } from '@shared/factories/repositories';
 
 const userRoutes = async (app: FastifyInstance) => {
   app.addHook('preHandler', updateLastAccess(makeUserRepository()));

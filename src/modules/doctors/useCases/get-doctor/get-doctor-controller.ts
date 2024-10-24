@@ -1,7 +1,7 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { paramIdSchema } from '@shared/utils';
+import { intIdParamSchema } from '@shared/utils';
 
 import { GetDoctorService } from './get-doctor-service';
 
@@ -11,7 +11,7 @@ export class GetDoctorController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const { id } = paramIdSchema.parse(this.request.params);
+    const { id } = intIdParamSchema.parse(this.request.params);
 
     const doctor = await this.getDoctorService.execute(id);
 

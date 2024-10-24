@@ -9,6 +9,7 @@ export const USER_INACTIVE =
   'Usuário inativo! Você está sem acesso no momento.';
 export const EMAIL_INVALID = 'E-mail inválido.';
 export const PASSWORD_INVALID = 'Senha inválida.';
+export const INCONPATIBLE_PASSWORDS = 'Confirme se as senhas são iguais.';
 
 // Patient
 export const CNS_EXISTS = 'O CNS já existe.';
