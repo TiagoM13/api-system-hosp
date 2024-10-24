@@ -5,3 +5,4 @@ export * from './metadata';
 export * from './params';
 export * from './paginate';
 export * from './entities';
+export * from './doctor';

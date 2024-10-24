@@ -23,3 +23,6 @@ export const APPOINTMENT_NOT_FOUND = 'Consulta não encontrada.';
 export const INVALID_PAGE_NUMBER = 'Número de página inválido.';
 export const INVALID_NUMBER_ITEMS_PER_PAGE =
   'Número inválido de itens por página.';
+
+// Doctor
+export const DOCTOR_NOT_FOUND = 'Médico não encontrado.';
