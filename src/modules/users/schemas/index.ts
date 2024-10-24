@@ -1,10 +1,14 @@
 import z from 'zod';
 
-import { Role } from '@shared/enums/role';
-import { Status } from '@shared/enums/status';
+import { Role, Status } from '@shared/enums';
+import {
+  MaxLengthPassword,
+  MinLengthPassword,
+  NameFieldRequired,
+} from '@shared/utils';
 
 export const userDataSchema = z.object({
-  name: z.string().min(3).max(255).trim(),
+  name: NameFieldRequired,
   email: z.string().email().trim(),
   role: z.nativeEnum(Role),
   status: z.nativeEnum(Status).optional(),
@@ -12,8 +16,16 @@ export const userDataSchema = z.object({
 });
 
 export const changePasswordUserSchema = z.object({
-  password: z.string().min(6).max(20).trim(),
-  confirm_password: z.string().min(6).max(20).trim(),
+  password: z
+    .string()
+    .min(6, MinLengthPassword)
+    .max(20, MaxLengthPassword)
+    .trim(),
+  confirm_password: z
+    .string()
+    .min(6, MinLengthPassword)
+    .max(20, MaxLengthPassword)
+    .trim(),
 });
 
 export type UserDataType = z.infer<typeof userDataSchema>;

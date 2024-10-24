@@ -59,8 +59,31 @@ model Appointment {
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt()
 
-  patient    Patient @relation(fields: [patient_id], references: [id])
+  doctor_id  Int
+  doctor     Doctor  @relation(fields: [doctor_id], references: [id])
   patient_id String
+  patient    Patient @relation(fields: [patient_id], references: [id])
 
   @@map("appointments")
+}
+
+model Doctor {
+  id           Int           @id @default(autoincrement())
+  name         String
+  sex          String
+  crm          String        @unique
+  cbo          String?
+  cns          String?       @unique
+  phone        String?
+  email        String?       @unique
+  birth_date   DateTime
+  avatar_url   String?
+  specialty    String
+  working_days Int[]
+  status       String        @default("ativo")
+  appointments Appointment[]
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+
+  @@map("doctors")
 }

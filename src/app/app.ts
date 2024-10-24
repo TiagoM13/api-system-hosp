@@ -12,6 +12,7 @@ import {
   uploadRoutes,
   userRoutes,
   authRoutes,
+  doctorRoutes,
 } from '@modules/exports';
 
 import { env } from '../env';
@@ -43,3 +44,4 @@ app.register(userRoutes);
 app.register(patientRoutes);
 app.register(appointmentRoutes);
 app.register(uploadRoutes);
+app.register(doctorRoutes);

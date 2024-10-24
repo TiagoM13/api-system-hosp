@@ -12,7 +12,7 @@ import {
   makeUpdatePatientController,
   makeCreatePatientController,
 } from '@shared/factories/controllers';
-import { makeUserRepository } from '@shared/factories/repositories/make-user-repository';
+import { makeUserRepository } from '@shared/factories/repositories';
 
 export const patientRoutes = async (app: FastifyInstance) => {
   app.addHook('preHandler', updateLastAccess(makeUserRepository()));

@@ -23,3 +23,10 @@ export * from './appointment/make-list-all-appointments-controller';
 export * from './appointment/make-get-appointment-controller';
 export * from './appointment/make-update-appointment-controller';
 export * from './appointment/make-update-appointment-status-controller';
+
+// doctors
+export * from './doctor/make-create-doctor-controller';
+export * from './doctor/make-get-all-doctors-controller';
+export * from './doctor/make-get-doctor-controller';
+export * from './doctor/make-update-doctor-controller';
+export * from './doctor/make-delete-doctor-controller';

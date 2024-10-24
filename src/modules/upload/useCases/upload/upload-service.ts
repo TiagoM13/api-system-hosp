@@ -10,7 +10,7 @@ import { AppError } from '@app/errors/app-client';
 const pump = util.promisify(pipeline);
 
 export class UploadService {
-  async execute(uploadData: MultipartFile | undefined) {
+  async execute(uploadData: MultipartFile | undefined): Promise<string> {
     if (!uploadData) {
       throw new AppError('No file uploaded');
     }
@@ -30,10 +30,6 @@ export class UploadService {
 
     await pump(uploadData.file, writeStream);
 
-    return { fileName };
+    return fileName;
   }
-}
-
-export function makeUploadService(): UploadService {
-  return new UploadService();
 }

@@ -1,6 +1,5 @@
 import { UpdateUserController } from '@modules/users/useCases/update-user/update-user-controller';
-
-import { makeUpdateUserService } from '../../services/user/make-update-user-service';
+import { makeUpdateUserService } from '@shared/factories/services/user/make-update-user-service';
 
 export const makeUpdateUserController = (): UpdateUserController => {
   return new UpdateUserController(makeUpdateUserService());

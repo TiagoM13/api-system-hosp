@@ -19,6 +19,7 @@ export const appointmentDataSchema = z.object({
   diagnosis_summary: z.string().min(3).max(255).optional(),
   scheduled_date: z.coerce.date(),
   status: z.nativeEnum(AppointmentStatus).optional(),
+  doctor_id: z.number().int(),
 });
 
 export const appointmentQuerySchema = z
