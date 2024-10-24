@@ -1,7 +1,6 @@
 import { GetPatientService } from '@modules/patients/useCases/get-patient/get-patient-service';
-
-import { MakePatientRepository } from '../../repositories/make-patient-repository';
+import { makePatientRepository } from '@shared/factories/repositories';
 
 export const makeGetPatientService = (): GetPatientService => {
-  return new GetPatientService(MakePatientRepository());
+  return new GetPatientService(makePatientRepository());
 };

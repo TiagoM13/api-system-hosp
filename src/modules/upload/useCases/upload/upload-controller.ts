@@ -20,7 +20,7 @@ export class UploadController extends BaseController {
       return this.response.status(400).send();
     }
 
-    const { fileName } = await this.uploadService.execute(file);
+    const fileName = await this.uploadService.execute(file);
 
     const fullUrl = this.request.protocol
       .concat('://')

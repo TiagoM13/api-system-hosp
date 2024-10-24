@@ -1,5 +1,8 @@
 import { AppError } from '@app/errors/app-client';
-import { USER_NOT_FOUND } from '@shared/constants/messages';
+import {
+  INCONPATIBLE_PASSWORDS,
+  USER_NOT_FOUND,
+} from '@shared/constants/messages';
 import { UserRepository } from '@shared/repositories/implementations';
 import { hashPassword } from '@shared/utils/generate-password';
 
@@ -18,7 +21,7 @@ export class ChangePasswordUserService {
     const isVerifyPassword = password === confirm_password;
 
     if (!isVerifyPassword) {
-      throw new AppError('Confirme se as senhas são iguais.');
+      throw new AppError(INCONPATIBLE_PASSWORDS);
     }
 
     const hashedPassword = await hashPassword(password);

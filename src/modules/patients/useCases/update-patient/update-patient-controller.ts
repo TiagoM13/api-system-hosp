@@ -1,7 +1,7 @@
 import { FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { paramSchema } from '@shared/utils';
+import { uuidParamSchema } from '@shared/utils';
 
 import { patientDataSchema } from '../../schemas/body';
 import { UpdatePatientService } from './update-patient-service';
@@ -12,7 +12,7 @@ export class UpdatePatientController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const { id } = paramSchema.parse(this.request.params);
+    const { id } = uuidParamSchema.parse(this.request.params);
     const data = patientDataSchema.parse(this.request.body);
 
     const updatedPatient = await this.updatePatientService.execute(id, data);

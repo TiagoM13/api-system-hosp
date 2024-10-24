@@ -66,7 +66,7 @@ export class PatientRepository implements IPatientRepository {
       where: { id },
       include: {
         _count: true,
-        queries: true,
+        appointments: true,
       },
     });
 

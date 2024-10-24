@@ -7,11 +7,12 @@ import fastifyBcrypt from 'fastify-bcrypt';
 import { resolve } from 'node:path';
 
 import {
-  routesPatients,
-  routesQueries,
-  routeUpload,
+  patientRoutes,
+  appointmentRoutes,
+  uploadRoutes,
   userRoutes,
   authRoutes,
+  doctorRoutes,
 } from '@modules/exports';
 
 import { env } from '../env';
@@ -40,6 +41,7 @@ app.register(fastifyBcrypt, {
 
 app.register(authRoutes);
 app.register(userRoutes);
-app.register(routesPatients);
-app.register(routesQueries);
-app.register(routeUpload);
+app.register(patientRoutes);
+app.register(appointmentRoutes);
+app.register(uploadRoutes);
+app.register(doctorRoutes);
