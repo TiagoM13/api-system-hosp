@@ -11,9 +11,9 @@ export class ForgotPasswordController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const { email } = forgotPasswordSchema.parse(this.request.body);
+    const data = forgotPasswordSchema.parse(this.request.body);
 
-    await this.forgotPasswordService.execute(email);
+    await this.forgotPasswordService.execute(data);
 
     return this.created({
       success: true,

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
+import { ForgetPasswordType } from '@modules/auth/schemas';
 import { getMailClient } from '@shared/configs/mailer';
 import { USER_INACTIVE, USER_NOT_FOUND } from '@shared/constants/messages';
 import { UserRepository } from '@shared/repositories/implementations';
@@ -14,7 +15,7 @@ export class ForgotPasswordService {
     this.userRepository = userRepository;
   }
 
-  async execute(email: string) {
+  async execute({ email }: ForgetPasswordType) {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {

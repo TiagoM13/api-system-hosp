@@ -3,6 +3,7 @@ import {
   INCONPATIBLE_PASSWORDS,
   USER_NOT_FOUND,
 } from '@shared/constants/messages';
+import { IUser } from '@shared/entities';
 import { UserRepository } from '@shared/repositories/implementations';
 import { hashPassword } from '@shared/utils/generate-password';
 
@@ -11,7 +12,11 @@ export class ChangePasswordUserService {
     this.userRepository = userRepository;
   }
 
-  async execute(id: number, password: string, confirm_password: string) {
+  async execute(
+    id: number,
+    password: string,
+    confirm_password: string,
+  ): Promise<IUser> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
@@ -26,7 +31,7 @@ export class ChangePasswordUserService {
 
     const hashedPassword = await hashPassword(password);
 
-    await this.userRepository.changePassword(user.id!, {
+    return await this.userRepository.changePassword(user.id!, {
       ...user,
       password: hashedPassword,
     });

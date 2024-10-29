@@ -18,7 +18,7 @@ export class UpdatePatientController extends BaseController {
     const updatedPatient = await this.updatePatientService.execute(id, data);
 
     return this.ok({
-      succes: true,
+      success: true,
       patient: updatedPatient,
     });
   }
