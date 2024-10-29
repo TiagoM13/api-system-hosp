@@ -1,6 +1,7 @@
 import z from 'zod';
 
 import { AppointmentStatus, AppointmentType } from '@shared/enums';
+import { MAX_LENGTH_TEXT, MIN_LENGTH_TEXT } from '@shared/utils';
 
 export const appointmentParamId = z.object({
   patientId: z.string().uuid(),
@@ -15,8 +16,16 @@ export const appointmentDataSchema = z.object({
   id: z.number().int().optional(),
   patient_id: z.string().uuid().optional(),
   appointment_type: z.nativeEnum(AppointmentType),
-  examination: z.string().min(3).max(255).optional(),
-  diagnosis_summary: z.string().min(3).max(255).optional(),
+  examination: z
+    .string()
+    .min(3, MIN_LENGTH_TEXT)
+    .max(255, MAX_LENGTH_TEXT)
+    .optional(),
+  diagnosis_summary: z
+    .string()
+    .min(3, MIN_LENGTH_TEXT)
+    .max(255, MAX_LENGTH_TEXT)
+    .optional(),
   scheduled_date: z.coerce.date(),
   status: z.nativeEnum(AppointmentStatus).optional(),
   doctor_id: z.number().int(),

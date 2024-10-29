@@ -2,21 +2,21 @@ import { z } from 'zod';
 
 import { Sex, MaterialStatus } from '@shared/enums';
 import {
-  NameFieldRequired,
+  NAME_FIELD_REQUIRED,
   calculateAge,
-  OptionalStringField,
-  RequiredField,
-  InvalidDateField,
-  MinDateField,
-  MaxDateField,
-  MinLengthCPF,
-  MinLengthCNS,
-  MaxLengthFieldPhone,
-  PositiveNumber,
+  OPTIONAL_STRING_FIELD,
+  REQUIRED_FIELD,
+  INVALID_DATE_FIELD,
+  MIN_DATE_FIELD,
+  MAX_DATE_FIELD,
+  MIN_LENGTH_CPF,
+  MIN_LENGTH_CNS,
+  MAX_LENGTH_FIELD_PHONE,
+  POSITIVE_NUMBER,
 } from '@shared/utils';
 
 export const patientDataSchema = z.object({
-  name: NameFieldRequired,
+  name: NAME_FIELD_REQUIRED,
   birth_date: z
     .preprocess(
       arg => {
@@ -27,50 +27,50 @@ export const patientDataSchema = z.object({
         return arg;
       },
       z.date({
-        invalid_type_error: InvalidDateField,
-        required_error: RequiredField,
+        invalid_type_error: INVALID_DATE_FIELD,
+        required_error: REQUIRED_FIELD,
       }),
     )
     .refine(data => data <= new Date(), {
-      message: MinDateField,
+      message: MIN_DATE_FIELD,
     })
     .refine(data => calculateAge(data) <= 105, {
-      message: MaxDateField,
+      message: MAX_DATE_FIELD,
     }),
   sex: z.nativeEnum(Sex),
-  cpf: OptionalStringField.refine(value => !value || value.length === 11, {
-    message: MinLengthCPF,
+  cpf: OPTIONAL_STRING_FIELD.refine(value => !value || value.length === 11, {
+    message: MIN_LENGTH_CPF,
   }),
-  cns: OptionalStringField.refine(value => !value || value.length === 15, {
-    message: MinLengthCNS,
+  cns: OPTIONAL_STRING_FIELD.refine(value => !value || value.length === 15, {
+    message: MIN_LENGTH_CNS,
   }),
-  address: OptionalStringField,
-  mother_name: OptionalStringField,
-  father_name: OptionalStringField,
+  address: OPTIONAL_STRING_FIELD,
+  mother_name: OPTIONAL_STRING_FIELD,
+  father_name: OPTIONAL_STRING_FIELD,
   material_status: z.nativeEnum(MaterialStatus).nullable().optional(),
-  occupation: OptionalStringField,
-  email: OptionalStringField,
-  phone: OptionalStringField.refine(value => !value || value.length === 11, {
-    message: MaxLengthFieldPhone,
+  occupation: OPTIONAL_STRING_FIELD,
+  email: OPTIONAL_STRING_FIELD,
+  phone: OPTIONAL_STRING_FIELD.refine(value => !value || value.length === 11, {
+    message: MAX_LENGTH_FIELD_PHONE,
   }),
-  contact_emergency: OptionalStringField.refine(
+  contact_emergency: OPTIONAL_STRING_FIELD.refine(
     value => !value || value.length === 11,
     {
-      message: MaxLengthFieldPhone,
+      message: MAX_LENGTH_FIELD_PHONE,
     },
   ),
-  name_contact_emergency: OptionalStringField,
-  health_agent: OptionalStringField,
+  name_contact_emergency: OPTIONAL_STRING_FIELD,
+  health_agent: OPTIONAL_STRING_FIELD,
   height: z
     .number()
-    .positive({ message: PositiveNumber })
+    .positive({ message: POSITIVE_NUMBER })
     .min(50, { message: 'Altura mínima permitida é 50 cm' })
     .max(300, { message: 'Altura máxima permitida é 300 cm' })
     .nullable()
     .optional(),
   weight: z
     .number()
-    .positive({ message: PositiveNumber })
+    .positive({ message: POSITIVE_NUMBER })
     .min(0.5, { message: 'Peso mínimo permitido é 0.5 kg' })
     .max(500, { message: 'Peso máximo permitido é 500 kg' })
     .nullable()

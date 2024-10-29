@@ -2,13 +2,13 @@ import z from 'zod';
 
 import { Role, Status } from '@shared/enums';
 import {
-  MaxLengthPassword,
-  MinLengthPassword,
-  NameFieldRequired,
+  MAX_LENGTH_PASSWORD,
+  MIN_LENGTH_PASSWORD,
+  NAME_FIELD_REQUIRED,
 } from '@shared/utils';
 
 export const userDataSchema = z.object({
-  name: NameFieldRequired,
+  name: NAME_FIELD_REQUIRED,
   email: z.string().email().trim(),
   role: z.nativeEnum(Role),
   status: z.nativeEnum(Status).optional(),
@@ -18,13 +18,13 @@ export const userDataSchema = z.object({
 export const changePasswordUserSchema = z.object({
   password: z
     .string()
-    .min(6, MinLengthPassword)
-    .max(20, MaxLengthPassword)
+    .min(6, MIN_LENGTH_PASSWORD)
+    .max(20, MAX_LENGTH_PASSWORD)
     .trim(),
   confirm_password: z
     .string()
-    .min(6, MinLengthPassword)
-    .max(20, MaxLengthPassword)
+    .min(6, MIN_LENGTH_PASSWORD)
+    .max(20, MAX_LENGTH_PASSWORD)
     .trim(),
 });
 

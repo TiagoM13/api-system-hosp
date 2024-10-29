@@ -3,22 +3,22 @@ import z from 'zod';
 import { WORKING_DAY_MIN, WORKING_DAY_MAX } from '@shared/constants/messages';
 import { Sex, Status } from '@shared/enums';
 import {
-  InvalidDateField,
-  RequiredField,
-  MinDateField,
+  INVALID_DATE_FIELD,
+  REQUIRED_FIELD,
+  MIN_DATE_FIELD,
   calculateAge,
-  MaxDateField,
-  NameFieldRequired,
-  OptionalStringField,
-  MaxLengthFieldPhone,
-  MinLengthText,
-  MaxLengthText,
-  MinLengthCNS,
+  MAX_DATE_FIELD,
+  NAME_FIELD_REQUIRED,
+  OPTIONAL_STRING_FIELD,
+  MAX_LENGTH_FIELD_PHONE,
+  MIN_LENGTH_TEXT,
+  MAX_LENGTH_TEXT,
+  MIN_LENGTH_CNS,
 } from '@shared/utils';
 
 export const doctorDataSchema = z.object({
   id: z.number().int().optional(),
-  name: NameFieldRequired,
+  name: NAME_FIELD_REQUIRED,
   birth_date: z
     .preprocess(
       arg => {
@@ -29,30 +29,34 @@ export const doctorDataSchema = z.object({
         return arg;
       },
       z.date({
-        invalid_type_error: InvalidDateField,
-        required_error: RequiredField,
+        invalid_type_error: INVALID_DATE_FIELD,
+        required_error: REQUIRED_FIELD,
       }),
     )
     .refine(data => data <= new Date(), {
-      message: MinDateField,
+      message: MIN_DATE_FIELD,
     })
     .refine(data => calculateAge(data) <= 105, {
-      message: MaxDateField,
+      message: MAX_DATE_FIELD,
     }),
   sex: z.nativeEnum(Sex),
-  crm: z.string().min(3, MinLengthText),
-  email: OptionalStringField,
-  phone: OptionalStringField.refine(value => !value || value.length === 11, {
-    message: MaxLengthFieldPhone,
+  crm: z.string().min(3, MIN_LENGTH_TEXT),
+  email: OPTIONAL_STRING_FIELD,
+  phone: OPTIONAL_STRING_FIELD.refine(value => !value || value.length === 11, {
+    message: MAX_LENGTH_FIELD_PHONE,
   }),
-  cbo: OptionalStringField,
-  cns: OptionalStringField.refine(value => !value || value.length === 15, {
-    message: MinLengthCNS,
+  cbo: OPTIONAL_STRING_FIELD,
+  cns: OPTIONAL_STRING_FIELD.refine(value => !value || value.length === 15, {
+    message: MIN_LENGTH_CNS,
   }),
   avatar_url: z.string().nullable().optional(),
   status: z.nativeEnum(Status).optional(),
   appointment_id: z.string().uuid().optional(),
-  specialty: z.string().min(3, MinLengthText).max(255, MaxLengthText).trim(),
+  specialty: z
+    .string()
+    .min(3, MIN_LENGTH_TEXT)
+    .max(255, MAX_LENGTH_TEXT)
+    .trim(),
   working_days: z.array(
     z.number().int().min(0, WORKING_DAY_MIN).max(6, WORKING_DAY_MAX),
   ),
