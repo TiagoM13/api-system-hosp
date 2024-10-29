@@ -15,6 +15,7 @@ export class ListAllAppointmentsService {
   }
 
   async execute({
+    name,
     page,
     items_per_page,
     appointment_type,
@@ -25,9 +26,10 @@ export class ListAllAppointmentsService {
 
     const offset = (page - 1) * items_per_page;
     const result = await this.appointmentRepository.findAllAppointments({
+      name,
       skip: offset,
       take: items_per_page,
-      appointment_type,
+      appointmentType: appointment_type,
       startDate: start_date,
       endDate: end_date,
     });

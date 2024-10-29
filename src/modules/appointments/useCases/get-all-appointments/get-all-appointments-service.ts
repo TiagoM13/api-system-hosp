@@ -46,7 +46,7 @@ export class GetAllAppointmentsService {
       patientId: patient_id,
       skip: offset,
       take: items_per_page,
-      appointment_type,
+      appointmentType: appointment_type,
       startDate: start_date,
       endDate: end_date,
     });

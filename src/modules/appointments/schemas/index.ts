@@ -24,6 +24,7 @@ export const appointmentDataSchema = z.object({
 
 export const appointmentQuerySchema = z
   .object({
+    name: z.string().optional(),
     page: z
       .string()
       .transform(val => parseInt(val, 10))

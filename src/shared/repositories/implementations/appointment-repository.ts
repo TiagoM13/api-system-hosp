@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Prisma } from '@prisma/client';
+
 import { prisma } from '@app/infra/prisma/client';
 import {
   FindEntitiesAndCountResult,
@@ -11,38 +13,19 @@ import { AppointmentStatus } from '@shared/enums';
 import { IAppointmentRepository } from '../interfaces/appointment';
 
 export class AppointmentRepository implements IAppointmentRepository {
-  async findAll(
-    patientId: string,
-    skip: number,
-    take: number,
-    appointment_type?: string,
-    startDate?: Date,
-    endDate?: Date,
-  ): Promise<IAppointment[]> {
-    return await prisma.appointment.findMany({
-      skip,
-      take,
-      where: {
-        patient_id: patientId,
-        appointment_type: appointment_type ? appointment_type : undefined,
-        created_at: {
-          ...(startDate ? { gte: startDate } : {}),
-          ...(endDate ? { lte: endDate } : {}),
-        },
-      },
-    });
-  }
-
   async findAllAppointments(
     params: FindAllAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>> {
-    const { skip, take, appointment_type, startDate, endDate } = params;
+    const { name, skip, take, appointmentType, startDate, endDate } = params;
 
-    const where: any = {
-      appointment_type: appointment_type ? appointment_type : undefined,
+    const where: Prisma.AppointmentWhereInput = {
+      appointment_type: appointmentType,
       scheduled_date: {
-        ...(startDate ? { gte: startDate } : {}),
-        ...(endDate ? { lte: endDate } : {}),
+        ...(startDate && { gte: startDate }),
+        ...(endDate && { lte: endDate }),
+      },
+      patient: {
+        ...(name && { name: { contains: name } }),
       },
     };
 
@@ -52,7 +35,7 @@ export class AppointmentRepository implements IAppointmentRepository {
       take,
       where,
       orderBy: {
-        scheduled_date: 'desc',
+        created_at: 'desc',
       },
       include: {
         patient: true,
@@ -69,12 +52,12 @@ export class AppointmentRepository implements IAppointmentRepository {
   async findAndCountAll(
     params: FindAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>> {
-    const { patientId, skip, take, appointment_type, startDate, endDate } =
+    const { patientId, skip, take, appointmentType, startDate, endDate } =
       params;
 
-    const where: any = {
+    const where: Prisma.AppointmentWhereInput = {
       patient_id: patientId,
-      ...(appointment_type && { appointment_type }),
+      ...(appointmentType && { appointment_type: appointmentType }),
       ...(startDate && { scheduled_date: { gte: startDate } }),
       ...(endDate && { scheduled_date: { lte: endDate } }),
     };

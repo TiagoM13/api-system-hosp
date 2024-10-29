@@ -1,5 +1,5 @@
 export interface FindEntitiesAndCountParams {
-  name: string | undefined;
+  name?: string;
   take: number;
   skip: number;
 }
@@ -9,19 +9,17 @@ export interface FindEntitiesAndCountResult<T> {
   rows: T[];
 }
 
-export interface FindAppointmentsAndCountParams {
+export interface FindAppointmentsAndCountParams
+  extends Omit<FindEntitiesAndCountParams, 'name'> {
   patientId: string;
-  skip: number;
-  take: number;
-  appointment_type?: string;
+  appointmentType?: string;
   startDate?: Date;
   endDate?: Date;
 }
 
-export interface FindAllAppointmentsAndCountParams {
-  skip: number;
-  take: number;
-  appointment_type?: string;
+export interface FindAllAppointmentsAndCountParams
+  extends FindEntitiesAndCountParams {
+  appointmentType?: string;
   startDate?: Date;
   endDate?: Date;
 }
