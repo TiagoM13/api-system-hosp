@@ -10,9 +10,9 @@ export interface IUserRepository {
   ): Promise<FindEntitiesAndCountResult<IUser>>;
   findById(id: number): Promise<IUser | null>;
   findByEmail(email: string): Promise<IUser | null>;
-  create(data: IUser): Promise<IUser>;
-  update(id: number, data: IUser): Promise<IUser>;
-  changePassword(id: number, data: IUser): Promise<IUser>;
+  create(dto: IUser): Promise<IUser>;
+  update(id: number, dto: Partial<IUser>): Promise<IUser>;
+  changePassword(id: number, dto: Partial<IUser>): Promise<IUser>;
   delete(id: number): Promise<IUser>;
   updateLastAccess(id: number): Promise<IUser>;
 }

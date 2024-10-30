@@ -10,15 +10,15 @@ import {
   hashPassword,
 } from '@shared/utils/generate-password';
 
-import { UserDataType } from '../../schemas';
+import { CreateUserDTO } from './create-user-schema';
 
 export class CreateUserService {
   constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute(data: UserDataType): Promise<IUser> {
-    const user = await this.userRepository.findByEmail(data.email);
+  async execute(dto: CreateUserDTO): Promise<IUser> {
+    const user = await this.userRepository.findByEmail(dto.email);
 
     if (user) {
       throw new AppError(EMAIL_IS_ALREADY_IN_USE);
@@ -28,7 +28,7 @@ export class CreateUserService {
     const hashedPassword = await hashPassword(provisionalPassword);
 
     const newUser = await this.userRepository.create({
-      ...data,
+      ...dto,
       password: hashedPassword,
     });
 

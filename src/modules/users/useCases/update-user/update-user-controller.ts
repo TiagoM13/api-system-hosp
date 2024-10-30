@@ -1,10 +1,10 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { userDataSchema } from '@modules/users/schemas';
 import { IUser } from '@shared/entities';
 import { intIdParamSchema } from '@shared/utils';
 
+import { updateUserSchema } from './update-user-schema';
 import { UpdateUserService } from './update-user-service';
 
 export class UpdateUserController extends BaseController {
@@ -14,12 +14,12 @@ export class UpdateUserController extends BaseController {
 
   async handle(): Promise<FastifyReply> {
     const { id } = intIdParamSchema.parse(this.request.params);
-    const data = userDataSchema.parse(this.request.body);
+    const dto = updateUserSchema.parse(this.request.body);
     const loggedInUser = this.request.user as IUser;
 
     const updatedUser = await this.updateUserService.execute(
       id,
-      data,
+      dto,
       loggedInUser,
     );
 

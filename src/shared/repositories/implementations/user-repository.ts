@@ -83,7 +83,7 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  async update(id: number, data: IUser): Promise<IUser> {
+  async update(id: number, data: Partial<IUser>): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
       data,
@@ -101,7 +101,7 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  async changePassword(id: number, data: IUser): Promise<IUser> {
+  async changePassword(id: number, data: Partial<IUser>): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
       data,

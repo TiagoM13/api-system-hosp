@@ -13,6 +13,6 @@ export interface IPatientRepository {
   findByCNS(cns: string): Promise<IPatient | null>;
   findFirstByCPF(id: string, cpf: string): Promise<IPatient | null>;
   findFirstByCNS(id: string, cpf: string): Promise<IPatient | null>;
-  create(data: IPatient): Promise<IPatient>;
-  update(id: string, data: IPatient): Promise<IPatient>;
+  create(dto: IPatient): Promise<IPatient>;
+  update(id: string, dto: Partial<IPatient>): Promise<IPatient>;
 }
