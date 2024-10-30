@@ -4,6 +4,7 @@ import {
   FindEntitiesAndCountResult,
   IDoctor,
 } from '@shared/entities';
+import { Status } from '@shared/enums';
 
 import { IDoctorRepository } from '../interfaces/doctor';
 
@@ -24,7 +25,7 @@ export class DoctorRepository implements IDoctorRepository {
         name: name ? { contains: name } : undefined,
       },
       orderBy: {
-        created_at: 'desc',
+        id: 'desc',
       },
     });
 
@@ -69,6 +70,16 @@ export class DoctorRepository implements IDoctorRepository {
       where: { id },
       data,
     });
+  }
+
+  async updateStatus(id: number, status: Status): Promise<string> {
+    const doctor = await prisma.doctor.update({
+      where: { id },
+      data: { status },
+      select: { status: true },
+    });
+
+    return doctor.status;
   }
 
   async delete(id: number): Promise<IDoctor> {

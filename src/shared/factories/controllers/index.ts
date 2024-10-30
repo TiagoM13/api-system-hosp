@@ -9,6 +9,7 @@ export * from './user/make-delete-user-controller';
 export * from './user/make-get-all-users-controller';
 export * from './user/make-get-user-controller';
 export * from './user/make-update-user-controller';
+export * from './user/make-update-user-status-controller';
 
 // patients
 export * from './patient/make-create-patient-controller';
@@ -30,3 +31,4 @@ export * from './doctor/make-get-all-doctors-controller';
 export * from './doctor/make-get-doctor-controller';
 export * from './doctor/make-update-doctor-controller';
 export * from './doctor/make-delete-doctor-controller';
+export * from './doctor/make-update-doctor-status-controller';
