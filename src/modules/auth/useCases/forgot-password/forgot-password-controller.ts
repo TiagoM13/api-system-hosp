@@ -1,8 +1,8 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { forgotPasswordSchema } from '@modules/auth/schemas';
 
+import { forgotPasswordSchema } from './forgot-password-schema';
 import { ForgotPasswordService } from './forgot-password-service';
 
 export class ForgotPasswordController extends BaseController {

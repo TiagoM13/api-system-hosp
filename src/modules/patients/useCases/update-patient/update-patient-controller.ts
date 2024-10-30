@@ -3,7 +3,7 @@ import { FastifyReply } from 'fastify';
 import { BaseController } from '@app/infra/http/controller/baseController';
 import { uuidParamSchema } from '@shared/utils';
 
-import { patientDataSchema } from '../../schemas/body';
+import { updatePatientSchema } from './update-patient-schema';
 import { UpdatePatientService } from './update-patient-service';
 
 export class UpdatePatientController extends BaseController {
@@ -13,9 +13,9 @@ export class UpdatePatientController extends BaseController {
 
   protected async handle(): Promise<FastifyReply> {
     const { id } = uuidParamSchema.parse(this.request.params);
-    const data = patientDataSchema.parse(this.request.body);
+    const dto = updatePatientSchema.parse(this.request.body);
 
-    const updatedPatient = await this.updatePatientService.execute(id, data);
+    const updatedPatient = await this.updatePatientService.execute(id, dto);
 
     return this.ok({
       success: true,

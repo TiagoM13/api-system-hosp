@@ -26,3 +26,8 @@ export const POSITIVE_NUMBER = 'O número deve ser um número positivo';
 
 export const MIN_LENGTH_PASSWORD = 'A senha deve ter no mínimo 6 caracteres';
 export const MAX_LENGTH_PASSWORD = 'A senha deve ter no máximo 20 caracteres';
+
+export const MIN_WEIGHT = 'Peso mínimo permitido é 0.5 kg';
+export const MAX_WEIGHT = 'Peso máximo permitido é 500 kg';
+export const MIN_HEIGHT = 'Altura mínima permitida é 50 cm';
+export const MAX_HEIGHT = 'Altura máxima permitida é 300 cm';

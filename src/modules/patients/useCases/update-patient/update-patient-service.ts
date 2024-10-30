@@ -7,39 +7,43 @@ import {
 import { IPatient } from '@shared/entities';
 import { PatientRepository } from '@shared/repositories/implementations';
 
-import { PatientDataType } from '../../schemas/body';
+import { UpdatePatientDTO } from './update-patient-schema';
 
 export class UpdatePatientService {
   constructor(private readonly patientRepository: PatientRepository) {
     this.patientRepository = patientRepository;
   }
 
-  async execute(id: string, data: PatientDataType): Promise<IPatient> {
+  async execute(id: string, dto: UpdatePatientDTO): Promise<IPatient> {
     const patient = await this.patientRepository.findById(id);
 
     if (!patient) {
       throw new AppError(PATIENT_NOT_FOUND);
     }
 
-    const { cpf, cns } = data;
-
-    if (cpf) {
-      const existingCpf = await this.patientRepository.findFirstByCPF(cpf, id);
+    if (dto.cpf) {
+      const existingCpf = await this.patientRepository.findFirstByCPF(
+        dto.cpf,
+        id,
+      );
 
       if (existingCpf) {
         throw new AppError(CPF_EXISTS);
       }
     }
 
-    if (cns) {
-      const existingCNS = await this.patientRepository.findFirstByCNS(cns, id);
+    if (dto.cns) {
+      const existingCNS = await this.patientRepository.findFirstByCNS(
+        dto.cns,
+        id,
+      );
 
       if (existingCNS) {
         throw new AppError(CNS_EXISTS);
       }
     }
 
-    const updatePatient = await this.patientRepository.update(id, data);
+    const updatePatient = await this.patientRepository.update(id, dto);
 
     return updatePatient;
   }

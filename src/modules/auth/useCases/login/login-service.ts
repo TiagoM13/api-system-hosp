@@ -8,14 +8,14 @@ import {
 } from '@shared/constants/messages';
 import { UserRepository } from '@shared/repositories/implementations';
 
-import { AuthenticationType } from '../../schemas';
+import { AuthenticationDTO } from './login-schema';
 
 export class LoginService {
   constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute({ email, password }: AuthenticationType) {
+  async execute({ email, password }: AuthenticationDTO) {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {

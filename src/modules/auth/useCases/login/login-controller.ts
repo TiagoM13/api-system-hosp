@@ -1,8 +1,8 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { authenticationSchema } from '@modules/auth/schemas';
 
+import { authenticationSchema } from './login-schema';
 import { LoginService } from './login-service';
 
 export class LoginController extends BaseController {

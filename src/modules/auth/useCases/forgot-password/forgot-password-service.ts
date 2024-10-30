@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
-import { ForgetPasswordType } from '@modules/auth/schemas';
 import { getMailClient } from '@shared/configs/mailer';
 import { USER_INACTIVE, USER_NOT_FOUND } from '@shared/constants/messages';
 import { UserRepository } from '@shared/repositories/implementations';
@@ -10,12 +9,14 @@ import {
   hashPassword,
 } from '@shared/utils/generate-password';
 
+import { ForgetPasswordDTO } from './forgot-password-schema';
+
 export class ForgotPasswordService {
   constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute({ email }: ForgetPasswordType) {
+  async execute({ email }: ForgetPasswordDTO) {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
