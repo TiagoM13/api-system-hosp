@@ -64,7 +64,7 @@ export class DoctorRepository implements IDoctorRepository {
     });
   }
 
-  async update(id: number, data: IDoctor): Promise<IDoctor> {
+  async update(id: number, data: Partial<IDoctor>): Promise<IDoctor> {
     return await prisma.doctor.update({
       where: { id },
       data,

@@ -1,8 +1,8 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { doctorDataSchema } from '@modules/doctors/schemas';
 
+import { createDoctorSchema } from './create-doctor-schema';
 import { CreateDoctorService } from './create-doctor-service';
 
 export class CreateDoctorController extends BaseController {
@@ -11,7 +11,7 @@ export class CreateDoctorController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const dto = doctorDataSchema.parse(this.request.body);
+    const dto = createDoctorSchema.parse(this.request.body);
 
     const doctor = await this.createDoctorService.execute(dto);
 
