@@ -43,7 +43,11 @@ export class PatientRepository implements IPatientRepository {
       where: { id },
       include: {
         _count: true,
-        appointments: true,
+        appointments: {
+          orderBy: {
+            scheduled_date: 'desc',
+          },
+        },
       },
     });
 
@@ -96,7 +100,7 @@ export class PatientRepository implements IPatientRepository {
     };
   }
 
-  async update(id: string, data: IPatient): Promise<IPatient> {
+  async update(id: string, data: Partial<IPatient>): Promise<IPatient> {
     const patient = await prisma.patient.update({
       where: { id },
       data,

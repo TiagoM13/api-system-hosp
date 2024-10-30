@@ -11,15 +11,15 @@ export interface FindEntitiesAndCountResult<T> {
 
 export interface FindAppointmentsAndCountParams
   extends Omit<FindEntitiesAndCountParams, 'name'> {
-  patientId: string;
-  appointmentType?: string;
-  startDate?: Date;
-  endDate?: Date;
+  patient_id: string;
+  appointment_type?: string;
+  start_date?: Date;
+  end_date?: Date;
 }
 
 export interface FindAllAppointmentsAndCountParams
   extends FindEntitiesAndCountParams {
-  appointmentType?: string;
-  startDate?: Date;
-  endDate?: Date;
+  appointment_type?: string;
+  start_date?: Date;
+  end_date?: Date;
 }

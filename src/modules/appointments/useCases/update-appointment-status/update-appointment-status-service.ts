@@ -11,7 +11,7 @@ import {
   PatientRepository,
 } from '@shared/repositories/implementations';
 
-import { UpdateAppointmentStatusType } from './update-appointment-status-schema';
+import { UpdateAppointmentStatusDTO } from './update-appointment-status-schema';
 
 export class UpdateAppointmentStatusService {
   constructor(
@@ -25,7 +25,7 @@ export class UpdateAppointmentStatusService {
   async execute(
     appointmentId: number,
     patientId: string,
-    dto: UpdateAppointmentStatusType,
+    dto: UpdateAppointmentStatusDTO,
   ): Promise<IAppointment> {
     const patient = await this.patientRepository.findById(patientId);
 

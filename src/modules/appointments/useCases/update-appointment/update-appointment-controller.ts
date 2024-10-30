@@ -1,11 +1,9 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import {
-  appointmentDataSchema,
-  appointmentParamsSchema,
-} from '@modules/appointments/schemas';
+import { appointmentParamsSchema } from '@modules/appointments/schemas';
 
+import { updateAppointmentSchema } from './update-appointment-schema';
 import { UpdateAppointmentService } from './update-appointment-service';
 
 export class UpdateAppointmentController extends BaseController {
@@ -19,15 +17,12 @@ export class UpdateAppointmentController extends BaseController {
     const { appointmentId, patientId } = appointmentParamsSchema.parse(
       this.request.params,
     );
-    const data = appointmentDataSchema.parse(this.request.body);
+    const dto = updateAppointmentSchema.parse(this.request.body);
 
     const appointment = await this.updateAppointmentService.execute(
       appointmentId,
       patientId,
-      {
-        ...data,
-        patient_id: patientId,
-      },
+      dto,
     );
 
     return this.ok({

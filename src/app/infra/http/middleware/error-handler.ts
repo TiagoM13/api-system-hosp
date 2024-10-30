@@ -7,15 +7,17 @@ type FastifyErrorHandler = FastifyInstance['errorHandler'];
 
 export const errorHandler: FastifyErrorHandler = (error, request, reply) => {
   if (error instanceof ZodError) {
-    return reply.status(400).send({
+    return reply.status(422).send({
       message: 'Invalid request body',
-      errors: error.flatten().fieldErrors,
+      errors: error.errors,
     });
   }
 
   if (error instanceof AppError) {
     return reply.status(error.statusCode).send({ message: error.message });
   }
+
+  console.error(error);
 
   return reply.status(500).send({ message: 'Internal Server Error' });
 };

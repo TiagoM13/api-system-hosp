@@ -1,5 +1,4 @@
 import { AppError } from '@app/errors/app-client';
-import { AppointmentDataType } from '@modules/appointments/schemas';
 import {
   APPOINTMENT_NOT_FOUND,
   DOCTOR_INACTIVE,
@@ -12,6 +11,8 @@ import {
   AppointmentRepository,
 } from '@shared/repositories/implementations';
 import { DoctorRepository } from '@shared/repositories/implementations/doctor-repository';
+
+import { UpdateAppointmentDTO } from './update-appointment-schema';
 
 export class UpdateAppointmentService {
   constructor(
@@ -26,7 +27,7 @@ export class UpdateAppointmentService {
   async execute(
     appointmentId: number,
     patientId: string,
-    data: AppointmentDataType,
+    dto: UpdateAppointmentDTO,
   ) {
     const patient = await this.patientRepository.findById(patientId);
 
@@ -41,19 +42,21 @@ export class UpdateAppointmentService {
       throw new AppError(APPOINTMENT_NOT_FOUND, 404);
     }
 
-    const doctor = await this.doctorRepository.findById(data.doctor_id);
+    if (dto.doctor_id) {
+      const doctor = await this.doctorRepository.findById(dto.doctor_id);
 
-    if (!doctor) {
-      throw new AppError(DOCTOR_NOT_FOUND, 404);
-    }
+      if (!doctor) {
+        throw new AppError(DOCTOR_NOT_FOUND, 404);
+      }
 
-    if (doctor.status === Status.INACTIVE) {
-      throw new AppError(DOCTOR_INACTIVE);
+      if (doctor.status === Status.INACTIVE) {
+        throw new AppError(DOCTOR_INACTIVE);
+      }
     }
 
     const updatedAppointment = await this.appointmentRepository.update(
       appointmentId,
-      data,
+      dto,
     );
 
     return updatedAppointment;

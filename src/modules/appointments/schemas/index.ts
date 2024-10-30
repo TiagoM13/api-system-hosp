@@ -1,8 +1,5 @@
 import z from 'zod';
 
-import { AppointmentStatus, AppointmentType } from '@shared/enums';
-import { MAX_LENGTH_TEXT, MIN_LENGTH_TEXT } from '@shared/utils';
-
 export const appointmentParamId = z.object({
   patientId: z.string().uuid(),
 });
@@ -12,36 +9,11 @@ export const appointmentParamsSchema = z.object({
   appointmentId: z.coerce.number().int(),
 });
 
-export const appointmentDataSchema = z.object({
-  id: z.number().int().optional(),
-  patient_id: z.string().uuid().optional(),
-  appointment_type: z.nativeEnum(AppointmentType),
-  examination: z
-    .string()
-    .min(3, MIN_LENGTH_TEXT)
-    .max(255, MAX_LENGTH_TEXT)
-    .optional(),
-  diagnosis_summary: z
-    .string()
-    .min(3, MIN_LENGTH_TEXT)
-    .max(255, MAX_LENGTH_TEXT)
-    .optional(),
-  scheduled_date: z.coerce.date(),
-  status: z.nativeEnum(AppointmentStatus).optional(),
-  doctor_id: z.number().int(),
-});
-
 export const appointmentQuerySchema = z
   .object({
     name: z.string().optional(),
-    page: z
-      .string()
-      .transform(val => parseInt(val, 10))
-      .default('1'),
-    items_per_page: z
-      .string()
-      .transform(val => parseInt(val, 10))
-      .default('10'),
+    page: z.coerce.number().default(1),
+    items_per_page: z.coerce.number().max(500).default(10),
     appointment_type: z.string().optional(),
     start_date: z.preprocess(
       val => (typeof val === 'string' ? new Date(val) : val),
@@ -76,5 +48,3 @@ export const appointmentQuerySchema = z
       path: ['end_date'],
     },
   );
-
-export type AppointmentDataType = z.infer<typeof appointmentDataSchema>;

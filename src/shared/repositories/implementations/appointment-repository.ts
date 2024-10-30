@@ -16,13 +16,13 @@ export class AppointmentRepository implements IAppointmentRepository {
   async findAllAppointments(
     params: FindAllAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>> {
-    const { name, skip, take, appointmentType, startDate, endDate } = params;
+    const { name, skip, take, appointment_type, start_date, end_date } = params;
 
     const where: Prisma.AppointmentWhereInput = {
-      appointment_type: appointmentType,
+      appointment_type,
       scheduled_date: {
-        ...(startDate && { gte: startDate }),
-        ...(endDate && { lte: endDate }),
+        ...(start_date && { gte: start_date }),
+        ...(end_date && { lte: end_date }),
       },
       patient: {
         ...(name && { name: { contains: name } }),
@@ -52,14 +52,16 @@ export class AppointmentRepository implements IAppointmentRepository {
   async findAndCountAll(
     params: FindAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>> {
-    const { patientId, skip, take, appointmentType, startDate, endDate } =
+    const { patient_id, skip, take, appointment_type, start_date, end_date } =
       params;
 
     const where: Prisma.AppointmentWhereInput = {
-      patient_id: patientId,
-      ...(appointmentType && { appointment_type: appointmentType }),
-      ...(startDate && { scheduled_date: { gte: startDate } }),
-      ...(endDate && { scheduled_date: { lte: endDate } }),
+      patient_id: patient_id,
+      ...(appointment_type && { appointment_type: appointment_type }),
+      scheduled_date: {
+        ...(start_date && { gte: start_date }),
+        ...(end_date && { lte: end_date }),
+      },
     };
 
     const count = await prisma.appointment.count({
@@ -107,7 +109,7 @@ export class AppointmentRepository implements IAppointmentRepository {
 
   async update(
     appointment_id: number,
-    data: IAppointment,
+    data: Partial<IAppointment>,
   ): Promise<IAppointment | null> {
     return await prisma.appointment.update({
       where: { id: appointment_id },

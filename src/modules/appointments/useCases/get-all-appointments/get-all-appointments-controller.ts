@@ -16,11 +16,13 @@ export class GetAllAppointmentsController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const { patientId } = appointmentParamId.parse(this.request.params);
+    const { patientId: patient_id } = appointmentParamId.parse(
+      this.request.params,
+    );
     const query = appointmentQuerySchema.parse(this.request.query);
 
     const results = await this.getAllAppointmentsService.execute({
-      patient_id: patientId,
+      patient_id,
       ...query,
     });
 
