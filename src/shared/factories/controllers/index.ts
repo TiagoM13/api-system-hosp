@@ -30,3 +30,4 @@ export * from './doctor/make-get-all-doctors-controller';
 export * from './doctor/make-get-doctor-controller';
 export * from './doctor/make-update-doctor-controller';
 export * from './doctor/make-delete-doctor-controller';
+export * from './doctor/make-update-doctor-status-controller';
