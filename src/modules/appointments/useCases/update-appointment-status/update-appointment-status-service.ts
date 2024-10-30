@@ -4,14 +4,13 @@ import {
   APPOINTMENT_STATUS_CANNOT_BE_CHANGED,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
-import { IAppointment } from '@shared/entities';
 import { AppointmentStatus } from '@shared/enums';
 import {
   AppointmentRepository,
   PatientRepository,
 } from '@shared/repositories/implementations';
 
-import { UpdateAppointmentStatusType } from './update-appointment-status-schema';
+import { UpdateAppointmentStatusDTO } from './update-appointment-status-schema';
 
 export class UpdateAppointmentStatusService {
   constructor(
@@ -25,8 +24,8 @@ export class UpdateAppointmentStatusService {
   async execute(
     appointmentId: number,
     patientId: string,
-    dto: UpdateAppointmentStatusType,
-  ): Promise<IAppointment> {
+    dto: UpdateAppointmentStatusDTO,
+  ): Promise<string> {
     const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {
@@ -48,7 +47,7 @@ export class UpdateAppointmentStatusService {
     }
 
     if (appointment.status === dto.status) {
-      return appointment;
+      return appointment.status;
     }
 
     const updatedAppointmentStatus =

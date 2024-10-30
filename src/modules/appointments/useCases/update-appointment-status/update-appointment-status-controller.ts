@@ -19,16 +19,15 @@ export class UpdateAppointmentStatusController extends BaseController {
     );
     const dto = updateAppointmentStatusSchema.parse(this.request.body);
 
-    const updatedAppointment =
-      await this.updateAppointmentStatusService.execute(
-        appointmentId,
-        patientId,
-        dto,
-      );
+    const status = await this.updateAppointmentStatusService.execute(
+      appointmentId,
+      patientId,
+      dto,
+    );
 
     return this.ok({
       success: true,
-      status: `Status alterado para ${updatedAppointment.status}`,
+      status: `Status alterado para ${status}.`,
     });
   }
 }

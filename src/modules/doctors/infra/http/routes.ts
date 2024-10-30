@@ -12,6 +12,7 @@ import {
   makeGetAllDoctorsController,
   makeGetDoctorController,
   makeUpdateDoctorController,
+  makeUpdateDoctorStatusController,
 } from '@shared/factories/controllers';
 import { makeUserRepository } from '@shared/factories/repositories';
 
@@ -24,4 +25,8 @@ export const doctorRoutes = async (app: FastifyInstance) => {
   app.post('/doctors', bindController(makeCreateDoctorController()));
   app.put('/doctors/:id', bindController(makeUpdateDoctorController()));
   app.delete('/doctors/:id', bindController(makeDeleteDoctorController()));
+  app.patch(
+    '/doctors/:id/status',
+    bindController(makeUpdateDoctorStatusController()),
+  );
 };

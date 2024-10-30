@@ -14,22 +14,17 @@ export class ListAllAppointmentsService {
     this.appointmentRepository = appointmentRepository;
   }
 
-  async execute({
-    page,
-    items_per_page,
-    appointment_type,
-    end_date,
-    start_date,
-  }: IListAllAppointmentsParams): Promise<FindAndCountAll<IAppointment>> {
+  async execute(
+    params: IListAllAppointmentsParams,
+  ): Promise<FindAndCountAll<IAppointment>> {
+    const { page, items_per_page } = params;
     validatePaginationParams(page, items_per_page);
 
     const offset = (page - 1) * items_per_page;
     const result = await this.appointmentRepository.findAllAppointments({
+      ...params,
       skip: offset,
       take: items_per_page,
-      appointment_type,
-      startDate: start_date,
-      endDate: end_date,
     });
 
     return {

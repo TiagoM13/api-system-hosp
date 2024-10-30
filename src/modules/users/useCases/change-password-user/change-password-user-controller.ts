@@ -1,9 +1,9 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { changePasswordUserSchema } from '@modules/users/schemas';
 import { intIdParamSchema } from '@shared/utils';
 
+import { changePasswordUserSchema } from './change-password-user-schema';
 import { ChangePasswordUserService } from './change-password-user-service';
 
 export class ChangePasswordUserController extends BaseController {
@@ -15,15 +15,9 @@ export class ChangePasswordUserController extends BaseController {
 
   protected async handle(): Promise<FastifyReply> {
     const { id } = intIdParamSchema.parse(this.request.params);
-    const { password, confirm_password } = changePasswordUserSchema.parse(
-      this.request.body,
-    );
+    const dto = changePasswordUserSchema.parse(this.request.body);
 
-    await this.changePasswordUserService.execute(
-      id,
-      password,
-      confirm_password,
-    );
+    await this.changePasswordUserService.execute(id, dto);
 
     return this.created({
       success: true,

@@ -3,6 +3,7 @@ import {
   type FindEntitiesAndCountResult,
   IDoctor,
 } from '@shared/entities';
+import { Status } from '@shared/enums';
 
 export interface IDoctorRepository {
   findAndCountAll(
@@ -11,7 +12,8 @@ export interface IDoctorRepository {
   findById(id: number): Promise<IDoctor | null>;
   findByEmailOrCrm(email: string, crm: string): Promise<IDoctor | null>;
   findByCNS(cns: string): Promise<IDoctor | null>;
-  create(data: IDoctor): Promise<IDoctor>;
-  update(id: number, data: IDoctor): Promise<IDoctor>;
+  create(dto: IDoctor): Promise<IDoctor>;
+  update(id: number, dto: Partial<IDoctor>): Promise<IDoctor>;
+  updateStatus(id: number, status: Status): Promise<string>;
   delete(id: number): Promise<IDoctor>;
 }

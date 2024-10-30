@@ -10,29 +10,6 @@ import { convertDecimalToNumber } from '../../utils';
 import { IPatientRepository } from '../interfaces/patient';
 
 export class PatientRepository implements IPatientRepository {
-  async findAll(
-    name: string | undefined,
-    skip: number,
-    take: number,
-  ): Promise<IPatient[]> {
-    const patients = await prisma.patient.findMany({
-      skip,
-      take,
-      where: {
-        name: name ? { contains: name } : undefined,
-      },
-      orderBy: {
-        created_at: 'desc',
-      },
-    });
-
-    return patients.map(patient => ({
-      ...patient,
-      height: convertDecimalToNumber(patient.height),
-      weight: convertDecimalToNumber(patient.weight),
-    }));
-  }
-
   async findAndCountAll(
     params: FindEntitiesAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IPatient>> {
@@ -66,7 +43,11 @@ export class PatientRepository implements IPatientRepository {
       where: { id },
       include: {
         _count: true,
-        appointments: true,
+        appointments: {
+          orderBy: {
+            scheduled_date: 'desc',
+          },
+        },
       },
     });
 
@@ -119,7 +100,7 @@ export class PatientRepository implements IPatientRepository {
     };
   }
 
-  async update(id: string, data: IPatient): Promise<IPatient> {
+  async update(id: string, data: Partial<IPatient>): Promise<IPatient> {
     const patient = await prisma.patient.update({
       where: { id },
       data,

@@ -4,47 +4,23 @@ import {
   type FindEntitiesAndCountResult,
   IUser,
 } from '@shared/entities';
+import { Status } from '@shared/enums';
 
 import { IUserRepository } from '../interfaces/user';
 
 export class UserRepository implements IUserRepository {
-  async findAll(
-    name: string | undefined,
-    skip: number,
-    take: number,
-  ): Promise<IUser[]> {
-    return await prisma.user.findMany({
-      skip,
-      take,
-      where: {
-        name: name ? { contains: name } : undefined,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        image_url: true,
-        role: true,
-        status: true,
-        last_access: true,
-        created_at: true,
-        updated_at: true,
-      },
-    });
-  }
-
   async findAndCountAll(
     params: FindEntitiesAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IUser>> {
     const { name, take, skip } = params;
     const count = await prisma.user.count({
-      where: { name: name ? { contains: name } : undefined },
+      where: { ...(name && { name: { contains: name } }) },
     });
     const users = await prisma.user.findMany({
       skip,
       take,
       where: {
-        name: name ? { contains: name } : undefined,
+        ...(name && { name: { contains: name } }),
       },
       select: {
         id: true,
@@ -108,9 +84,10 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  async update(id: number, data: IUser): Promise<IUser> {
+  async update(id: number, data: Partial<IUser>): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
+      data,
       select: {
         id: true,
         name: true,
@@ -122,11 +99,20 @@ export class UserRepository implements IUserRepository {
         created_at: true,
         updated_at: true,
       },
-      data,
     });
   }
 
-  async changePassword(id: number, data: IUser): Promise<IUser> {
+  async updateStatus(id: number, status: Status): Promise<string> {
+    const doctor = await prisma.user.update({
+      where: { id },
+      data: { status },
+      select: { status: true },
+    });
+
+    return doctor.status;
+  }
+
+  async changePassword(id: number, data: Partial<IUser>): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
       data,

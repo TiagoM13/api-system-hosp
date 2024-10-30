@@ -1,5 +1,4 @@
 import { AppError } from '@app/errors/app-client';
-import { AppointmentDataType } from '@modules/appointments/schemas';
 import {
   DOCTOR_INACTIVE,
   DOCTOR_NOT_FOUND,
@@ -12,6 +11,8 @@ import {
 } from '@shared/repositories/implementations';
 import { DoctorRepository } from '@shared/repositories/implementations/doctor-repository';
 
+import { CreateAppointmentDTO } from './create-appointment-schema';
+
 export class CreateAppointmentService {
   constructor(
     private readonly appointmentRepository: AppointmentRepository,
@@ -22,14 +23,14 @@ export class CreateAppointmentService {
     this.patientRepository = patientRepository;
   }
 
-  async execute(id: string, data: AppointmentDataType) {
-    const patient = await this.patientRepository.findById(id);
+  async execute(patientId: string, dto: CreateAppointmentDTO) {
+    const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {
       throw new AppError(PATIENT_NOT_FOUND, 404);
     }
 
-    const doctor = await this.doctorRepository.findById(data.doctor_id);
+    const doctor = await this.doctorRepository.findById(dto.doctor_id);
 
     if (!doctor) {
       throw new AppError(DOCTOR_NOT_FOUND, 404);
@@ -39,7 +40,7 @@ export class CreateAppointmentService {
       throw new AppError(DOCTOR_INACTIVE);
     }
 
-    const appointment = await this.appointmentRepository.create(id, data);
+    const appointment = await this.appointmentRepository.create(patientId, dto);
 
     return appointment;
   }

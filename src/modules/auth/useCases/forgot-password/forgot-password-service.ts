@@ -9,12 +9,14 @@ import {
   hashPassword,
 } from '@shared/utils/generate-password';
 
+import { ForgetPasswordDTO } from './forgot-password-schema';
+
 export class ForgotPasswordService {
   constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async execute(email: string) {
+  async execute({ email }: ForgetPasswordDTO) {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {

@@ -8,6 +8,6 @@ export const updateAppointmentStatusSchema = z
   })
   .strict();
 
-export type UpdateAppointmentStatusType = z.infer<
+export type UpdateAppointmentStatusDTO = z.infer<
   typeof updateAppointmentStatusSchema
 >;

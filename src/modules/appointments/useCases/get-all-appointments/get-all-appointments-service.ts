@@ -24,14 +24,10 @@ export class GetAllAppointmentsService {
     this.patientRepository = patientRepository;
   }
 
-  async execute({
-    patient_id,
-    page,
-    items_per_page,
-    appointment_type,
-    start_date,
-    end_date,
-  }: IGetAllAppointmentsParams): Promise<FindAndCountAll<IAppointment>> {
+  async execute(
+    params: IGetAllAppointmentsParams,
+  ): Promise<FindAndCountAll<IAppointment>> {
+    const { patient_id, page, items_per_page } = params;
     const patient = await this.patientRepository.findById(patient_id);
 
     if (!patient) {
@@ -41,14 +37,10 @@ export class GetAllAppointmentsService {
     validatePaginationParams(page, items_per_page);
 
     const offset = (page - 1) * items_per_page;
-
     const appointments = await this.appointmentRepository.findAndCountAll({
-      patientId: patient_id,
+      ...params,
       skip: offset,
       take: items_per_page,
-      appointment_type,
-      startDate: start_date,
-      endDate: end_date,
     });
 
     return appointments;
