@@ -4,7 +4,6 @@ import {
   APPOINTMENT_STATUS_CANNOT_BE_CHANGED,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
-import { IAppointment } from '@shared/entities';
 import { AppointmentStatus } from '@shared/enums';
 import {
   AppointmentRepository,
@@ -26,7 +25,7 @@ export class UpdateAppointmentStatusService {
     appointmentId: number,
     patientId: string,
     dto: UpdateAppointmentStatusDTO,
-  ): Promise<IAppointment> {
+  ): Promise<string> {
     const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {
@@ -48,7 +47,7 @@ export class UpdateAppointmentStatusService {
     }
 
     if (appointment.status === dto.status) {
-      return appointment;
+      return appointment.status;
     }
 
     const updatedAppointmentStatus =

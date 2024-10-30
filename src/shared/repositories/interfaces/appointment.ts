@@ -22,5 +22,5 @@ export interface IAppointmentRepository {
   updateAppointmentStatus(
     appointment_id: number,
     status: AppointmentStatus,
-  ): Promise<IAppointment>;
+  ): Promise<string>;
 }

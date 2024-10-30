@@ -13,6 +13,7 @@ import {
   makeGetAllUsersController,
   makeGetUserController,
   makeUpdateUserController,
+  makeUpdateUserStatusController,
 } from '@shared/factories/controllers';
 import { makeUserRepository } from '@shared/factories/repositories';
 
@@ -49,6 +50,13 @@ const userRoutes = async (app: FastifyInstance) => {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
     bindController(makeChangePasswordUserController()),
+  );
+  app.patch(
+    '/users/:id/status',
+    {
+      preHandler: verifyAuthorization([Role.ADMIN]),
+    },
+    bindController(makeUpdateUserStatusController()),
   );
   app.delete(
     '/users/:id',

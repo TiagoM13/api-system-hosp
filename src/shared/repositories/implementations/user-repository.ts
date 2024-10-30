@@ -4,6 +4,7 @@ import {
   type FindEntitiesAndCountResult,
   IUser,
 } from '@shared/entities';
+import { Status } from '@shared/enums';
 
 import { IUserRepository } from '../interfaces/user';
 
@@ -99,6 +100,16 @@ export class UserRepository implements IUserRepository {
         updated_at: true,
       },
     });
+  }
+
+  async updateStatus(id: number, status: Status): Promise<string> {
+    const doctor = await prisma.user.update({
+      where: { id },
+      data: { status },
+      select: { status: true },
+    });
+
+    return doctor.status;
   }
 
   async changePassword(id: number, data: Partial<IUser>): Promise<IUser> {

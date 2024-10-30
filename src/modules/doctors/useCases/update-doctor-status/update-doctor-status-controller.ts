@@ -17,7 +17,7 @@ export class UpdateDoctorStatusController extends BaseController {
     const { id } = intIdParamSchema.parse(this.request.params);
     const dto = updateDoctorStatusSchema.parse(this.request.body);
 
-    const { status } = await this.updateDoctorStatusService.execute(id, dto);
+    const status = await this.updateDoctorStatusService.execute(id, dto);
 
     return this.ok({
       success: true,

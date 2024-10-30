@@ -122,12 +122,14 @@ export class AppointmentRepository implements IAppointmentRepository {
   async updateAppointmentStatus(
     appointment_id: number,
     status: AppointmentStatus,
-  ): Promise<IAppointment> {
-    return await prisma.appointment.update({
+  ): Promise<string> {
+    const appointment = await prisma.appointment.update({
       where: { id: appointment_id },
       data: {
         status,
       },
+      select: { status: true },
     });
+    return appointment.status;
   }
 }
