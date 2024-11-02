@@ -5,6 +5,8 @@ export const EMAIL_IS_ALREADY_IN_USE =
 export const EMAIL_CANNOT_BE_CHANGED =
   'O endereço de e-mail não pode ser alterado.';
 export const ROLE_CANNOT_BE_CHANGED = 'Você não pode alterar suas permissões.';
+export const STATUS_CANNOT_BE_CHANGED =
+  'Não é permitido alterar o próprio status.';
 export const USER_INACTIVE =
   'Usuário inativo! Você está sem acesso no momento.';
 export const EMAIL_INVALID = 'E-mail inválido.';

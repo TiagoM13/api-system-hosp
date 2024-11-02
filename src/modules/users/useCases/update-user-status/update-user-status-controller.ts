@@ -1,6 +1,7 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
+import { IUser } from '@shared/entities';
 import { intIdParamSchema } from '@shared/utils';
 
 import { updateUserStatusSchema } from './update-user-status-schema';
@@ -16,8 +17,13 @@ export class UpdateUserStatusController extends BaseController {
   protected async handle(): Promise<FastifyReply> {
     const { id } = intIdParamSchema.parse(this.request.params);
     const dto = updateUserStatusSchema.parse(this.request.body);
+    const loggedInUser = this.request.user as IUser;
 
-    const status = await this.updateUserStatusService.execute(id, dto);
+    const status = await this.updateUserStatusService.execute(
+      id,
+      dto,
+      loggedInUser,
+    );
 
     return this.ok({
       success: true,
