@@ -19,7 +19,7 @@ export class AppointmentRepository implements IAppointmentRepository {
     const { name, skip, take, appointment_type, start_date, end_date } = params;
 
     const where: Prisma.AppointmentWhereInput = {
-      appointment_type,
+      ...(appointment_type && { appointment_type: appointment_type }),
       scheduled_date: {
         ...(start_date && { gte: start_date }),
         ...(end_date && { lte: end_date }),

@@ -20,7 +20,7 @@ export const appointmentRoutes = async (app: FastifyInstance) => {
   app.addHook('preHandler', updateLastAccess(makeUserRepository()));
 
   app.get(
-    '/appointments/list-all',
+    '/appointments',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
