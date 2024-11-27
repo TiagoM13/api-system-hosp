@@ -8,7 +8,7 @@ import {
 import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 
-type IGetAllAppointmentsParams = IPaginateRequest & {
+type IGetAllAppointmentsParams = Omit<IPaginateRequest, 'name'> & {
   patient_id: string;
   end_date?: Date;
   start_date?: Date;
