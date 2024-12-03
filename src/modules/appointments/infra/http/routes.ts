@@ -8,7 +8,7 @@ import {
 import { Role } from '@shared/enums';
 import {
   makeCreateAppointmentController,
-  makeGetAllAppointmentsController,
+  makeGetAppointmentsByPatientController,
   makeGetAppointmentController,
   makeListAllAppointmentsController,
   makeUpdateAppointmentController,
@@ -31,7 +31,7 @@ export const appointmentRoutes = async (app: FastifyInstance) => {
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
     },
-    bindController(makeGetAllAppointmentsController()),
+    bindController(makeGetAppointmentsByPatientController()),
   );
   app.get(
     '/appointments/:patientId/appointment/:appointmentId',

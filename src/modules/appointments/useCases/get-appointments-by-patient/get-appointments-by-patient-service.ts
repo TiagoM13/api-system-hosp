@@ -8,14 +8,14 @@ import {
 import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 
-type IGetAllAppointmentsParams = Omit<IPaginateRequest, 'name'> & {
+type IGetAppointmentsByPatientParams = Omit<IPaginateRequest, 'name'> & {
   patient_id: string;
   end_date?: Date;
   start_date?: Date;
   appointment_type?: string;
 };
 
-export class GetAllAppointmentsService {
+export class GetAppointmentsByPatientService {
   constructor(
     private readonly appointmentRepository: AppointmentRepository,
     private readonly patientRepository: PatientRepository,
@@ -25,7 +25,7 @@ export class GetAllAppointmentsService {
   }
 
   async execute(
-    params: IGetAllAppointmentsParams,
+    params: IGetAppointmentsByPatientParams,
   ): Promise<FindAndCountAll<IAppointment>> {
     const { patient_id, page, items_per_page } = params;
     const patient = await this.patientRepository.findById(patient_id);

@@ -6,11 +6,11 @@ import {
   appointmentQuerySchema,
 } from '@modules/appointments/schemas';
 
-import { GetAllAppointmentsService } from './get-all-appointments-service';
+import { GetAppointmentsByPatientService } from './get-appointments-by-patient-service';
 
-export class GetAllAppointmentsController extends BaseController {
+export class GetAppointmentsByPatientController extends BaseController {
   constructor(
-    private readonly getAllAppointmentsService: GetAllAppointmentsService,
+    private readonly getAllAppointmentsService: GetAppointmentsByPatientService,
   ) {
     super();
   }
