@@ -3,19 +3,19 @@ import { AppointmentRepository } from '@shared/repositories/implementations/appo
 import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 
-type IListAllAppointmentsParams = IPaginateRequest & {
+type IGetAllAppointmentsParams = IPaginateRequest & {
   end_date?: Date;
   start_date?: Date;
   appointment_type?: string;
 };
 
-export class ListAllAppointmentsService {
+export class GetAllAppointmentsService {
   constructor(private readonly appointmentRepository: AppointmentRepository) {
     this.appointmentRepository = appointmentRepository;
   }
 
   async execute(
-    params: IListAllAppointmentsParams,
+    params: IGetAllAppointmentsParams,
   ): Promise<FindAndCountAll<IAppointment>> {
     const { page, items_per_page } = params;
     validatePaginationParams(page, items_per_page);

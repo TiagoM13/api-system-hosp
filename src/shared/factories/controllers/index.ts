@@ -20,7 +20,7 @@ export * from './patient/make-update-patient-controller';
 // appointements
 export * from './appointment/make-create-appointment-controller';
 export * from './appointment/make-get-appointments-by-patient-controller';
-export * from './appointment/make-list-all-appointments-controller';
+export * from './appointment/make-get-all-appointments-controller';
 export * from './appointment/make-get-appointment-controller';
 export * from './appointment/make-update-appointment-controller';
 export * from './appointment/make-update-appointment-status-controller';

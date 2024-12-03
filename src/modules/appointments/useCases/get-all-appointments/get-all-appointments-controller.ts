@@ -3,11 +3,11 @@ import { type FastifyReply } from 'fastify';
 import { BaseController } from '@app/infra/http/controller/baseController';
 import { appointmentQuerySchema } from '@modules/appointments/schemas';
 
-import { ListAllAppointmentsService } from './list-all-appointments-service';
+import { GetAllAppointmentsService } from './get-all-appointments-service';
 
-export class ListAllAppointmentsController extends BaseController {
+export class GetAllAppointmentsController extends BaseController {
   constructor(
-    private readonly listAllAppointmentsService: ListAllAppointmentsService,
+    private readonly listAllAppointmentsService: GetAllAppointmentsService,
   ) {
     super();
   }
@@ -17,6 +17,6 @@ export class ListAllAppointmentsController extends BaseController {
 
     const results = await this.listAllAppointmentsService.execute(query);
 
-    return this.paginate(results, 'list-all-appointments');
+    return this.paginate(results, 'get-all-appointments');
   }
 }
