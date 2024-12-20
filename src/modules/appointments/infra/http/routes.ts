@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 
 import { bindController } from '@app/infra/http/controller/bindController';
@@ -5,7 +6,6 @@ import {
   updateLastAccess,
   verifyAuthorization,
 } from '@app/infra/http/middleware';
-import { Role } from '@shared/enums';
 import {
   makeCreateAppointmentController,
   makeGetAppointmentsByPatientController,

@@ -1,25 +1,23 @@
-import { PrismaClient } from '@prisma/client';
-
-import { Role } from '@shared/enums';
+import { PrismaClient, Role } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 const users = [
   {
-    name: 'Ana Silva',
-    email: 'ana.silva@hospital.com',
+    name: 'Admin Tester',
+    email: 'admin.tester@hospital.com',
     password: 'admin123',
     role: Role.ADMIN,
   },
   {
-    name: 'Carlos Pereira',
-    email: 'carlos.pereira@hospital.com',
+    name: 'Editor Tester',
+    email: 'editor.tester@hospital.com',
     password: 'editor123',
     role: Role.EDITOR,
   },
   {
-    name: 'Fernanda Costa',
-    email: 'fernanda.costa@hospital.com',
+    name: 'Clínico Tester',
+    email: 'clinico.tester@hospital.com',
     password: 'clinico123',
     role: Role.CLINICAL,
   },

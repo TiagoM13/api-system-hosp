@@ -1,3 +1,4 @@
+import { Status } from '@prisma/client';
 import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
@@ -23,7 +24,7 @@ export class ForgotPasswordService {
       throw new AppError(USER_NOT_FOUND, 404);
     }
 
-    if (user.status === 'inativo') {
+    if (user.status === Status.INACTIVE) {
       throw new AppError(USER_INACTIVE, 403);
     }
 
@@ -34,6 +35,8 @@ export class ForgotPasswordService {
       ...user,
       password: hashedPassword,
     });
+
+    console.log({ provisionalPassword });
 
     const mail = await getMailClient();
 

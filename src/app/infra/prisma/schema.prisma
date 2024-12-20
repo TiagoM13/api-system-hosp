@@ -7,13 +7,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  CLINICAL
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+  SEPARATED
+}
+
+enum AppointmentStatus {
+  COMPLETED
+  CANCELLED
+  PENDING
+}
+
+enum AppointmentType {
+  QUERY
+  OTHER
+  ACCIDENT
+  FIREARM_INJURY
+  WHITE_WEAPON_INJURY
+}
+
 model User {
   id          Int       @id @default(autoincrement())
   name        String
   email       String    @unique
-  role        String
+  role        Role
   image_url   String?
-  status      String    @default("ativo")
+  status      Status    @default(ACTIVE)
   last_access DateTime?
   password    String
   created_at  DateTime  @default(now())

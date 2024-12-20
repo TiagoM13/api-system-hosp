@@ -1,6 +1,6 @@
+import { Role } from '@prisma/client';
 import z from 'zod';
 
-import { Role } from '@shared/enums';
 import { NAME_FIELD_REQUIRED } from '@shared/utils';
 
 export const updateUserSchema = z

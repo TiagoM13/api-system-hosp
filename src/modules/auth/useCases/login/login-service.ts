@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Status } from '@prisma/client';
+
 import { app } from '@app/app';
 import { AppError } from '@app/errors/app-client';
 import {
@@ -31,7 +33,7 @@ export class LoginService {
       throw new AppError(PASSWORD_INVALID);
     }
 
-    if (user.status === 'inativo') {
+    if (user.status === Status.INACTIVE) {
       throw new AppError(USER_INACTIVE, 403);
     }
 
