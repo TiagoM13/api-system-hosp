@@ -1,9 +1,10 @@
+import { Status } from '@prisma/client';
+
 import {
   type FindEntitiesAndCountParams,
   type FindEntitiesAndCountResult,
   IUser,
 } from '@shared/entities';
-import { Status } from '@shared/enums';
 
 export interface IUserRepository {
   findAndCountAll(

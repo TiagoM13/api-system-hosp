@@ -1,10 +1,11 @@
+import { AppointmentStatus } from '@prisma/client';
+
 import { AppError } from '@app/errors/app-client';
 import {
   APPOINTMENT_NOT_FOUND,
   APPOINTMENT_STATUS_CANNOT_BE_CHANGED,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
-import { AppointmentStatus } from '@shared/enums';
 import {
   AppointmentRepository,
   PatientRepository,

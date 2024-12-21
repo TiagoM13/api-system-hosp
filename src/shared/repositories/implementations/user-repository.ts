@@ -1,10 +1,11 @@
+import { Status } from '@prisma/client';
+
 import { prisma } from '@app/infra/prisma/client';
 import {
   type FindEntitiesAndCountParams,
   type FindEntitiesAndCountResult,
   IUser,
 } from '@shared/entities';
-import { Status } from '@shared/enums';
 
 import { IUserRepository } from '../interfaces/user';
 

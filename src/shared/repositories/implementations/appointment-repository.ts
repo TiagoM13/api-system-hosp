@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Prisma } from '@prisma/client';
+import { AppointmentStatus, Prisma } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
 import {
@@ -8,7 +8,6 @@ import {
   FindAppointmentsAndCountParams,
   FindAllAppointmentsAndCountParams,
 } from '@shared/entities';
-import { AppointmentStatus } from '@shared/enums';
 
 import { IAppointmentRepository } from '../interfaces/appointment';
 

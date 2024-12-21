@@ -1,6 +1,6 @@
+import { MaritalStatus, Sex } from '@prisma/client';
 import z from 'zod';
 
-import { Sex, MaterialStatus } from '@shared/enums';
 import {
   calculateAge,
   NAME_FIELD_REQUIRED,
@@ -50,7 +50,7 @@ export const createPatientSchema = z
     address: OPTIONAL_STRING_FIELD,
     mother_name: OPTIONAL_STRING_FIELD,
     father_name: OPTIONAL_STRING_FIELD,
-    material_status: z.nativeEnum(MaterialStatus).nullable().optional(),
+    marital_status: z.nativeEnum(MaritalStatus).nullable().optional(),
     occupation: OPTIONAL_STRING_FIELD,
     email: OPTIONAL_STRING_FIELD,
     phone: OPTIONAL_STRING_FIELD.refine(

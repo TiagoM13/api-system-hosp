@@ -47,6 +47,9 @@ export class PatientRepository implements IPatientRepository {
           orderBy: {
             scheduled_date: 'desc',
           },
+          include: {
+            doctor: true,
+          },
         },
       },
     });
