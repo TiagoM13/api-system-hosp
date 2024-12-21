@@ -1,10 +1,11 @@
+import { AppointmentStatus } from '@prisma/client';
+
 import {
   type FindEntitiesAndCountResult,
   type FindAppointmentsAndCountParams,
   type FindAllAppointmentsAndCountParams,
   IAppointment,
 } from '@shared/entities';
-import { AppointmentStatus } from '@shared/enums';
 
 export interface IAppointmentRepository {
   findAndCountAll(

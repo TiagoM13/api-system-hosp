@@ -1,16 +1,17 @@
+import { MaritalStatus, Sex, Status } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export type IPatient = {
   id?: string;
   name: string;
   birth_date: Date;
-  sex: string;
+  sex: Sex;
   cpf?: string | null;
   cns?: string | null;
   address?: string | null;
   mother_name?: string | null;
   father_name?: string | null;
-  material_status?: string | null;
+  marital_status?: MaritalStatus | null;
   occupation?: string | null;
   email?: string | null;
   phone?: string | null;
@@ -19,7 +20,7 @@ export type IPatient = {
   health_agent?: string | null;
   height?: number | Decimal | null;
   weight?: number | Decimal | null;
-  status?: string;
+  status?: Status;
 
   created_at?: Date;
   updated_at?: Date;

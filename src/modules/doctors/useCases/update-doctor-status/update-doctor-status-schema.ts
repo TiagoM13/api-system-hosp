@@ -1,6 +1,5 @@
+import { Status } from '@prisma/client';
 import z from 'zod';
-
-import { Status } from '@shared/enums';
 
 export const updateDoctorStatusSchema = z
   .object({

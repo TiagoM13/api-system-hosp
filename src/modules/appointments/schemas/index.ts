@@ -1,3 +1,4 @@
+import { AppointmentType } from '@prisma/client';
 import z from 'zod';
 
 import { AppError } from '@app/errors/app-client';
@@ -16,7 +17,7 @@ export const appointmentQuerySchema = z
     name: z.string().optional(),
     page: z.coerce.number().default(1),
     items_per_page: z.coerce.number().max(500).default(10),
-    appointment_type: z.string().optional(),
+    appointment_type: z.nativeEnum(AppointmentType).optional(),
     start_date: z.preprocess(
       val => {
         if (typeof val === 'string' && val.trim() === '') return undefined;

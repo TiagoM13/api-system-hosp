@@ -1,6 +1,5 @@
+import { AppointmentStatus } from '@prisma/client';
 import z from 'zod';
-
-import { AppointmentStatus } from '@shared/enums';
 
 export const updateAppointmentStatusSchema = z
   .object({

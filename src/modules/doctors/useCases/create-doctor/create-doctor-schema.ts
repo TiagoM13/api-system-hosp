@@ -1,7 +1,7 @@
+import { Sex } from '@prisma/client';
 import z from 'zod';
 
 import { WORKING_DAY_MIN, WORKING_DAY_MAX } from '@shared/constants/messages';
-import { Sex } from '@shared/enums';
 import {
   INVALID_DATE_FIELD,
   REQUIRED_FIELD,

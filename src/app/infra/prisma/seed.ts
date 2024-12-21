@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, Sex } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -27,55 +27,55 @@ const pacientes = [
   {
     name: 'Alice Souza',
     birth_date: new Date('1993-05-15'),
-    sex: 'feminino',
+    sex: Sex.FEMALE,
   },
   {
     name: 'Bob Oliveira',
     birth_date: new Date('1980-11-22'),
-    sex: 'masculino',
+    sex: Sex.MALE,
   },
   {
     name: 'Carlos Martins',
     birth_date: new Date('1975-01-10'),
-    sex: 'masculino',
+    sex: Sex.MALE,
   },
-  { name: 'Diana Lima', birth_date: new Date('1998-03-05'), sex: 'feminino' },
+  { name: 'Diana Lima', birth_date: new Date('1998-03-05'), sex: Sex.FEMALE },
   {
     name: 'Eduardo Rocha',
     birth_date: new Date('1990-09-30'),
-    sex: 'masculino',
+    sex: Sex.MALE,
   },
   {
     name: 'Fernanda Gonçalves',
     birth_date: new Date('1988-07-12'),
-    sex: 'feminino',
+    sex: Sex.FEMALE,
   },
   {
     name: 'Gabriel Santos',
     birth_date: new Date('1983-02-18'),
-    sex: 'masculino',
+    sex: Sex.MALE,
   },
   {
     name: 'Helena Ferreira',
     birth_date: new Date('1992-06-25'),
-    sex: 'feminino',
+    sex: Sex.FEMALE,
   },
   {
     name: 'Igor Almeida',
     birth_date: new Date('1985-12-15'),
-    sex: 'masculino',
+    sex: Sex.MALE,
   },
   {
     name: 'Júlia Ribeiro',
     birth_date: new Date('1996-04-20'),
-    sex: 'feminino',
+    sex: Sex.FEMALE,
   },
 ];
 
 const doctors = [
   {
     name: 'Dr. João Martins',
-    sex: 'masculino',
+    sex: Sex.MALE,
     crm: '123456-SP',
     phone: '5511999990001',
     email: 'joao.martins@hospital.com',
@@ -86,7 +86,7 @@ const doctors = [
   },
   {
     name: 'Dra. Maria Souza',
-    sex: 'feminino',
+    sex: Sex.FEMALE,
     crm: '654321-RJ',
     phone: '5511999990002',
     email: 'maria.souza@hospital.com',
@@ -98,7 +98,7 @@ const doctors = [
   },
   {
     name: 'Dr. Ricardo Alves',
-    sex: 'masculino',
+    sex: Sex.MALE,
     crm: '789012-MG',
     phone: '5511999990003',
     email: 'ricardo.alves@hospital.com',
@@ -109,7 +109,7 @@ const doctors = [
   },
   {
     name: 'Dra. Fernanda Oliveira',
-    sex: 'feminino',
+    sex: Sex.FEMALE,
     crm: '321654-BA',
     phone: '5511999990004',
     email: 'fernanda.oliveira@hospital.com',
@@ -121,7 +121,7 @@ const doctors = [
   },
   {
     name: 'Dr. Lucas Lima',
-    sex: 'masculino',
+    sex: Sex.MALE,
     crm: '987654-RS',
     phone: '5511999990005',
     email: 'lucas.lima@hospital.com',

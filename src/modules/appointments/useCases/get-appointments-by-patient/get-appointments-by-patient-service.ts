@@ -1,3 +1,5 @@
+import { AppointmentType } from '@prisma/client';
+
 import { AppError } from '@app/errors/app-client';
 import { PATIENT_NOT_FOUND } from '@shared/constants/messages';
 import { IAppointment, IPaginateRequest } from '@shared/entities';
@@ -12,7 +14,7 @@ type IGetAppointmentsByPatientParams = Omit<IPaginateRequest, 'name'> & {
   patient_id: string;
   end_date?: Date;
   start_date?: Date;
-  appointment_type?: string;
+  appointment_type?: AppointmentType;
 };
 
 export class GetAppointmentsByPatientService {

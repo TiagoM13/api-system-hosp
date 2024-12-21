@@ -1,3 +1,5 @@
+import { Status } from '@prisma/client';
+
 import { AppError } from '@app/errors/app-client';
 import {
   APPOINTMENT_NOT_FOUND,
@@ -5,7 +7,6 @@ import {
   DOCTOR_NOT_FOUND,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
-import { Status } from '@shared/enums';
 import {
   PatientRepository,
   AppointmentRepository,

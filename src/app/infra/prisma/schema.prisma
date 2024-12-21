@@ -21,7 +21,6 @@ enum Role {
 enum Sex {
   MALE
   FEMALE
-  OTHER
 }
 
 enum MaritalStatus {
@@ -62,41 +61,41 @@ model User {
 }
 
 model Patient {
-  id                     String        @id @default(uuid())
+  id                     String         @id @default(uuid())
   name                   String
   birth_date             DateTime
-  cpf                    String?       @unique
-  cns                    String?       @unique
-  sex                    String
+  cpf                    String?        @unique
+  cns                    String?        @unique
+  sex                    Sex
   address                String?
   mother_name            String?
   father_name            String?
-  material_status        String?
+  marital_status         MaritalStatus?
   occupation             String?
   email                  String?
   phone                  String?
   contact_emergency      String?
   name_contact_emergency String?
   health_agent           String?
-  status                 String        @default("ativo")
+  status                 Status         @default(ACTIVE)
   height                 Decimal?
   weight                 Decimal?
-  created_at             DateTime      @default(now())
-  updated_at             DateTime      @updatedAt
+  created_at             DateTime       @default(now())
+  updated_at             DateTime       @updatedAt
   appointments           Appointment[]
 
   @@map("patients")
 }
 
 model Appointment {
-  id                Int      @id @default(autoincrement())
-  appointment_type  String   @default("consulta")
+  id                String            @id @default(uuid())
+  appointment_type  AppointmentType   @default(QUERY)
   examination       String?
   diagnosis_summary String?
   scheduled_date    DateTime
-  status            String   @default("pendente")
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt()
+  status            AppointmentStatus @default(PENDING)
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt()
 
   doctor_id  Int
   doctor     Doctor  @relation(fields: [doctor_id], references: [id])
@@ -109,7 +108,7 @@ model Appointment {
 model Doctor {
   id           Int           @id @default(autoincrement())
   name         String
-  sex          String
+  sex          Sex
   crm          String        @unique
   cbo          String?
   cns          String?       @unique
@@ -119,7 +118,7 @@ model Doctor {
   avatar_url   String?
   specialty    String
   working_days Int[]
-  status       String        @default("ativo")
+  status       Status        @default(ACTIVE)
   appointments Appointment[]
   created_at   DateTime      @default(now())
   updated_at   DateTime      @updatedAt
