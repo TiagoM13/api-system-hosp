@@ -1,8 +1,8 @@
 import { FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
-import { paginateSchema } from '@shared/utils';
 
+import { patientsFilterSchema } from './get-all-patients-schema';
 import { GetAllPatientsService } from './get-all-patients-service';
 
 export class GetAllPatientsController extends BaseController {
@@ -11,7 +11,7 @@ export class GetAllPatientsController extends BaseController {
   }
 
   protected async handle(): Promise<FastifyReply> {
-    const query = paginateSchema.parse(this.request.query);
+    const query = patientsFilterSchema.parse(this.request.query);
 
     const results = await this.getAllPatientsService.execute(query);
 
