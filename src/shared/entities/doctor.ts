@@ -1,7 +1,9 @@
+import { Sex, Status } from '@prisma/client';
+
 export type IDoctor = {
   id?: number;
   name: string;
-  sex: string;
+  sex: Sex;
   birth_date: Date;
   crm: string;
   phone?: string | null;
@@ -10,7 +12,7 @@ export type IDoctor = {
   specialty: string;
   appointment_id?: string | null;
   working_days: number[];
-  status?: string;
+  status?: Status;
 
   created_at?: Date;
   updated_at?: Date;

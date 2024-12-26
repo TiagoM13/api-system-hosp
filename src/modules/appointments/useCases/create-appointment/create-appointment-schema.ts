@@ -1,6 +1,5 @@
+import { AppointmentType } from '@prisma/client';
 import z from 'zod';
-
-import { AppointmentType } from '@shared/enums';
 
 export const createAppointmentSchema = z
   .object({

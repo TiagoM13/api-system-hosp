@@ -1,10 +1,11 @@
+import { Status } from '@prisma/client';
+
 import { prisma } from '@app/infra/prisma/client';
 import {
   FindEntitiesAndCountParams,
   FindEntitiesAndCountResult,
   IDoctor,
 } from '@shared/entities';
-import { Status } from '@shared/enums';
 
 import { IDoctorRepository } from '../interfaces/doctor';
 

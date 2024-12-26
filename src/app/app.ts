@@ -1,9 +1,9 @@
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
-import multipart from '@fastify/multipart';
+import { fastifyMultipart } from '@fastify/multipart';
 import { fastifyStatic } from '@fastify/static';
 import { fastify } from 'fastify';
-import fastifyBcrypt from 'fastify-bcrypt';
+import { fastifyBcrypt } from 'fastify-bcrypt';
 import { resolve } from 'node:path';
 
 import {
@@ -27,7 +27,7 @@ app.setErrorHandler(errorHandler);
 app.register(cors, {
   origin: '*',
 });
-app.register(multipart);
+app.register(fastifyMultipart);
 app.register(fastifyStatic, {
   root: resolve(__dirname, '../uploads'),
   prefix: '/uploads',

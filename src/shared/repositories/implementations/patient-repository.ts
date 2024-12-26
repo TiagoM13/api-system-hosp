@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Prisma } from '@prisma/client';
+
 import { prisma } from '@app/infra/prisma/client';
 import {
-  type FindEntitiesAndCountParams,
+  type FindAllPatientsAndCountParams,
   type FindEntitiesAndCountResult,
   IPatient,
 } from '@shared/entities';
@@ -11,18 +13,22 @@ import { IPatientRepository } from '../interfaces/patient';
 
 export class PatientRepository implements IPatientRepository {
   async findAndCountAll(
-    params: FindEntitiesAndCountParams,
+    params: FindAllPatientsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IPatient>> {
-    const { name, take, skip } = params;
-    const count = await prisma.patient.count({
-      where: { name: name ? { contains: name } : undefined },
-    });
+    const { name, take, skip, cpf, cns, status } = params;
+
+    const where: Prisma.PatientWhereInput = {
+      ...(name && { name: { contains: name } }),
+      ...(cpf && { cpf }),
+      ...(cns && { cns }),
+      ...(status && { status }),
+    };
+
+    const count = await prisma.patient.count({ where });
     const patients = await prisma.patient.findMany({
       skip,
       take,
-      where: {
-        name: name ? { contains: name } : undefined,
-      },
+      where,
       orderBy: {
         created_at: 'desc',
       },
@@ -46,6 +52,9 @@ export class PatientRepository implements IPatientRepository {
         appointments: {
           orderBy: {
             scheduled_date: 'desc',
+          },
+          include: {
+            doctor: true,
           },
         },
       },

@@ -1,12 +1,12 @@
 import {
-  type FindEntitiesAndCountParams,
+  type FindAllPatientsAndCountParams,
   type FindEntitiesAndCountResult,
   IPatient,
 } from '@shared/entities';
 
 export interface IPatientRepository {
   findAndCountAll(
-    params: FindEntitiesAndCountParams,
+    params: FindAllPatientsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IPatient>>;
   findById(id: string): Promise<IPatient | null>;
   findByCPF(cpf: string): Promise<IPatient | null>;

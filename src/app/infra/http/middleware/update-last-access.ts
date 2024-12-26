@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { app } from '@app/app';
-import { UserRepository } from '@shared/repositories/implementations';
+import { IUserRepository } from '@shared/repositories/interfaces/user';
 
-export const updateLastAccess = (userRepository: UserRepository) => {
+export const updateLastAccess = (userRepository: IUserRepository) => {
   return async (req: FastifyRequest, res: FastifyReply) => {
     try {
       const authorization = req.headers.authorization;

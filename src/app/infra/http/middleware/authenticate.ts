@@ -1,7 +1,7 @@
+import { Role, Status } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { app } from '@app/app';
-import { Status, Role } from '@shared/enums';
 
 interface TokenData {
   id: number;

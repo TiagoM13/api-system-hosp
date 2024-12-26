@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Prisma } from '@prisma/client';
+import { AppointmentStatus, Prisma } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
 import {
@@ -8,7 +8,6 @@ import {
   FindAppointmentsAndCountParams,
   FindAllAppointmentsAndCountParams,
 } from '@shared/entities';
-import { AppointmentStatus } from '@shared/enums';
 
 import { IAppointmentRepository } from '../interfaces/appointment';
 
@@ -19,7 +18,7 @@ export class AppointmentRepository implements IAppointmentRepository {
     const { name, skip, take, appointment_type, start_date, end_date } = params;
 
     const where: Prisma.AppointmentWhereInput = {
-      appointment_type,
+      ...(appointment_type && { appointment_type }),
       scheduled_date: {
         ...(start_date && { gte: start_date }),
         ...(end_date && { lte: end_date }),
@@ -57,7 +56,7 @@ export class AppointmentRepository implements IAppointmentRepository {
 
     const where: Prisma.AppointmentWhereInput = {
       patient_id: patient_id,
-      ...(appointment_type && { appointment_type: appointment_type }),
+      ...(appointment_type && { appointment_type }),
       scheduled_date: {
         ...(start_date && { gte: start_date }),
         ...(end_date && { lte: end_date }),

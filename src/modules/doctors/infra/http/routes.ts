@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 
 import { bindController } from '@app/infra/http/controller/bindController';
@@ -5,7 +6,6 @@ import {
   updateLastAccess,
   verifyAuthorization,
 } from '@app/infra/http/middleware';
-import { Role } from '@shared/enums';
 import {
   makeCreateDoctorController,
   makeDeleteDoctorController,
@@ -17,7 +17,10 @@ import {
 import { makeUserRepository } from '@shared/factories/repositories';
 
 export const doctorRoutes = async (app: FastifyInstance) => {
-  app.addHook('preHandler', verifyAuthorization([Role.ADMIN]));
+  app.addHook(
+    'preHandler',
+    verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
+  );
   app.addHook('preHandler', updateLastAccess(makeUserRepository()));
 
   app.get('/doctors', bindController(makeGetAllDoctorsController()));

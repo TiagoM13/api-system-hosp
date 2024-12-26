@@ -1,48 +1,37 @@
-import { AppError } from '@app/errors/app-client';
-import { PATIENT_NOT_FOUND } from '@shared/constants/messages';
+import { AppointmentType } from '@prisma/client';
+
 import { IAppointment, IPaginateRequest } from '@shared/entities';
-import {
-  PatientRepository,
-  AppointmentRepository,
-} from '@shared/repositories/implementations';
+import { AppointmentRepository } from '@shared/repositories/implementations/appointment-repository';
 import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 
 type IGetAllAppointmentsParams = IPaginateRequest & {
-  patient_id: string;
   end_date?: Date;
   start_date?: Date;
-  appointment_type?: string;
+  appointment_type?: AppointmentType;
 };
 
 export class GetAllAppointmentsService {
-  constructor(
-    private readonly appointmentRepository: AppointmentRepository,
-    private readonly patientRepository: PatientRepository,
-  ) {
+  constructor(private readonly appointmentRepository: AppointmentRepository) {
     this.appointmentRepository = appointmentRepository;
-    this.patientRepository = patientRepository;
   }
 
   async execute(
     params: IGetAllAppointmentsParams,
   ): Promise<FindAndCountAll<IAppointment>> {
-    const { patient_id, page, items_per_page } = params;
-    const patient = await this.patientRepository.findById(patient_id);
-
-    if (!patient) {
-      throw new AppError(PATIENT_NOT_FOUND, 404);
-    }
-
+    const { page, items_per_page } = params;
     validatePaginationParams(page, items_per_page);
 
     const offset = (page - 1) * items_per_page;
-    const appointments = await this.appointmentRepository.findAndCountAll({
+    const result = await this.appointmentRepository.findAllAppointments({
       ...params,
       skip: offset,
       take: items_per_page,
     });
 
-    return appointments;
+    return {
+      rows: result.rows,
+      count: result.count,
+    };
   }
 }

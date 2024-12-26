@@ -1,4 +1,7 @@
+import { AppointmentType } from '@prisma/client';
 import z from 'zod';
+
+import { AppError } from '@app/errors/app-client';
 
 export const appointmentParamId = z.object({
   patientId: z.string().uuid(),
@@ -14,14 +17,41 @@ export const appointmentQuerySchema = z
     name: z.string().optional(),
     page: z.coerce.number().default(1),
     items_per_page: z.coerce.number().max(500).default(10),
-    appointment_type: z.string().optional(),
+    appointment_type: z
+      .union([z.nativeEnum(AppointmentType), z.undefined(), z.string()])
+      .optional(),
     start_date: z.preprocess(
-      val => (typeof val === 'string' ? new Date(val) : val),
-      z.date().optional(),
+      val => {
+        if (typeof val === 'string' && val.trim() === '') return undefined;
+
+        if (typeof val === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+          throw new AppError(
+            'Data de início inválida. Use o formato YYYY-MM-DD',
+          );
+        }
+        return typeof val === 'string' ? new Date(val) : val;
+      },
+      z
+        .date({
+          invalid_type_error:
+            'Data de início inválida. Use o formato YYYY-MM-DD',
+        })
+        .optional(),
     ),
     end_date: z.preprocess(
-      val => (typeof val === 'string' ? new Date(val) : val),
-      z.date().optional(),
+      val => {
+        if (typeof val === 'string' && val.trim() === '') return undefined;
+
+        if (typeof val === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(val)) {
+          throw new AppError('Data de fim inválida. Use o formato YYYY-MM-DD');
+        }
+        return typeof val === 'string' ? new Date(val) : val;
+      },
+      z
+        .date({
+          invalid_type_error: 'Data de fim inválida. Use o formato YYYY-MM-DD',
+        })
+        .optional(),
     ),
   })
   .refine(
@@ -34,17 +64,5 @@ export const appointmentQuerySchema = z
     {
       message: 'A data de início não pode ser maior que a data de fim',
       path: ['start_date'],
-    },
-  )
-  .refine(
-    data => {
-      if (data.start_date && data.end_date) {
-        return data.end_date >= data.start_date;
-      }
-      return true;
-    },
-    {
-      message: 'A data de fim não pode ser menor que a data de início',
-      path: ['end_date'],
     },
   );
