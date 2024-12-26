@@ -17,7 +17,9 @@ export const appointmentQuerySchema = z
     name: z.string().optional(),
     page: z.coerce.number().default(1),
     items_per_page: z.coerce.number().max(500).default(10),
-    appointment_type: z.nativeEnum(AppointmentType).optional(),
+    appointment_type: z
+      .union([z.nativeEnum(AppointmentType), z.undefined(), z.string()])
+      .optional(),
     start_date: z.preprocess(
       val => {
         if (typeof val === 'string' && val.trim() === '') return undefined;

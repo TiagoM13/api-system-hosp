@@ -1,6 +1,8 @@
 import { MaritalStatus, Sex, Status } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 
+import { IPaginateRequest } from './paginate';
+
 export type IPatient = {
   id?: string;
   name: string;
@@ -24,5 +26,12 @@ export type IPatient = {
 
   created_at?: Date;
   updated_at?: Date;
+  // TO-DO
   // conditions: []
 };
+
+export interface IPatientFilters extends IPaginateRequest {
+  cpf?: string;
+  cns?: string;
+  status?: Status;
+}

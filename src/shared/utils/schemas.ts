@@ -31,3 +31,6 @@ export const MIN_WEIGHT = 'Peso mínimo permitido é 0.5 kg';
 export const MAX_WEIGHT = 'Peso máximo permitido é 500 kg';
 export const MIN_HEIGHT = 'Altura mínima permitida é 50 cm';
 export const MAX_HEIGHT = 'Altura máxima permitida é 300 cm';
+
+export const MUST_CONTAIN_CPF_SIZE = 'O CPF deve conter 11 dígitos.';
+export const MUST_CONTAIN_CNS_SIZE = 'O CNS deve conter 15 dígitos.';
