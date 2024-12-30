@@ -1,4 +1,4 @@
-import { AppointmentType } from '@prisma/client';
+import { AppointmentStatus, AppointmentType } from '@prisma/client';
 
 import { IAppointment, IPaginateRequest } from '@shared/entities';
 import { AppointmentRepository } from '@shared/repositories/implementations/appointment-repository';
@@ -6,9 +6,9 @@ import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 
 type IGetAllAppointmentsParams = IPaginateRequest & {
-  end_date?: Date;
-  start_date?: Date;
+  scheduled_date?: Date;
   appointment_type?: AppointmentType;
+  status?: AppointmentStatus;
 };
 
 export class GetAllAppointmentsService {
