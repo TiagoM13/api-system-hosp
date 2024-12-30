@@ -17,14 +17,15 @@ export class GetAppointmentService {
     this.patientRepository = patientRepository;
   }
 
-  async execute(queryId: number, patientId: string) {
+  async execute(appointmentId: number, patientId: string) {
     const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {
       throw new AppError(PATIENT_NOT_FOUND, 404);
     }
 
-    const appointment = await this.appointmentRepository.findById(queryId);
+    const appointment =
+      await this.appointmentRepository.findById(appointmentId);
 
     if (patientId !== appointment?.patient_id) {
       throw new AppError(APPOINTMENT_NOT_FOUND, 404);

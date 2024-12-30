@@ -1,4 +1,4 @@
-import { AppointmentType, Status } from '@prisma/client';
+import { AppointmentStatus, AppointmentType, Status } from '@prisma/client';
 
 export interface FindEntitiesAndCountParams {
   name?: string;
@@ -14,16 +14,16 @@ export interface FindEntitiesAndCountResult<T> {
 export interface FindAppointmentsAndCountParams
   extends Omit<FindEntitiesAndCountParams, 'name'> {
   patient_id: string;
+  scheduled_date?: Date;
   appointment_type?: AppointmentType;
-  start_date?: Date;
-  end_date?: Date;
+  status?: AppointmentStatus;
 }
 
 export interface FindAllAppointmentsAndCountParams
   extends FindEntitiesAndCountParams {
+  scheduled_date?: Date;
   appointment_type?: AppointmentType;
-  start_date?: Date;
-  end_date?: Date;
+  status?: AppointmentStatus;
 }
 
 export interface FindAllPatientsAndCountParams
