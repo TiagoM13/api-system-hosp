@@ -1,8 +1,11 @@
+version: '3.9'
 name: api-hosp
 
 services:
   postgres:
     image: bitnami/postgresql:latest
+    container_name: postgres
+    restart: always
     ports:
       - '5432:5432'
     environment:
