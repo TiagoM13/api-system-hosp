@@ -18,7 +18,8 @@ export const appointmentQuerySchema = z
     page: z.coerce.number().default(1),
     items_per_page: z.coerce.number().max(500).default(10),
     appointment_type: z
-      .union([z.nativeEnum(AppointmentType), z.undefined(), z.string()])
+      .union([z.nativeEnum(AppointmentType), z.literal('')])
+      .transform(val => (val === '' ? undefined : val))
       .optional(),
     start_date: z.preprocess(
       val => {

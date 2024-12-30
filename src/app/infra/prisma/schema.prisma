@@ -88,7 +88,7 @@ model Patient {
 }
 
 model Appointment {
-  id                String            @id @default(uuid())
+  id                Int               @id @default(autoincrement())
   appointment_type  AppointmentType   @default(QUERY)
   examination       String?
   diagnosis_summary String?

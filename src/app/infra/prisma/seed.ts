@@ -80,7 +80,6 @@ const doctors = [
     phone: '5511999990001',
     email: 'joao.martins@hospital.com',
     birth_date: new Date('1975-04-10'),
-    avatar_url: 'https://example.com/avatar1.jpg',
     specialty: 'Cardiologia',
     working_days: [1, 3, 5], // Segundas, quartas, sextas
   },
@@ -91,8 +90,6 @@ const doctors = [
     phone: '5511999990002',
     email: 'maria.souza@hospital.com',
     birth_date: new Date('1980-12-20'),
-    avatar_url:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMivCzphvfoMNWnDmyx4B9-2x9t818xbOkcw&s',
     specialty: 'Pediatria',
     working_days: [2, 4], // Terças e quintas
   },
@@ -103,7 +100,6 @@ const doctors = [
     phone: '5511999990003',
     email: 'ricardo.alves@hospital.com',
     birth_date: new Date('1982-09-15'),
-    avatar_url: 'https://example.com/avatar3.jpg',
     specialty: 'Ortopedia',
     working_days: [1, 2, 5], // Segundas, terças e sextas
   },
@@ -114,8 +110,6 @@ const doctors = [
     phone: '5511999990004',
     email: 'fernanda.oliveira@hospital.com',
     birth_date: new Date('1990-05-18'),
-    avatar_url:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKUabeWRx6T2GqZmeIwP4P7lVNHV3ghHDYGQ&s',
     specialty: 'Dermatologia',
     working_days: [3, 5], // Quartas e sextas
   },
@@ -126,13 +120,13 @@ const doctors = [
     phone: '5511999990005',
     email: 'lucas.lima@hospital.com',
     birth_date: new Date('1987-03-30'),
-    avatar_url: 'https://example.com/avatar5.jpg',
     specialty: 'Neurologia',
     working_days: [2, 4], // Terças e quintas
   },
 ];
 
 async function seed() {
+  await prisma.appointment.deleteMany();
   await prisma.user.deleteMany();
   await prisma.patient.deleteMany();
   await prisma.doctor.deleteMany();
