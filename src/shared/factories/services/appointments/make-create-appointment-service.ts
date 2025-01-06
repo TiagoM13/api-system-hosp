@@ -1,13 +1,13 @@
 import { CreateAppointmentService } from '@modules/appointments/useCases/create-appointment/create-appointment-service';
 import {
-  makeAppointmentRepository,
+  makePrismaAppointmentRepository,
   makePrismaDoctorRepoistory,
   makePrismaPatientRepository,
 } from '@shared/factories/repositories';
 
 export const makeCreateAppointmentService = (): CreateAppointmentService => {
   return new CreateAppointmentService(
-    makeAppointmentRepository(),
+    makePrismaAppointmentRepository(),
     makePrismaPatientRepository(),
     makePrismaDoctorRepoistory(),
   );

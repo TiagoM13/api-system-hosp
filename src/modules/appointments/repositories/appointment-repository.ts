@@ -7,7 +7,7 @@ import {
   IAppointment,
 } from '@shared/entities';
 
-export interface IAppointmentRepository {
+export interface AppointmentRepository {
   findAndCountAll(
     params: FindAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>>;
@@ -23,5 +23,5 @@ export interface IAppointmentRepository {
   updateAppointmentStatus(
     appointment_id: number,
     status: AppointmentStatus,
-  ): Promise<string>;
+  ): Promise<AppointmentStatus>;
 }

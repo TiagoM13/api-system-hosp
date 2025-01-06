@@ -1,15 +1,13 @@
 import { AppointmentStatus } from '@prisma/client';
 
 import { AppError } from '@app/errors/app-client';
+import { AppointmentRepository } from '@modules/appointments/repositories/appointment-repository';
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import {
   APPOINTMENT_NOT_FOUND,
   APPOINTMENT_STATUS_CANNOT_BE_CHANGED,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
-import {
-  AppointmentRepository,
-  PatientRepository,
-} from '@shared/repositories/implementations';
 
 import { UpdateAppointmentStatusDTO } from './update-appointment-status-schema';
 
@@ -26,7 +24,7 @@ export class UpdateAppointmentStatusService {
     appointmentId: number,
     patientId: string,
     dto: UpdateAppointmentStatusDTO,
-  ): Promise<string> {
+  ): Promise<AppointmentStatus> {
     const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {

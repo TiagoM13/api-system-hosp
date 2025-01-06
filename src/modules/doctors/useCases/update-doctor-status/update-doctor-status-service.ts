@@ -1,3 +1,5 @@
+import { Status } from '@prisma/client';
+
 import { AppError } from '@app/errors/app-client';
 import { DoctorRepository } from '@modules/doctors/repositories/doctor-repository';
 import { DOCTOR_NOT_FOUND } from '@shared/constants/messages';
@@ -9,7 +11,7 @@ export class UpdateDoctorStatusService {
     this.doctorRepository = doctorRepository;
   }
 
-  async execute(id: number, dto: UpdateDoctorStatusDTO): Promise<string> {
+  async execute(id: number, dto: UpdateDoctorStatusDTO): Promise<Status> {
     const doctor = await this.doctorRepository.findById(id);
 
     if (!doctor) {

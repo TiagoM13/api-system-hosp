@@ -2,6 +2,7 @@ import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
 import { appointmentParamsSchema } from '@modules/appointments/schemas';
+import { APPOINTMENT_STATUS_LABELS } from '@shared/constants/labels';
 
 import { updateAppointmentStatusSchema } from './update-appointment-status-schema';
 import { UpdateAppointmentStatusService } from './update-appointment-status-service';
@@ -27,7 +28,7 @@ export class UpdateAppointmentStatusController extends BaseController {
 
     return this.ok({
       success: true,
-      status: `Status alterado para ${status}.`,
+      status: `Status alterado para ${APPOINTMENT_STATUS_LABELS[status]}.`,
     });
   }
 }
