@@ -1,5 +1,8 @@
+import { Status } from '@prisma/client';
+
 import { AppError } from '@app/errors/app-client';
 import { UserRepository } from '@modules/users/repositories/user-repository';
+import { STATUS_LABELS } from '@shared/constants/labels';
 import {
   USER_NOT_FOUND,
   STATUS_CANNOT_BE_CHANGED,
@@ -17,7 +20,7 @@ export class UpdateUserStatusService {
     id: number,
     dto: UpdateUserStatusDTO,
     loggedInUser: IUser,
-  ): Promise<string> {
+  ): Promise<Status> {
     const user = await this.userRepository.findById(id);
 
     if (!user) throw new AppError(USER_NOT_FOUND, 404);
@@ -27,7 +30,9 @@ export class UpdateUserStatusService {
     }
 
     if (user.status === dto.status) {
-      throw new AppError(`O status já está definido como "${user.status}".`);
+      throw new AppError(
+        `O status já está definido como "${STATUS_LABELS[user.status]}".`,
+      );
     }
 
     const status = await this.userRepository.updateStatus(id, dto.status);

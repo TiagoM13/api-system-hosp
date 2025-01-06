@@ -102,7 +102,7 @@ export class PrismaUserRepository implements UserRepository {
     });
   }
 
-  async updateStatus(id: number, status: Status): Promise<string> {
+  async updateStatus(id: number, status: Status): Promise<Status> {
     const doctor = await prisma.user.update({
       where: { id },
       data: { status },
