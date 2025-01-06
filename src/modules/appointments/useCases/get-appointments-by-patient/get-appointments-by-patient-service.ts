@@ -1,12 +1,10 @@
 import { AppointmentStatus, AppointmentType } from '@prisma/client';
 
 import { AppError } from '@app/errors/app-client';
+import { AppointmentRepository } from '@modules/appointments/repositories/appointment-repository';
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import { PATIENT_NOT_FOUND } from '@shared/constants/messages';
 import { IAppointment, IPaginateRequest } from '@shared/entities';
-import {
-  PatientRepository,
-  AppointmentRepository,
-} from '@shared/repositories/implementations';
 import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 

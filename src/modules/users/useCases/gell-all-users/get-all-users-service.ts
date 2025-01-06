@@ -1,5 +1,5 @@
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import { IPaginateRequest, IUser } from '@shared/entities';
-import { UserRepository } from '@shared/repositories/implementations';
 import { type FindAndCountAll } from '@shared/utils/format-paginate';
 import { validatePaginationParams } from '@shared/utils/validate-paginate';
 

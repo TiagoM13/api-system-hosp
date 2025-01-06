@@ -1,12 +1,10 @@
 import { AppError } from '@app/errors/app-client';
+import { AppointmentRepository } from '@modules/appointments/repositories/appointment-repository';
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import {
   APPOINTMENT_NOT_FOUND,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
-import {
-  PatientRepository,
-  AppointmentRepository,
-} from '@shared/repositories/implementations';
 
 export class GetAppointmentService {
   constructor(

@@ -1,17 +1,15 @@
 import { Status } from '@prisma/client';
 
 import { AppError } from '@app/errors/app-client';
+import { AppointmentRepository } from '@modules/appointments/repositories/appointment-repository';
+import { DoctorRepository } from '@modules/doctors/repositories/doctor-repository';
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import {
   APPOINTMENT_NOT_FOUND,
   DOCTOR_INACTIVE,
   DOCTOR_NOT_FOUND,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
-import {
-  PatientRepository,
-  AppointmentRepository,
-} from '@shared/repositories/implementations';
-import { DoctorRepository } from '@shared/repositories/implementations/doctor-repository';
 
 import { UpdateAppointmentDTO } from './update-appointment-schema';
 

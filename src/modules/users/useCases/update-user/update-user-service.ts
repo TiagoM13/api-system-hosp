@@ -1,4 +1,5 @@
 import { AppError } from '@app/errors/app-client';
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import {
   EMAIL_CANNOT_BE_CHANGED,
   EMAIL_IS_ALREADY_IN_USE,
@@ -6,7 +7,6 @@ import {
   USER_NOT_FOUND,
 } from '@shared/constants/messages';
 import { IUser } from '@shared/entities';
-import { UserRepository } from '@shared/repositories/implementations';
 
 import { UpdateUserDTO } from './update-user-schema';
 

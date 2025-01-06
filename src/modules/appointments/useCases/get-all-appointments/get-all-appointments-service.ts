@@ -1,7 +1,7 @@
 import { AppointmentStatus, AppointmentType } from '@prisma/client';
 
+import { AppointmentRepository } from '@modules/appointments/repositories/appointment-repository';
 import { IAppointment, IPaginateRequest } from '@shared/entities';
-import { AppointmentRepository } from '@shared/repositories/implementations/appointment-repository';
 import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 

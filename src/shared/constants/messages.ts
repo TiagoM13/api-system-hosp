@@ -9,9 +9,14 @@ export const STATUS_CANNOT_BE_CHANGED =
   'Não é permitido alterar o próprio status.';
 export const USER_INACTIVE =
   'Usuário inativo! Você está sem acesso no momento.';
-export const EMAIL_INVALID = 'E-mail inválido.';
-export const PASSWORD_INVALID = 'Senha inválida.';
+export const INVALID_EMAIL = 'E-mail inválido.';
+export const INVALID_PASSWORD = 'Senha inválida.';
 export const INCONPATIBLE_PASSWORDS = 'Confirme se as senhas são iguais.';
+export const USER_NOT_AUTHORIZED =
+  'Acesso proibido! Tipo de usuário não autorizado';
+export const INVALID_TOKEN = 'Token inválido';
+export const EXPIRED_TOKEN = 'O token expirou';
+export const TOKEN_NOT_FOUND = 'Token não fornecido';
 
 // Patient
 export const CNS_EXISTS = 'O CNS já existe.';

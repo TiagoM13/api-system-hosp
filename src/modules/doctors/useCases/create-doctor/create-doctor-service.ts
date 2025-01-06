@@ -1,7 +1,7 @@
 import { AppError } from '@app/errors/app-client';
+import { DoctorRepository } from '@modules/doctors/repositories/doctor-repository';
 import { CNS_EXISTS } from '@shared/constants/messages';
 import { IDoctor } from '@shared/entities';
-import { DoctorRepository } from '@shared/repositories/implementations/doctor-repository';
 
 import { CreateDoctorDTO } from './create-doctor-schema';
 

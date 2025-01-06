@@ -1,6 +1,6 @@
 import { GetDoctorService } from '@modules/doctors/useCases/get-doctor/get-doctor-service';
-import { makeDoctorRepoistory } from '@shared/factories/repositories/make-doctor-repository';
+import { makePrismaDoctorRepoistory } from '@shared/factories/repositories';
 
 export const makeGetDoctorService = (): GetDoctorService => {
-  return new GetDoctorService(makeDoctorRepoistory());
+  return new GetDoctorService(makePrismaDoctorRepoistory());
 };

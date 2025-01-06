@@ -4,7 +4,7 @@ import {
   IPatient,
 } from '@shared/entities';
 
-export interface IPatientRepository {
+export interface PatientRepository {
   findAndCountAll(
     params: FindAllPatientsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IPatient>>;

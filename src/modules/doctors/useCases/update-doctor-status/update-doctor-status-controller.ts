@@ -1,6 +1,7 @@
 import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
+import { STATUS_LABELS } from '@shared/constants/labels';
 import { intIdParamSchema } from '@shared/utils';
 
 import { updateDoctorStatusSchema } from './update-doctor-status-schema';
@@ -21,7 +22,7 @@ export class UpdateDoctorStatusController extends BaseController {
 
     return this.ok({
       success: true,
-      message: `Status do médico atualizado para ${status}`,
+      message: `Status do médico atualizado para ${STATUS_LABELS[status]}`,
     });
   }
 }

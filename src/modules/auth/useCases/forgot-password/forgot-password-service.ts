@@ -2,9 +2,9 @@ import { Status } from '@prisma/client';
 import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
-import { getMailClient } from '@shared/configs/mailer';
+import { UserRepository } from '@modules/users/repositories/user-repository';
+import { sendResetPasswordEmail } from '@shared/config/emails/reset-password';
 import { USER_INACTIVE, USER_NOT_FOUND } from '@shared/constants/messages';
-import { UserRepository } from '@shared/repositories/implementations';
 import {
   generateProvisionalPassword,
   hashPassword,
@@ -36,35 +36,15 @@ export class ForgotPasswordService {
       password: hashedPassword,
     });
 
+    // TO-DO
     console.log({ provisionalPassword });
 
-    const mail = await getMailClient();
-
-    const message = await mail.sendMail({
-      from: {
-        name: 'Equipe Teste',
-        address: 'equipe@example.com',
-      },
-      to: user.email,
-      subject: 'Sua nova senha já está disponivel',
-      html: `
-            <div style="font-family: sans-serif; font-size: 16px; line-height: 1.6;">
-                <p>Olá, ${user.name}!</p>
-                <p>Recebemos seu pedido para redefinir a senha e estamos aqui para ajudar!</p>
-                <p>Use a senha provisória abaixo para acessar sua conta novamente:</p>
-                <p><strong>${provisionalPassword}</strong></p>
-                <p>Não se esqueça de trocar essa senha assim que possível para manter sua conta segura.</p>
-                <p>Você pode acessar o sistema clicando no link abaixo:</p>
-                <p><a target="_blank" href="${process.env.BASE_URL_WEB}/sign-in">Clique aqui para fazer login</a></p>
-                <p>Caso você não tenha solicitado a redefinição de senha, pode ignorar esta mensagem sem preocupações.</p>
-                <p>Estamos sempre aqui para ajudar!</p>
-                <p>Abraços,</p>
-                <p>Equipe Teste</p>
-            </div>
-          `.trim(),
+    const message = await sendResetPasswordEmail({
+      user,
+      temporaryPassword: provisionalPassword,
     });
 
-    // Remover
+    // TO-DO
     console.error(nodemailer.getTestMessageUrl(message));
   }
 }

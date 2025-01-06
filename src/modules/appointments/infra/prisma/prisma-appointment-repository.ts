@@ -2,6 +2,7 @@
 import { AppointmentStatus, Prisma } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
+import { AppointmentRepository } from '@modules/appointments/repositories/appointment-repository';
 import {
   FindEntitiesAndCountResult,
   IAppointment,
@@ -9,9 +10,7 @@ import {
   FindAllAppointmentsAndCountParams,
 } from '@shared/entities';
 
-import { IAppointmentRepository } from '../interfaces/appointment';
-
-export class AppointmentRepository implements IAppointmentRepository {
+export class PrismaAppointmentRepository implements AppointmentRepository {
   async findAllAppointments(
     params: FindAllAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>> {
@@ -128,7 +127,7 @@ export class AppointmentRepository implements IAppointmentRepository {
   async updateAppointmentStatus(
     appointment_id: number,
     status: AppointmentStatus,
-  ): Promise<string> {
+  ): Promise<AppointmentStatus> {
     const appointment = await prisma.appointment.update({
       where: { id: appointment_id },
       data: {

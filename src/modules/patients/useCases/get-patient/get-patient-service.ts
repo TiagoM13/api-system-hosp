@@ -1,7 +1,7 @@
 import { AppError } from '@app/errors/app-client';
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import { PATIENT_NOT_FOUND } from '@shared/constants/messages';
 import { IPatient } from '@shared/entities';
-import { PatientRepository } from '@shared/repositories/implementations';
 
 export class GetPatientService {
   constructor(private readonly patientRepository: PatientRepository) {
