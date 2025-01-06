@@ -3,12 +3,12 @@ import { Status } from '@prisma/client';
 
 import { app } from '@app/app';
 import { AppError } from '@app/errors/app-client';
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import {
-  EMAIL_INVALID,
-  PASSWORD_INVALID,
+  INVALID_EMAIL,
+  INVALID_PASSWORD,
   USER_INACTIVE,
 } from '@shared/constants/messages';
-import { UserRepository } from '@shared/repositories/implementations';
 
 import { AuthenticationDTO } from './login-schema';
 
@@ -21,7 +21,7 @@ export class LoginService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new AppError(EMAIL_INVALID);
+      throw new AppError(INVALID_EMAIL);
     }
 
     const isPasswordValid = await app.bcrypt.compare(
@@ -30,7 +30,7 @@ export class LoginService {
     );
 
     if (!isPasswordValid) {
-      throw new AppError(PASSWORD_INVALID);
+      throw new AppError(INVALID_PASSWORD);
     }
 
     if (user.status === Status.INACTIVE) {

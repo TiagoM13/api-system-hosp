@@ -1,15 +1,14 @@
 import { Status } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import {
   type FindEntitiesAndCountParams,
   type FindEntitiesAndCountResult,
   IUser,
 } from '@shared/entities';
 
-import { IUserRepository } from '../interfaces/user';
-
-export class UserRepository implements IUserRepository {
+export class PrismaUserRepository implements UserRepository {
   async findAndCountAll(
     params: FindEntitiesAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IUser>> {

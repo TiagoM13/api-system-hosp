@@ -6,7 +6,7 @@ import {
   IUser,
 } from '@shared/entities';
 
-export interface IUserRepository {
+export interface UserRepository {
   findAndCountAll(
     params: FindEntitiesAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IUser>>;

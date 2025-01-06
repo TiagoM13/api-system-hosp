@@ -12,11 +12,11 @@ const pump = util.promisify(pipeline);
 export class UploadService {
   async execute(uploadData: MultipartFile | undefined): Promise<string> {
     if (!uploadData) {
-      throw new AppError('No file uploaded');
+      throw new AppError('Nenhum arquivo carregado');
     }
 
     if (!uploadData.mimetype.startsWith('image/')) {
-      throw new AppError('Only image files are allowed');
+      throw new AppError('Somente arquivos de imagem são permitidos');
     }
 
     const fileId = randomUUID();

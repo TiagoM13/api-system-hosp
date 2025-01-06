@@ -14,14 +14,14 @@ import {
   makeUpdateDoctorController,
   makeUpdateDoctorStatusController,
 } from '@shared/factories/controllers';
-import { makeUserRepository } from '@shared/factories/repositories';
+import { makePrismaUserRepository } from '@shared/factories/repositories';
 
 export const doctorRoutes = async (app: FastifyInstance) => {
   app.addHook(
     'preHandler',
     verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
   );
-  app.addHook('preHandler', updateLastAccess(makeUserRepository()));
+  app.addHook('preHandler', updateLastAccess(makePrismaUserRepository()));
 
   app.get('/doctors', bindController(makeGetAllDoctorsController()));
   app.get('/doctors/:id', bindController(makeGetDoctorController()));

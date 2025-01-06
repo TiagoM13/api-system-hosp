@@ -1,10 +1,10 @@
 import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import { getMailClient } from '@shared/configs/mailer';
 import { EMAIL_IS_ALREADY_IN_USE } from '@shared/constants/messages';
 import { IUser } from '@shared/entities';
-import { UserRepository } from '@shared/repositories/implementations';
 import {
   generateProvisionalPassword,
   hashPassword,

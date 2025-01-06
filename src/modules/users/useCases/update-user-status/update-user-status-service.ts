@@ -1,10 +1,10 @@
 import { AppError } from '@app/errors/app-client';
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import {
   USER_NOT_FOUND,
   STATUS_CANNOT_BE_CHANGED,
 } from '@shared/constants/messages';
 import { IUser } from '@shared/entities';
-import { UserRepository } from '@shared/repositories/implementations';
 
 import { UpdateUserStatusDTO } from './update-user-status-schema';
 

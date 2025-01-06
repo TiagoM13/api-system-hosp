@@ -1,10 +1,10 @@
 import { AppError } from '@app/errors/app-client';
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import {
   INCONPATIBLE_PASSWORDS,
   USER_NOT_FOUND,
 } from '@shared/constants/messages';
 import { IUser } from '@shared/entities';
-import { UserRepository } from '@shared/repositories/implementations';
 import { hashPassword } from '@shared/utils/generate-password';
 
 import { ChangePasswordUserDTO } from './change-password-user-schema';

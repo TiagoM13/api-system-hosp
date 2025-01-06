@@ -2,9 +2,9 @@ import { Status } from '@prisma/client';
 import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
+import { UserRepository } from '@modules/users/repositories/user-repository';
 import { getMailClient } from '@shared/configs/mailer';
 import { USER_INACTIVE, USER_NOT_FOUND } from '@shared/constants/messages';
-import { UserRepository } from '@shared/repositories/implementations';
 import {
   generateProvisionalPassword,
   hashPassword,

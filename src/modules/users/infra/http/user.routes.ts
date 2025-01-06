@@ -15,10 +15,10 @@ import {
   makeUpdateUserController,
   makeUpdateUserStatusController,
 } from '@shared/factories/controllers';
-import { makeUserRepository } from '@shared/factories/repositories';
+import { makePrismaUserRepository } from '@shared/factories/repositories';
 
 const userRoutes = async (app: FastifyInstance) => {
-  app.addHook('preHandler', updateLastAccess(makeUserRepository()));
+  app.addHook('preHandler', updateLastAccess(makePrismaUserRepository()));
 
   app.get(
     '/users',
