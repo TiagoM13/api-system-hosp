@@ -1,6 +1,6 @@
 import { AppError } from '@app/errors/app-client';
+import { DoctorRepository } from '@modules/doctors/repositories/doctor-repository';
 import { DOCTOR_NOT_FOUND } from '@shared/constants/messages';
-import { DoctorRepository } from '@shared/repositories/implementations';
 
 import { UpdateDoctorStatusDTO } from './update-doctor-status-schema';
 

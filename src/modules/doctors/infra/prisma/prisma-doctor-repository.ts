@@ -1,15 +1,14 @@
 import { Status } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
+import { DoctorRepository } from '@modules/doctors/repositories/doctor-repository';
 import {
   FindEntitiesAndCountParams,
   FindEntitiesAndCountResult,
   IDoctor,
 } from '@shared/entities';
 
-import { IDoctorRepository } from '../interfaces/doctor';
-
-export class DoctorRepository implements IDoctorRepository {
+export class PrismaDoctorRepository implements DoctorRepository {
   async findAndCountAll(
     params: FindEntitiesAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IDoctor>> {
@@ -73,7 +72,7 @@ export class DoctorRepository implements IDoctorRepository {
     });
   }
 
-  async updateStatus(id: number, status: Status): Promise<string> {
+  async updateStatus(id: number, status: Status): Promise<Status> {
     const doctor = await prisma.doctor.update({
       where: { id },
       data: { status },

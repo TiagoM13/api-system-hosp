@@ -1,5 +1,5 @@
+import { DoctorRepository } from '@modules/doctors/repositories/doctor-repository';
 import { IDoctor, IPaginateRequest } from '@shared/entities';
-import { DoctorRepository } from '@shared/repositories/implementations/doctor-repository';
 import { validatePaginationParams } from '@shared/utils';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 

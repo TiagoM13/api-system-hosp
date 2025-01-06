@@ -1,7 +1,7 @@
 import { CreateAppointmentService } from '@modules/appointments/useCases/create-appointment/create-appointment-service';
 import {
   makeAppointmentRepository,
-  makeDoctorRepoistory,
+  makePrismaDoctorRepoistory,
   makePatientRepository,
 } from '@shared/factories/repositories';
 
@@ -9,6 +9,6 @@ export const makeCreateAppointmentService = (): CreateAppointmentService => {
   return new CreateAppointmentService(
     makeAppointmentRepository(),
     makePatientRepository(),
-    makeDoctorRepoistory(),
+    makePrismaDoctorRepoistory(),
   );
 };
