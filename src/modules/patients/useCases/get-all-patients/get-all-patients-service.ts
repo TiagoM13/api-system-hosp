@@ -1,5 +1,5 @@
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import { IPatient, IPatientFilters } from '@shared/entities';
-import { PatientRepository } from '@shared/repositories/implementations';
 import { FindAndCountAll } from '@shared/utils/format-paginate';
 import { validatePaginationParams } from '@shared/utils/validate-paginate';
 

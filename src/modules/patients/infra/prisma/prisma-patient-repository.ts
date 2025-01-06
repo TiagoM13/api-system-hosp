@@ -1,17 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Prisma } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import {
   type FindAllPatientsAndCountParams,
   type FindEntitiesAndCountResult,
   IPatient,
 } from '@shared/entities';
+import { convertDecimalToNumber } from '@shared/utils';
 
-import { convertDecimalToNumber } from '../../utils';
-import { IPatientRepository } from '../interfaces/patient';
-
-export class PatientRepository implements IPatientRepository {
+export class PrismaPatientRepository implements PatientRepository {
   async findAndCountAll(
     params: FindAllPatientsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IPatient>> {

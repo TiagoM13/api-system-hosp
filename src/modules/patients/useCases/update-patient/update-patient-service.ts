@@ -1,11 +1,11 @@
 import { AppError } from '@app/errors/app-client';
+import { PatientRepository } from '@modules/patients/repositories/patient-repository';
 import {
   CNS_EXISTS,
   CPF_EXISTS,
   PATIENT_NOT_FOUND,
 } from '@shared/constants/messages';
 import { IPatient } from '@shared/entities';
-import { PatientRepository } from '@shared/repositories/implementations';
 
 import { UpdatePatientDTO } from './update-patient-schema';
 

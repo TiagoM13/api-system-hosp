@@ -2,13 +2,13 @@ import { UpdateAppointmentService } from '@modules/appointments/useCases/update-
 import {
   makeAppointmentRepository,
   makePrismaDoctorRepoistory,
-  makePatientRepository,
+  makePrismaPatientRepository,
 } from '@shared/factories/repositories';
 
 export const makeUpdateAppointmentService = (): UpdateAppointmentService => {
   return new UpdateAppointmentService(
     makeAppointmentRepository(),
-    makePatientRepository(),
+    makePrismaPatientRepository(),
     makePrismaDoctorRepoistory(),
   );
 };
