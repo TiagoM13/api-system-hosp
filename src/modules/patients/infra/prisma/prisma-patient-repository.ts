@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Status } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
 import { PatientRepository } from '@modules/patients/repositories/patient-repository';
@@ -118,5 +118,15 @@ export class PrismaPatientRepository implements PatientRepository {
       height: convertDecimalToNumber(patient.height),
       weight: convertDecimalToNumber(patient.weight),
     };
+  }
+
+  async updateStatus(id: string, status: Status): Promise<Status> {
+    const patient = await prisma.patient.update({
+      where: { id },
+      data: { status },
+      select: { status: true },
+    });
+
+    return patient.status;
   }
 }
