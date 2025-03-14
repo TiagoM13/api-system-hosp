@@ -41,7 +41,7 @@ export class PrismaUserRepository implements UserRepository {
     };
   }
 
-  async findById(id: number): Promise<IUser | null> {
+  async findById(id: string): Promise<IUser | null> {
     return await prisma.user.findUnique({
       where: { id },
       select: {
@@ -84,7 +84,7 @@ export class PrismaUserRepository implements UserRepository {
     });
   }
 
-  async update(id: number, data: Partial<IUser>): Promise<IUser> {
+  async update(id: string, data: Partial<IUser>): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
       data,
@@ -102,7 +102,7 @@ export class PrismaUserRepository implements UserRepository {
     });
   }
 
-  async updateStatus(id: number, status: Status): Promise<Status> {
+  async updateStatus(id: string, status: Status): Promise<Status> {
     const doctor = await prisma.user.update({
       where: { id },
       data: { status },
@@ -112,21 +112,21 @@ export class PrismaUserRepository implements UserRepository {
     return doctor.status;
   }
 
-  async changePassword(id: number, data: Partial<IUser>): Promise<IUser> {
+  async changePassword(id: string, data: Partial<IUser>): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
       data,
     });
   }
 
-  async updateLastAccess(id: number): Promise<IUser> {
+  async updateLastAccess(id: string): Promise<IUser> {
     return await prisma.user.update({
       where: { id },
       data: { last_access: new Date() },
     });
   }
 
-  async delete(id: number): Promise<IUser> {
+  async delete(id: string): Promise<IUser> {
     return await prisma.user.delete({ where: { id } });
   }
 }

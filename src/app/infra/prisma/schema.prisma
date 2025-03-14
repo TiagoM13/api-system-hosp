@@ -46,7 +46,7 @@ enum AppointmentType {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   name        String
   email       String    @unique
   role        Role
@@ -88,7 +88,7 @@ model Patient {
 }
 
 model Appointment {
-  id                Int               @id @default(autoincrement())
+  id                String            @id @default(uuid())
   appointment_type  AppointmentType   @default(QUERY)
   examination       String?
   diagnosis_summary String?
@@ -97,7 +97,7 @@ model Appointment {
   created_at        DateTime          @default(now())
   updated_at        DateTime          @updatedAt()
 
-  doctor_id  Int
+  doctor_id  String
   doctor     Doctor  @relation(fields: [doctor_id], references: [id])
   patient_id String
   patient    Patient @relation(fields: [patient_id], references: [id])
@@ -106,7 +106,7 @@ model Appointment {
 }
 
 model Doctor {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(uuid())
   name         String
   sex          Sex
   crm          String        @unique

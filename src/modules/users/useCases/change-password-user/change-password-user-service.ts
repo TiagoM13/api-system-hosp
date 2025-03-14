@@ -1,9 +1,6 @@
 import { AppError } from '@app/errors/app-client';
 import { UserRepository } from '@modules/users/repositories/user-repository';
-import {
-  INCONPATIBLE_PASSWORDS,
-  USER_NOT_FOUND,
-} from '@shared/constants/messages';
+import { USER_NOT_FOUND } from '@shared/constants/messages';
 import { IUser } from '@shared/entities';
 import { hashPassword } from '@shared/utils/generate-password';
 
@@ -14,22 +11,16 @@ export class ChangePasswordUserService {
     this.userRepository = userRepository;
   }
 
-  async execute(id: number, dto: ChangePasswordUserDTO): Promise<IUser> {
+  async execute(id: string, dto: ChangePasswordUserDTO): Promise<IUser> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
       throw new AppError(USER_NOT_FOUND, 404);
     }
 
-    const isVerifyPassword = dto.password === dto.confirm_password;
-
-    if (!isVerifyPassword) {
-      throw new AppError(INCONPATIBLE_PASSWORDS);
-    }
-
     const hashedPassword = await hashPassword(dto.password);
 
-    return await this.userRepository.changePassword(Number(user.id), {
+    return await this.userRepository.changePassword(String(user.id), {
       ...user,
       password: hashedPassword,
     });

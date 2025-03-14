@@ -9,11 +9,6 @@ export const changePasswordUserSchema = z
       .min(6, MIN_LENGTH_PASSWORD)
       .max(20, MAX_LENGTH_PASSWORD)
       .trim(),
-    confirm_password: z
-      .string()
-      .min(6, MIN_LENGTH_PASSWORD)
-      .max(20, MAX_LENGTH_PASSWORD)
-      .trim(),
   })
   .strict();
 

@@ -12,7 +12,7 @@ export class UpdateUserController extends BaseController {
     super();
   }
 
-  async handle(): Promise<FastifyReply> {
+  protected async handle(): Promise<FastifyReply> {
     const { id } = intIdParamSchema.parse(this.request.params);
     const dto = updateUserSchema.parse(this.request.body);
     const loggedInUser = this.request.user as IUser;

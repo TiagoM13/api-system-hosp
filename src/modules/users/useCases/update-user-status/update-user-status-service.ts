@@ -17,7 +17,7 @@ export class UpdateUserStatusService {
   }
 
   async execute(
-    id: number,
+    id: string,
     dto: UpdateUserStatusDTO,
     loggedInUser: IUser,
   ): Promise<Status> {
