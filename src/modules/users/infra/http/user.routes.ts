@@ -8,12 +8,13 @@ import {
 } from '@app/infra/http/middleware';
 import {
   createUserSchemaDoc,
+  deleteUserSchemaDoc,
   getAllUsersSchemaDoc,
   getUserByIdSchemaDoc,
+  updateStatusUserSchemaDoc,
+  updateUserBasicInfoSchemaDoc,
+  updateUserSchemaDoc,
 } from '@modules/users/docs/schemas';
-import { deleteUserSchemaDoc } from '@modules/users/docs/schemas/delete-user-doc';
-import { updateStatusUserSchemaDoc } from '@modules/users/docs/schemas/update-status-user-doc';
-import { updateUserSchemaDoc } from '@modules/users/docs/schemas/update-user-doc';
 import {
   makeChangePasswordUserController,
   makeCreateUserController,
@@ -64,10 +65,7 @@ const userRoutes = async (app: FastifyInstance) => {
     '/users/:id/change-password',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
-      schema: {
-        tags: ['Users'],
-        description: 'Altera a senha de um usuário pelo ID.',
-      },
+      schema: updateUserBasicInfoSchemaDoc,
     },
     bindController(makeChangePasswordUserController()),
   );
