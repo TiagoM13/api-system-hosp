@@ -15,7 +15,7 @@ export class GetAppointmentService {
     this.patientRepository = patientRepository;
   }
 
-  async execute(appointmentId: number, patientId: string) {
+  async execute(appointmentId: string, patientId: string) {
     const patient = await this.patientRepository.findById(patientId);
 
     if (!patient) {

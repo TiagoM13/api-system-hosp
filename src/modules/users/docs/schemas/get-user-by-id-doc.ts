@@ -18,7 +18,7 @@ export const getUserByIdSchemaDoc = {
       type: 'object',
       properties: {
         success: { type: 'boolean' },
-        messgae: {
+        user: {
           type: 'object',
           properties: UserSchemaResponse,
         },

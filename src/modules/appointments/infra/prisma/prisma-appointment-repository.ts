@@ -94,7 +94,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
     };
   }
 
-  async findById(appointment_id: number): Promise<IAppointment | null> {
+  async findById(appointment_id: string): Promise<IAppointment | null> {
     return prisma.appointment.findUnique({
       where: { id: appointment_id },
       include: {
@@ -113,7 +113,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
   }
 
   async update(
-    appointment_id: number,
+    appointment_id: string,
     data: Partial<IAppointment>,
   ): Promise<IAppointment | null> {
     return await prisma.appointment.update({
@@ -125,7 +125,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
   }
 
   async updateAppointmentStatus(
-    appointment_id: number,
+    appointment_id: string,
     status: AppointmentStatus,
   ): Promise<AppointmentStatus> {
     const appointment = await prisma.appointment.update({

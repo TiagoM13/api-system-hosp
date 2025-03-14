@@ -10,7 +10,7 @@ export class UpdateDoctorService {
     this.doctorRepository = doctorRepository;
   }
 
-  async execute(id: number, dto: UpdateDoctorDTO): Promise<IDoctor> {
+  async execute(id: string, dto: UpdateDoctorDTO): Promise<IDoctor> {
     const doctor = await this.doctorRepository.findById(id);
 
     if (!doctor) {

@@ -11,7 +11,7 @@ import {
 } from '@shared/constants/messages';
 
 interface TokenData {
-  id: number;
+  id: string;
   role: Role;
   status: Status;
 }
