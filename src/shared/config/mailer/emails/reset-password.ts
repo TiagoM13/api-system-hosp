@@ -1,16 +1,16 @@
 import { IUser } from '@shared/entities';
 
-import { getMailClient } from '../mailer';
+import { getMailClient } from '..';
 
-interface SendWelcomeEmailProps {
+interface SendResetPasswordEmailProps {
   user: IUser;
-  password: string;
+  temporaryPassword: string;
 }
 
-export const sendWelcomeEmail = async ({
+export const sendResetPasswordEmail = async ({
   user,
-  password,
-}: SendWelcomeEmailProps) => {
+  temporaryPassword,
+}: SendResetPasswordEmailProps) => {
   const mail = await getMailClient();
 
   const sender = {
@@ -21,15 +21,14 @@ export const sendWelcomeEmail = async ({
   const message = await mail.sendMail({
     from: sender,
     to: user.email,
-    subject: 'Bem-vindo ao Sistema de Gerenciamento Hospitalar!',
+    subject: 'Redefinição de senha - Sua nova senha está disponível',
     html: `
           <section style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333;">
             <p>Olá, <strong>${user.name}</strong>!</p>
-            <p>Seja muito bem-vindo ao <strong>Sistema de Gerenciamento Hospitalar</strong>!</p>
-            <p>Seu acesso foi criado com sucesso e estamos felizes em ter você em nossa equipe.</p>
-            <p>Para acessar o sistema, utilize a senha provisória abaixo:</p>
-            <p style="font-size: 18px; font-weight: bold; color: #000;">${password}</p>
-            <p>Recomendamos que você troque sua senha assim que possível para garantir a segurança do seu acesso.</p>
+            <p>Recebemos seu pedido para redefinir a senha e estamos aqui para ajudar!</p>
+            <p>Use a senha provisória abaixo para acessar sua conta novamente:</p>
+            <p style="font-size: 18px; font-weight: bold; color: #000;">${temporaryPassword}</p>
+            <p>Não se esqueça de trocar essa senha assim que possível para manter sua conta segura.</p>
             <p>Você pode acessar o sistema clicando no link abaixo:</p>
             <p>
               <a
@@ -40,8 +39,9 @@ export const sendWelcomeEmail = async ({
                 Clique aqui para fazer login
               </a>
             </p>
-            <p>Caso você não tenha solicitado este e-mail, apenas ignore esta mensagem.</p>
+            <p>Caso você não tenha solicitado a redefinição de senha, pode ignorar esta mensagem sem preocupações.</p>
             <footer style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 14px; color: #555;">
+              <p>Estamos sempre aqui para ajudar!</p>
               <p>Abraços,</p>
               <p><strong>Equipe Suporte</strong></p>
             </footer>

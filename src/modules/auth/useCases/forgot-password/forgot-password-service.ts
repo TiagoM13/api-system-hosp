@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 import { AppError } from '@app/errors/app-client';
 import { UserRepository } from '@modules/users/repositories/user-repository';
-import { sendResetPasswordEmail } from '@shared/config/emails/reset-password';
+import { sendResetPasswordEmail } from '@shared/config/mailer/emails/reset-password';
 import { USER_INACTIVE, USER_NOT_FOUND } from '@shared/constants/messages';
 import {
   generateProvisionalPassword,
