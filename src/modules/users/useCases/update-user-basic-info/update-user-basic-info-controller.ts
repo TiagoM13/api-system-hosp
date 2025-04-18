@@ -4,20 +4,22 @@ import { BaseController } from '@app/infra/http/controller/baseController';
 import { IUser } from '@shared/entities';
 import { uuidParamSchema } from '@shared/utils';
 
-import { updateUserSchema } from './update-user-schema';
-import { UpdateUserService } from './update-user-service';
+import { updateUserBasicInfoSchema } from './update-user-basic-info-schema';
+import { UpdateUserBasicInfoService } from './update-user-basic-info-service';
 
-export class UpdateUserController extends BaseController {
-  constructor(private readonly updateUserService: UpdateUserService) {
+export class UpdateUserBasicInfoController extends BaseController {
+  constructor(
+    private readonly updateUserBasicInfoService: UpdateUserBasicInfoService,
+  ) {
     super();
   }
 
   protected async handle(): Promise<FastifyReply> {
     const { id } = uuidParamSchema.parse(this.request.params);
-    const dto = updateUserSchema.parse(this.request.body);
+    const dto = updateUserBasicInfoSchema.parse(this.request.body);
     const loggedInUser = this.request.user as IUser;
 
-    const updatedUser = await this.updateUserService.execute(
+    const user = await this.updateUserBasicInfoService.execute(
       id,
       dto,
       loggedInUser,
@@ -25,7 +27,7 @@ export class UpdateUserController extends BaseController {
 
     return this.ok({
       success: true,
-      user: updatedUser,
+      user,
     });
   }
 }

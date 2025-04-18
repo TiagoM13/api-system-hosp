@@ -2,6 +2,7 @@ import { Status } from '@prisma/client';
 
 import { prisma } from '@app/infra/prisma/client';
 import { UserRepository } from '@modules/users/repositories/user-repository';
+import { UpdateUserBasicInfoDTO } from '@modules/users/useCases/update-user-basic-info/update-user-basic-info-schema';
 import {
   type FindEntitiesAndCountParams,
   type FindEntitiesAndCountResult,
@@ -110,6 +111,16 @@ export class PrismaUserRepository implements UserRepository {
     });
 
     return doctor.status;
+  }
+
+  async updateUserBasicInfo(
+    id: string,
+    data: UpdateUserBasicInfoDTO,
+  ): Promise<IUser> {
+    return await prisma.user.update({
+      where: { id },
+      data,
+    });
   }
 
   async changePassword(id: string, data: Partial<IUser>): Promise<IUser> {

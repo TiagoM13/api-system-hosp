@@ -16,13 +16,13 @@ import {
   updateUserSchemaDoc,
 } from '@modules/users/docs/schemas';
 import {
-  makeChangePasswordUserController,
   makeCreateUserController,
   makeDeleteUserController,
   makeGetAllUsersController,
   makeGetUserController,
   makeUpdateUserController,
   makeUpdateUserStatusController,
+  makeUpdateUserBasicInfoController,
 } from '@shared/factories/controllers';
 import { makePrismaUserRepository } from '@shared/factories/repositories';
 
@@ -62,12 +62,12 @@ const userRoutes = async (app: FastifyInstance) => {
     bindController(makeUpdateUserController()),
   );
   app.patch(
-    '/users/:id/change-password',
+    '/users/:id/basic-info',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
       schema: updateUserBasicInfoSchemaDoc,
     },
-    bindController(makeChangePasswordUserController()),
+    bindController(makeUpdateUserBasicInfoController()),
   );
   app.patch(
     '/users/:id/status',

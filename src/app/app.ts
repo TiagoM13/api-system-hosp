@@ -30,7 +30,8 @@ export const app = fastify({
 app.setErrorHandler(errorHandler);
 
 app.register(cors, {
-  origin: '*',
+  origin: ['http://localhost:3003'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 });
 app.register(fastifyMultipart);
 app.register(fastifyStatic, {

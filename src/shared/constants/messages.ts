@@ -17,6 +17,7 @@ export const USER_NOT_AUTHORIZED =
 export const INVALID_TOKEN = 'Token inválido';
 export const EXPIRED_TOKEN = 'O token expirou';
 export const TOKEN_NOT_FOUND = 'Token não fornecido';
+export const UNAUTHORIZED = 'Acesso não autorizado';
 
 // Patient
 export const CNS_EXISTS = 'O CNS já existe.';

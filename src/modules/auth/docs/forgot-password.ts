@@ -17,7 +17,7 @@ export const passwordRecoverySchemaDoc = {
         default: 'usuario@example.com',
       },
     },
-    required: ['email', 'password'],
+    required: ['email'],
     additionalProperties: false,
   },
   response: {

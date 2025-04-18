@@ -6,6 +6,8 @@ import {
   IUser,
 } from '@shared/entities';
 
+import { UpdateUserBasicInfoDTO } from '../useCases/update-user-basic-info/update-user-basic-info-schema';
+
 export interface UserRepository {
   findAndCountAll(
     params: FindEntitiesAndCountParams,
@@ -18,4 +20,5 @@ export interface UserRepository {
   changePassword(id: string, dto: Partial<IUser>): Promise<IUser>;
   delete(id: string): Promise<IUser>;
   updateLastAccess(id: string): Promise<IUser>;
+  updateUserBasicInfo(id: string, dto: UpdateUserBasicInfoDTO): Promise<IUser>;
 }

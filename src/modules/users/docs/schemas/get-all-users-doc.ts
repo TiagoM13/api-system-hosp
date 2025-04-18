@@ -28,9 +28,9 @@ export const userListQuerySchema = {
       enum: Object.values(Role),
       description: 'Filtrar por role do usuário',
     },
-    page: { type: 'number', description: 'Número da página' },
+    page: { type: 'string', description: 'Número da página' },
     items_per_page: {
-      type: 'number',
+      type: 'string',
       description: 'Número de itens por página',
     },
   },

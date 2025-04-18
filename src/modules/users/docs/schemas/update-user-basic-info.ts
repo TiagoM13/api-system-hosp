@@ -15,6 +15,12 @@ export const updateUserBasicInfoSchemaDoc = {
   body: {
     type: 'object',
     properties: {
+      name: { type: 'string' },
+      email: {
+        type: 'string',
+        format: 'email',
+        default: 'usuario@example.com',
+      },
       password: { type: 'string' },
     },
     additionalProperties: false,
@@ -25,7 +31,18 @@ export const updateUserBasicInfoSchemaDoc = {
       type: 'object',
       properties: {
         success: { type: 'boolean' },
-        message: { type: 'string' },
+        user: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            email: {
+              type: 'string',
+              format: 'email',
+              default: 'usuario@example.com',
+            },
+            password: { type: 'string' },
+          },
+        },
       },
     },
     400: InvalidRequestSchema,
