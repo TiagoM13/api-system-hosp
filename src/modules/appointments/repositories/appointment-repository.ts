@@ -14,14 +14,14 @@ export interface AppointmentRepository {
   findAllAppointments(
     params: FindAllAppointmentsAndCountParams,
   ): Promise<FindEntitiesAndCountResult<IAppointment>>;
-  findById(appointment_id: number): Promise<IAppointment | null>;
+  findById(appointment_id: string): Promise<IAppointment | null>;
   create(patient_id: string, dto: IAppointment): Promise<IAppointment>;
   update(
-    appointment_id: number,
+    appointment_id: string,
     dto: Partial<IAppointment>,
   ): Promise<IAppointment | null>;
   updateAppointmentStatus(
-    appointment_id: number,
+    appointment_id: string,
     status: AppointmentStatus,
   ): Promise<AppointmentStatus>;
 }

@@ -7,7 +7,7 @@ export const appointmentParamId = z.object({
 
 export const appointmentParamsSchema = z.object({
   patientId: z.string().uuid(),
-  appointmentId: z.coerce.number().int(),
+  appointmentId: z.string().uuid(),
 });
 
 export const appointmentQuerySchema = z.object({

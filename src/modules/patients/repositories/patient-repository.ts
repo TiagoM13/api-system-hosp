@@ -1,3 +1,5 @@
+import { Status } from '@prisma/client';
+
 import {
   type FindAllPatientsAndCountParams,
   type FindEntitiesAndCountResult,
@@ -15,4 +17,5 @@ export interface PatientRepository {
   findFirstByCNS(id: string, cpf: string): Promise<IPatient | null>;
   create(dto: IPatient): Promise<IPatient>;
   update(id: string, dto: Partial<IPatient>): Promise<IPatient>;
+  updateStatus(id: string, status: Status): Promise<Status>;
 }

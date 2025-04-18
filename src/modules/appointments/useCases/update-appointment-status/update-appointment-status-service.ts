@@ -21,7 +21,7 @@ export class UpdateAppointmentStatusService {
   }
 
   async execute(
-    appointmentId: number,
+    appointmentId: string,
     patientId: string,
     dto: UpdateAppointmentStatusDTO,
   ): Promise<AppointmentStatus> {

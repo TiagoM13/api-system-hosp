@@ -1,6 +1,7 @@
 import { Status } from '@prisma/client';
 
 import { AppError } from '@app/errors/app-client';
+import { prisma } from '@app/infra/prisma/client';
 import { AppointmentRepository } from '@modules/appointments/repositories/appointment-repository';
 import { DoctorRepository } from '@modules/doctors/repositories/doctor-repository';
 import { PatientRepository } from '@modules/patients/repositories/patient-repository';
@@ -37,6 +38,13 @@ export class CreateAppointmentService {
 
     if (doctor.status === Status.INACTIVE) {
       throw new AppError(DOCTOR_INACTIVE);
+    }
+
+    if (patient.status === Status.INACTIVE) {
+      await prisma.patient.update({
+        where: { id: patientId },
+        data: { status: Status.ACTIVE },
+      });
     }
 
     const appointment = await this.appointmentRepository.create(patientId, dto);

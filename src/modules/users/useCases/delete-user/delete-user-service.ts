@@ -8,7 +8,7 @@ export class DeleteUserService {
     this.userRepository = userRepository;
   }
 
-  async execute(id: number): Promise<IUser> {
+  async execute(id: string): Promise<IUser> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {

@@ -81,7 +81,7 @@ const doctors = [
     email: 'joao.martins@hospital.com',
     birth_date: new Date('1975-04-10'),
     specialty: 'Cardiologia',
-    working_days: [1, 3, 5], // Segundas, quartas, sextas
+    working_days: [1, 3, 5],
   },
   {
     name: 'Dra. Maria Souza',
@@ -91,7 +91,7 @@ const doctors = [
     email: 'maria.souza@hospital.com',
     birth_date: new Date('1980-12-20'),
     specialty: 'Pediatria',
-    working_days: [2, 4], // Terças e quintas
+    working_days: [2, 4],
   },
   {
     name: 'Dr. Ricardo Alves',
@@ -101,7 +101,7 @@ const doctors = [
     email: 'ricardo.alves@hospital.com',
     birth_date: new Date('1982-09-15'),
     specialty: 'Ortopedia',
-    working_days: [1, 2, 5], // Segundas, terças e sextas
+    working_days: [1, 2, 5],
   },
   {
     name: 'Dra. Fernanda Oliveira',
@@ -111,7 +111,7 @@ const doctors = [
     email: 'fernanda.oliveira@hospital.com',
     birth_date: new Date('1990-05-18'),
     specialty: 'Dermatologia',
-    working_days: [3, 5], // Quartas e sextas
+    working_days: [3, 5],
   },
   {
     name: 'Dr. Lucas Lima',
@@ -121,7 +121,7 @@ const doctors = [
     email: 'lucas.lima@hospital.com',
     birth_date: new Date('1987-03-30'),
     specialty: 'Neurologia',
-    working_days: [2, 4], // Terças e quintas
+    working_days: [2, 4],
   },
 ];
 

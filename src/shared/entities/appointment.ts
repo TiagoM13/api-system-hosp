@@ -1,7 +1,7 @@
 import { AppointmentStatus, AppointmentType } from '@prisma/client';
 
 export type IAppointment = {
-  id?: number;
+  id?: string;
   appointment_type: AppointmentType;
   examination?: string | null;
   diagnosis_summary?: string | null;
@@ -10,5 +10,5 @@ export type IAppointment = {
   updated_at?: Date;
   patient_id?: string;
   status?: AppointmentStatus;
-  doctor_id: number;
+  doctor_id: string;
 };

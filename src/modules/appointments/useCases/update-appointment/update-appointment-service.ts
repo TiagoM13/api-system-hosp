@@ -24,7 +24,7 @@ export class UpdateAppointmentService {
   }
 
   async execute(
-    appointmentId: number,
+    appointmentId: string,
     patientId: string,
     dto: UpdateAppointmentDTO,
   ) {

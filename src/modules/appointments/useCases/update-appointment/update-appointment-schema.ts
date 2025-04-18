@@ -7,7 +7,7 @@ export const updateAppointmentSchema = z
   .object({
     appointment_type: z.nativeEnum(AppointmentType),
     scheduled_date: z.coerce.date(),
-    doctor_id: z.number().int(),
+    doctor_id: z.string().uuid(),
     examination: z.string().min(3, MIN_LENGTH_TEXT).max(255, MAX_LENGTH_TEXT),
     diagnosis_summary: z
       .string()

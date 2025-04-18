@@ -16,7 +16,7 @@ export class UpdateUserService {
   }
 
   async execute(
-    id: number,
+    id: string,
     dto: UpdateUserDTO,
     loggedInUser: IUser,
   ): Promise<IUser> {

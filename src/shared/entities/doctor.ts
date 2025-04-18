@@ -1,7 +1,7 @@
 import { Sex, Status } from '@prisma/client';
 
 export type IDoctor = {
-  id?: number;
+  id?: string;
   name: string;
   sex: Sex;
   birth_date: Date;

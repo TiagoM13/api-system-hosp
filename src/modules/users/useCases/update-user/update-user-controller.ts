@@ -2,7 +2,7 @@ import { type FastifyReply } from 'fastify';
 
 import { BaseController } from '@app/infra/http/controller/baseController';
 import { IUser } from '@shared/entities';
-import { intIdParamSchema } from '@shared/utils';
+import { uuidParamSchema } from '@shared/utils';
 
 import { updateUserSchema } from './update-user-schema';
 import { UpdateUserService } from './update-user-service';
@@ -12,8 +12,8 @@ export class UpdateUserController extends BaseController {
     super();
   }
 
-  async handle(): Promise<FastifyReply> {
-    const { id } = intIdParamSchema.parse(this.request.params);
+  protected async handle(): Promise<FastifyReply> {
+    const { id } = uuidParamSchema.parse(this.request.params);
     const dto = updateUserSchema.parse(this.request.body);
     const loggedInUser = this.request.user as IUser;
 

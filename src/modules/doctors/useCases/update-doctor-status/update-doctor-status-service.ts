@@ -11,7 +11,7 @@ export class UpdateDoctorStatusService {
     this.doctorRepository = doctorRepository;
   }
 
-  async execute(id: number, dto: UpdateDoctorStatusDTO): Promise<Status> {
+  async execute(id: string, dto: UpdateDoctorStatusDTO): Promise<Status> {
     const doctor = await this.doctorRepository.findById(id);
 
     if (!doctor) {

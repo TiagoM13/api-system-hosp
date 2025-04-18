@@ -18,7 +18,7 @@ export const updateLastAccess = (userRepository: UserRepository) => {
       }
 
       const token = authorization.split(' ')[1];
-      const { id } = app.jwt.verify<{ id: number }>(token);
+      const { id } = app.jwt.verify<{ id: string }>(token);
 
       await userRepository.updateLastAccess(id);
 

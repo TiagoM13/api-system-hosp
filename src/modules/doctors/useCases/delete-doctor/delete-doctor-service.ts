@@ -8,7 +8,7 @@ export class DeleteDoctorService {
     this.doctorRepository = doctorRepository;
   }
 
-  async execute(id: number): Promise<IDoctor> {
+  async execute(id: string): Promise<IDoctor> {
     const doctor = await this.doctorRepository.findById(id);
 
     if (!doctor) {

@@ -1,7 +1,7 @@
 import { Role, Status } from '@prisma/client';
 
 export type IUser = {
-  id?: number;
+  id?: string;
   name: string;
   email: string;
   role: Role;

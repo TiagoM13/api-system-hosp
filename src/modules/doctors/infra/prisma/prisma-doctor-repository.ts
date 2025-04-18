@@ -32,7 +32,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
     return { count, rows: doctors };
   }
 
-  async findById(id: number): Promise<IDoctor | null> {
+  async findById(id: string): Promise<IDoctor | null> {
     return await prisma.doctor.findUnique({
       where: {
         id,
@@ -65,14 +65,14 @@ export class PrismaDoctorRepository implements DoctorRepository {
     });
   }
 
-  async update(id: number, data: Partial<IDoctor>): Promise<IDoctor> {
+  async update(id: string, data: Partial<IDoctor>): Promise<IDoctor> {
     return await prisma.doctor.update({
       where: { id },
       data,
     });
   }
 
-  async updateStatus(id: number, status: Status): Promise<Status> {
+  async updateStatus(id: string, status: Status): Promise<Status> {
     const doctor = await prisma.doctor.update({
       where: { id },
       data: { status },
@@ -82,7 +82,7 @@ export class PrismaDoctorRepository implements DoctorRepository {
     return doctor.status;
   }
 
-  async delete(id: number): Promise<IDoctor> {
+  async delete(id: string): Promise<IDoctor> {
     return await prisma.doctor.delete({
       where: { id },
     });

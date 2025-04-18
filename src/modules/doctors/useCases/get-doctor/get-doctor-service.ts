@@ -8,7 +8,7 @@ export class GetDoctorService {
     this.doctorRepository = doctorRepository;
   }
 
-  async execute(id: number): Promise<IDoctor | null> {
+  async execute(id: string): Promise<IDoctor | null> {
     const doctor = await this.doctorRepository.findById(id);
 
     if (!doctor) {
