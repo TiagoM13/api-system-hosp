@@ -6,29 +6,29 @@ import {
 } from '@shared/utils/swagger-schemas';
 import { Tags } from '@shared/utils/tags';
 
-import { UserNotFoundSchema, UserSchemaResponse } from './user-doc';
+import { DoctorSchemaResponse } from './doctor-doc';
 
-export const getUserByIdSchemaDoc = {
-  tags: [Tags.USERS],
-  description: 'Obtém os detalhes de um usuário pelo ID.',
-  summary: 'Obter usuário',
+export const getDoctorByIdSchemaDoc = {
+  tags: [Tags.DOCTORS],
+  summary: 'Buscar médico por ID',
+  description: 'Retorna os dados de um médico pelo ID',
   security: [{ Bearer: [] }],
   params: UUIParamsSchema,
   response: {
     200: {
-      description: 'Usuário obtido com sucesso',
+      description: 'Médico retornado com sucesso',
       type: 'object',
       properties: {
         success: { type: 'boolean' },
-        user: {
+        doctor: {
           type: 'object',
-          properties: UserSchemaResponse,
+          properties: DoctorSchemaResponse,
         },
       },
     },
     400: InvalidRequestSchema,
     401: TokenNotFoundSchema,
     403: UserNotAuthorizedSchema,
-    404: UserNotFoundSchema,
+    // 404: NotFoundSchema,
   },
 };
