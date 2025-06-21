@@ -7,7 +7,7 @@
     "migrateOutput": "./src/app/infra/prisma/migrations"
   },
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "scripts": {
     "start": "node dist/src/app/infra/http/server.js",

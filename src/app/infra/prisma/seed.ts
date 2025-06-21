@@ -133,12 +133,15 @@ async function seed() {
 
   await prisma.user.createMany({
     data: users,
+    skipDuplicates: false,
   });
   await prisma.patient.createMany({
     data: pacientes,
+    skipDuplicates: false,
   });
   await prisma.doctor.createMany({
     data: doctors,
+    skipDuplicates: false,
   });
 
   console.log('Usuários criados com sucesso:', users);
