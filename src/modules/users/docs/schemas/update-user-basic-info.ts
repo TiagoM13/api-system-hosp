@@ -2,6 +2,7 @@ import {
   InvalidRequestSchema,
   TokenNotFoundSchema,
   UserNotAuthorizedSchema,
+  UUIParamsSchema,
 } from '@shared/utils/swagger-schemas';
 import { Tags } from '@shared/utils/tags';
 
@@ -12,6 +13,7 @@ export const updateUserBasicInfoSchemaDoc = {
   description: 'Atualiza os dados básicos de um usuário pelo ID.',
   summary: 'Atualizar dados básicos',
   security: [{ Bearer: [] }],
+  params: UUIParamsSchema,
   body: {
     type: 'object',
     properties: {

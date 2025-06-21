@@ -6,22 +6,20 @@ import {
 } from '@shared/utils/swagger-schemas';
 import { Tags } from '@shared/utils/tags';
 
-import { UserNotFoundSchema } from './user-doc';
-
-export const deleteUserSchemaDoc = {
-  tags: [Tags.USERS],
-  description: 'Deleta um usuário do sistema pelo ID.',
-  summary: 'Deletar usuário',
+export const deleteDoctorSchemaDoc = {
+  tags: [Tags.DOCTORS],
+  summary: 'Excluir médico',
+  description: 'Exclui um médico do sistema pelo ID',
   security: [{ Bearer: [] }],
   params: UUIParamsSchema,
   response: {
-    200: {
-      description: 'Usuário deletado com sucesso',
+    204: {
+      description: 'Médico excluído com sucesso',
       type: 'null',
     },
     400: InvalidRequestSchema,
     401: TokenNotFoundSchema,
     403: UserNotAuthorizedSchema,
-    404: UserNotFoundSchema,
+    // 404: NotFoundSchema,
   },
 };

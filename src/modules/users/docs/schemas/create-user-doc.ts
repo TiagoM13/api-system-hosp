@@ -7,7 +7,7 @@ import {
 } from '@shared/utils/swagger-schemas';
 import { Tags } from '@shared/utils/tags';
 
-import { UserNotFoundSchema, UserSchemaResponse } from './user-doc';
+import { UserSchemaResponse } from './user-doc';
 
 export const createUserSchemaDoc = {
   tags: [Tags.USERS],
@@ -39,6 +39,5 @@ export const createUserSchemaDoc = {
     400: InvalidRequestSchema,
     401: TokenNotFoundSchema,
     403: UserNotAuthorizedSchema,
-    404: UserNotFoundSchema,
   },
 };

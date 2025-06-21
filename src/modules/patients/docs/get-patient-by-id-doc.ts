@@ -1,34 +1,32 @@
 import {
-  InvalidRequestSchema,
   TokenNotFoundSchema,
   UserNotAuthorizedSchema,
   UUIParamsSchema,
 } from '@shared/utils/swagger-schemas';
 import { Tags } from '@shared/utils/tags';
 
-import { UserNotFoundSchema, UserSchemaResponse } from './user-doc';
+import { PatientNotFoundSchema, PatientSchemaResponse } from './patient-doc';
 
-export const getUserByIdSchemaDoc = {
-  tags: [Tags.USERS],
-  description: 'Obtém os detalhes de um usuário pelo ID.',
-  summary: 'Obter usuário',
+export const getPatientByIdSchemaDoc = {
+  tags: [Tags.PATIENTS],
+  description: 'Busca um paciente por ID',
+  summary: 'Buscar paciente por ID',
   security: [{ Bearer: [] }],
   params: UUIParamsSchema,
   response: {
     200: {
-      description: 'Usuário obtido com sucesso',
+      description: 'Paciente encontrado com sucesso',
       type: 'object',
       properties: {
         success: { type: 'boolean' },
-        user: {
+        patient: {
           type: 'object',
-          properties: UserSchemaResponse,
+          properties: PatientSchemaResponse,
         },
       },
     },
-    400: InvalidRequestSchema,
     401: TokenNotFoundSchema,
     403: UserNotAuthorizedSchema,
-    404: UserNotFoundSchema,
+    404: PatientNotFoundSchema,
   },
 };

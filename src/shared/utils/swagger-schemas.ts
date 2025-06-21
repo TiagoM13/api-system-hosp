@@ -46,3 +46,10 @@ export const UserNotAuthorizedSchema = {
     message: { type: 'string' },
   },
 };
+export const UUIParamsSchema = {
+  type: 'object',
+  properties: {
+    id: { type: 'string', format: 'uuid' },
+  },
+  required: ['id'],
+};
