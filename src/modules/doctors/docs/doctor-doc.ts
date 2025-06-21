@@ -3,7 +3,7 @@ import { Sex, Status } from '@prisma/client';
 export const DoctorSchemaResponse = {
   id: { type: 'string', format: 'uuid' },
   name: { type: 'string' },
-  birth_date: { type: 'string', format: 'date-time' },
+  birth_date: { type: 'string', format: 'date' },
   sex: { type: 'string', enum: Object.values(Sex) },
   crm: { type: 'string' },
   email: { type: ['string', 'null'], nullable: true },

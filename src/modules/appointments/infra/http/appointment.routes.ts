@@ -6,6 +6,7 @@ import {
   updateLastAccess,
   verifyAuthorization,
 } from '@app/infra/http/middleware';
+import { createAppointmentDoc } from '@modules/appointments/docs/create-appointment-doc';
 import {
   makeCreateAppointmentController,
   makeGetAppointmentsByPatientController,
@@ -44,6 +45,7 @@ export const appointmentRoutes = async (app: FastifyInstance) => {
     '/appointments/:patientId',
     {
       preHandler: verifyAuthorization([Role.ADMIN, Role.EDITOR, Role.CLINICAL]),
+      schema: createAppointmentDoc,
     },
     bindController(makeCreateAppointmentController()),
   );

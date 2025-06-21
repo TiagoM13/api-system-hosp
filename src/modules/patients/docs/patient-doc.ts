@@ -5,7 +5,7 @@ import { PATIENT_NOT_FOUND } from '@shared/constants/messages';
 export const PatientSchemaResponse = {
   id: { type: 'string', format: 'uuid' },
   name: { type: 'string' },
-  birth_date: { type: 'string', format: 'date-time' },
+  birth_date: { type: 'string', format: 'date' },
   cpf: { type: ['string', 'null'], nullable: true },
   cns: { type: ['string', 'null'], nullable: true },
   sex: { type: 'string', enum: Object.values(Sex) },
